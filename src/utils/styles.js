@@ -16,7 +16,7 @@ export const colors = {
     red: "#b92b27",
     blue: "#0095f6",
     orange: "#FF8A3D",
-    darkgray: "rgba(0,0,0,0.5)",
+    darkgray: "rgba(0,0,0,0.4)",
     lightgray: "rgba(255,255,255,0.5)"
 }
 
@@ -59,6 +59,6 @@ export const GlobalStyles = createGlobalStyle`
     input{
         background-color:${props => props.theme.bgColor};
         border:${props => props.theme.themeGray} 1.5px solid;
-        color:${props => props.theme.themeGray};
+        color:${props => props.theme.color};
     }
 `

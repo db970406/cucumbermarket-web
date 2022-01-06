@@ -6,12 +6,40 @@
 
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/shared/Button';
+import Divider from '../../components/shared/Divider';
 import FormBox from '../../components/shared/FormBox';
 import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
+import SendAnywhere from '../../components/shared/SendAnywhere';
 import { logUserIn } from '../../utils/apollo';
+import { socialLogin } from "../../utils/socialLogin"
+import { colors } from '../../utils/styles';
+
+const SocialLogins = styled.div`
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+`
+const SocialLoginBtn = styled.button`
+    height:50px;
+    margin:0 auto;
+    text-align:center;
+    background: none;
+`
+const Img = styled.img`
+    width:100%;
+    height:100%;
+`
+
+const Greeting = styled.span`
+    color:${colors.green};
+    text-align:center;
+`
 
 const LOGIN_MUTATION = gql`
     mutation login($username:String!,$password:String!){
@@ -24,8 +52,15 @@ const LOGIN_MUTATION = gql`
 `
 
 export default function Login() {
-    const { register, handleSubmit, clearErrors, setError, formState } = useForm({
-        mode: "onChange"
+    const { state } = useLocation()
+
+    // SignUp이 성공하면 form에 자동적으로 username과 password를 세팅하게 둠
+    const { register, handleSubmit, clearErrors, formState } = useForm({
+        mode: "onChange",
+        defaultValues: {
+            username: state?.username ?? "",
+            password: state?.password ?? "",
+        }
     })
 
     const clearError = (errorName) => clearErrors(errorName)
@@ -34,10 +69,7 @@ export default function Login() {
     const afterLogin = ({ login }) => {
         const { ok, token, error } = login
         if (!ok) {
-            setError("result", {
-                message: error
-            })
-            clearError("result")
+            alert(error)
             return;
         }
         if (token) {
@@ -62,13 +94,12 @@ export default function Login() {
     }
 
 
-    // 백엔드에서 해당하는 유저를 찾지 못했을 경우 return하는 문자열을 alert로 띄울 것이다.
-    if (formState.errors?.result?.message) {
-        alert(formState.errors?.result?.message)
-    }
     return (
         <AuthLayout title="Log In">
-            <FormBox>
+            <FormBox onClick={handleSubmit(onValid)}>
+                {state?.message ? (
+                    <Greeting>{state?.message}</Greeting>
+                ) : null}
                 <Input
                     placeholder="아이디를 입력하세요."
                     onChange={clearError}
@@ -121,7 +152,18 @@ export default function Login() {
                     disabled={!formState.isValid || loading}
                     loading={loading}
                 />
+                <SendAnywhere
+                    link="sign-up"
+                    description="계정이 없으시다면? "
+                    where='회원가입'
+                />
             </FormBox>
+            <Divider />
+            <SocialLogins>
+                <SocialLoginBtn /* onClick={() => socialLogin("naver")} */>
+                    <Img src={require("../../images/naverLogin.png")} />
+                </SocialLoginBtn>
+            </SocialLogins>
         </AuthLayout>
     )
 }
