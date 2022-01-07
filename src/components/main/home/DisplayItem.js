@@ -9,27 +9,30 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import propTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { darkModeVar } from '../../../utils/apollo';
 import { colors } from '../../../utils/styles';
 import UserAvatar from '../UserAvatar';
+import UserLocation from '../UserLocation';
 import Username from '../Username';
 
 const Container = styled.div`
-
 `
 const PhotoCase = styled.div`
-    max-width:200px;
+    width:200px;
     height:200px;
     img{
         margin:0 auto;
         width:100%;
         height:100%;
         border-radius:7px;
+        
     }
 `
 const ItemPhoto = styled.img`
-
+    width:100%;
+    height:100%;
 `
 const MetaData = styled.div`
     padding:7px;
@@ -44,13 +47,21 @@ const Title = styled.span`
 const UserData = styled.div`
     display:flex;
     align-items:center;
+    margin-top:10px;
 `
+const UserInfo = styled.div`
+    display:flex;
+    flex-direction:column;
+`
+
 const LikeData = styled.div`
-    margin-top:5px;
+    margin-top:10px;
 `
 const LikeBtn = styled.button`
 `
-const LikeCount = styled.span``
+const LikeCount = styled.span`
+    font-size:12px;
+`
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id:Int!){
@@ -89,23 +100,33 @@ const DisplayItem = ({ id, title, description, user, itemPhotos, isMine, likes, 
     })
     return (
         <Container>
-            <PhotoCase>
-                <ItemPhoto src={itemPhotos[0].file} />
-            </PhotoCase>
+            <Link to={`/item/${id}`}>
+                <PhotoCase>
+                    <ItemPhoto
+                        src={itemPhotos[0].file}
+                        alt={title}
+                    />
+                </PhotoCase>
+            </Link>
             <MetaData>
                 <Title>{title}</Title>
                 <UserData>
-                    <UserAvatar img={user.avatar} size={25} />
-                    <Username name={user.name} size={18} />
+                    <UserAvatar img={user.avatar} size={30} />
+                    <UserInfo>
+                        <Username name={user.name} size={14} />
+                        <UserLocation location={user.location} size={12} />
+                    </UserInfo>
                 </UserData>
                 <LikeData>
-                    <LikeBtn onClick={toggleLike} isLiked={isLiked}>
-                        <FontAwesomeIcon
-                            icon={isLiked ? solidHeart : faHeart}
-                            size="lg"
-                            color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
-                        />
-                    </LikeBtn>
+                    {!isMine ? (
+                        <LikeBtn onClick={toggleLike} isLiked={isLiked}>
+                            <FontAwesomeIcon
+                                icon={isLiked ? solidHeart : faHeart}
+                                size="lg"
+                                color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                            />
+                        </LikeBtn>
+                    ) : null}
                     <LikeCount>관심 : {likeCount}</LikeCount>
                 </LikeData>
             </MetaData>
@@ -116,7 +137,6 @@ const DisplayItem = ({ id, title, description, user, itemPhotos, isMine, likes, 
 DisplayItem.propTypes = {
     id: propTypes.number.isRequired,
     title: propTypes.string.isRequired,
-    description: propTypes.string.isRequired,
     user: propTypes.shape({
         id: propTypes.number.isRequired,
         name: propTypes.string.isRequired,
@@ -127,12 +147,6 @@ DisplayItem.propTypes = {
         id: propTypes.number.isRequired,
         file: propTypes.string.isRequired,
     })),
-    likes: propTypes.arrayOf(propTypes.shape({
-        id: propTypes.number.isRequired,
-        username: propTypes.string.isRequired,
-        avatar: propTypes.string,
-    })),
-    isMine: propTypes.bool.isRequired,
     likeCount: propTypes.number.isRequired,
     isLiked: propTypes.bool.isRequired,
 };

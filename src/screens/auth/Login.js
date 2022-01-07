@@ -11,7 +11,6 @@ import styled from 'styled-components';
 import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/shared/Button';
 import Divider from '../../components/shared/Divider';
-import FormBox from '../../components/shared/FormBox';
 import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
 import SendAnywhere from '../../components/shared/SendAnywhere';
@@ -96,7 +95,7 @@ export default function Login() {
 
     return (
         <AuthLayout title="Log In">
-            <FormBox onClick={handleSubmit(onValid)}>
+            <form onClick={handleSubmit(onValid)}>
                 {state?.message ? (
                     <Greeting>{state?.message}</Greeting>
                 ) : null}
@@ -157,7 +156,7 @@ export default function Login() {
                     description="계정이 없으시다면? "
                     where='회원가입'
                 />
-            </FormBox>
+            </form>
             <Divider />
             <SocialLogins>
                 <SocialLoginBtn /* onClick={() => socialLogin("naver")} */>

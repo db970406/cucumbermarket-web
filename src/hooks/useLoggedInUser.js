@@ -8,6 +8,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { logUserOut } from '../utils/apollo'
 
+// 현재 로그인한 유저의 정보를 1차적으로 가져와준다(Header에 avatar를 넣기 위한 목적이 큼).
 const SEE_LOGGED_IN_USER = gql`
     query seeLoggedInUser{
         seeLoggedInUser{
@@ -20,7 +21,7 @@ const SEE_LOGGED_IN_USER = gql`
 export default function useLoggedInUser() {
     const history = useHistory()
 
-    const seeLoggedInUserCompleted = () => {
+    const seeLoggedInUserCompleted = (data) => {
         if (data?.seeLoggedInUser === null) {
             logUserOut(history)
         }

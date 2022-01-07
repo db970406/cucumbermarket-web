@@ -5,6 +5,7 @@
 */
 
 // 위도, 경도를 받아서 시,구(군),동을 구해주는 카카오 API
+// https://developers.kakao.com/docs/latest/ko/local/dev-guide#coord-to-address
 export const kakaoLocationApi = async (lat, lon) => {
     const apiUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`
     const { documents } = await (

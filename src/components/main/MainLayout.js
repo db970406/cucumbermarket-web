@@ -50,6 +50,6 @@ export default function MainLayout({ children, loading, title }) {
 }
 
 MainLayout.propTypes = {
-    title: propTypes.string.isRequired,
+    title: propTypes.string,
     loading: propTypes.bool,
 }

@@ -12,7 +12,7 @@ import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import { colors } from '../../utils/styles'
 
 const Button = styled.button`
-    position:sticky;
+    position:fixed;
     bottom:20px;
     left:20px;
     width:50px;

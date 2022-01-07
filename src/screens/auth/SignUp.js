@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 import { kakaoLocationApi } from '../../apis/locationApi';
 import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/shared/Button';
-import FormBox from '../../components/shared/FormBox';
 import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
 import SendAnywhere from '../../components/shared/SendAnywhere';
@@ -42,6 +41,7 @@ export default function SignUp() {
     const { register, handleSubmit, clearErrors, formState, getValues } = useForm({
         mode: "onChange"
     })
+    const clearError = (errorName) => clearErrors(errorName)
 
     // SignUp Mutation 처리 후 실행할 함수로 Login으로 보내면서 정보를 넘겨준다. 
     const signUpCompleted = ({ createUser }) => {
@@ -60,8 +60,6 @@ export default function SignUp() {
     const [signUp, { loading }] = useMutation(SIGNUP_MUTATION, {
         onCompleted: signUpCompleted
     })
-
-    const clearError = (errorName) => clearErrors(errorName)
 
     const onValid = (data) => {
         if (loading) return;
@@ -96,7 +94,7 @@ export default function SignUp() {
 
     return (
         <AuthLayout title="Sign Up">
-            <FormBox onSubmit={handleSubmit(onValid)}>
+            <form onSubmit={handleSubmit(onValid)}>
                 <Input
                     onChange={clearError}
                     {...register("name", {
@@ -214,7 +212,7 @@ export default function SignUp() {
                     description="계정이 있으신가요?"
                     where="로그인"
                 />
-            </FormBox>
+            </form>
         </AuthLayout>
     )
 }

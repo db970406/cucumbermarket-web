@@ -7,13 +7,19 @@
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
+const Img = styled.img`
+`
 export default function UserAvatar({ img, size }) {
-    const Img = styled.img`
-        width:${size}px;
-        height:${size}px;
-        border-radius:${size / 2}px;   
-    `
-    return <Img src={img === null ? require("../../images/default-avatar.jpg") : img} />
+    return (
+        <Img
+            src={img === null ? require("../../images/default-avatar.jpg") : img}
+            style={{
+                width: size,
+                height: size,
+                borderRadius: size / 2
+            }}
+        />
+    )
 }
 
 UserAvatar.propTypes = {

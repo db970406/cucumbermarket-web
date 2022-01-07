@@ -22,7 +22,8 @@ const Container = styled.header`
     position:sticky;
     top:0;
     border-bottom:0.5px solid ${colors.lightgray};
-    background-color:${props => props.theme.header} ;
+    background-color:${props => props.theme.header};
+    z-index:1;
 `
 const Logo = styled.img`
     width:40px;

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.07
 */
 // CSS의 큰 틀을 담당하는 파일
 
@@ -17,7 +17,7 @@ export const colors = {
     blue: "#0095f6",
     orange: "#FF8A3D",
     darkgray: "rgba(0,0,0,0.4)",
-    lightgray: "rgba(255,255,255,0.5)",
+    lightgray: "rgba(230,230,230,0.3)",
     pink: "tomato",
 }
 

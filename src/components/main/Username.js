@@ -6,14 +6,19 @@
 
 import styled from 'styled-components'
 
+const Name = styled.span`
+`
 
 export default function Username({ name, size }) {
-    const Name = styled.span`
-        font-weight:600;
-        font-size:${size};
-        margin:0 5px;
-    `
     return (
-        <Name>{name}</Name>
+        <Name
+            style={{
+                fontWeight: 500,
+                fontSize: size,
+                marginInline: 5
+            }}
+        >
+            {name}
+        </Name>
     )
 }
