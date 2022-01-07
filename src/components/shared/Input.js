@@ -11,6 +11,7 @@ const Input = styled.input`
     width:100%;
     padding:10px 15px;
     border-radius:7px;
+    margin:5px 0;
     &::placeholder{
         font-size:12px;
         color:${props => props.theme.themeGray};

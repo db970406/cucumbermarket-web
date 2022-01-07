@@ -1,12 +1,13 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.07
 */
 
 // ApolloClient 관련파일
 
-import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client"
+import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client"
+import { setContext } from "@apollo/client/link/context"
 
 /* 
 로그인 구현부
@@ -17,10 +18,13 @@ export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)))
 export const logUserIn = (token) => {
     isLoggedInVar(true)
     localStorage.setItem(TOKEN, token)
+    window.location.reload()
 }
-export const logUserOut = () => {
+export const logUserOut = (history) => {
     isLoggedInVar(false)
     localStorage.removeItem(TOKEN)
+    history.replace()
+    window.location.reload()
 }
 
 
@@ -39,7 +43,19 @@ export const getLightMode = () => {
     localStorage.removeItem(DARKMODE)
 }
 
-export const client = new ApolloClient({
+
+const httpLink = createHttpLink({
     uri: "http://localhost:4000/graphql",
+})
+const authLink = setContext((_, { headers }) => {
+    return {
+        headers: {
+            ...headers,
+            token: localStorage.getItem(TOKEN)
+        }
+    }
+})
+export const client = new ApolloClient({
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache()
 })

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.07
 */
 // CSS의 큰 틀을 담당하는 파일
 
@@ -16,8 +16,9 @@ export const colors = {
     red: "#b92b27",
     blue: "#0095f6",
     orange: "#FF8A3D",
-    darkgray: "rgba(0,0,0,0.5)",
-    lightgray: "rgba(255,255,255,0.5)"
+    darkgray: "rgba(0,0,0,0.4)",
+    lightgray: "rgba(230,230,230,0.3)",
+    pink: "tomato",
 }
 
 // Theme으로 부여할 prop
@@ -26,12 +27,15 @@ export const darkTheme = {
     color: colors.white,
     accent: colors.green,
     themeGray: colors.lightgray,
+    header: colors.darkgray,
+
 }
 export const lightTheme = {
     bgColor: colors.white,
     color: colors.black,
     accent: colors.green,
-    themeGray: colors.darkgray
+    themeGray: colors.darkgray,
+    header: colors.lightgray,
 }
 
 // 전역 Styles 적용
@@ -55,10 +59,11 @@ export const GlobalStyles = createGlobalStyle`
         color:white;
         border:none;
         cursor:pointer;
+        background:none;
     }
     input{
         background-color:${props => props.theme.bgColor};
         border:${props => props.theme.themeGray} 1.5px solid;
-        color:${props => props.theme.themeGray};
+        color:${props => props.theme.color};
     }
 `
