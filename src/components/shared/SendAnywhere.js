@@ -27,6 +27,7 @@ const Where = styled.span`
     };
     color:${colors.green};
 `
+
 export default function SendAnywhere({ description, where, link }) {
     return (
         <Container>
@@ -39,5 +40,7 @@ export default function SendAnywhere({ description, where, link }) {
 }
 
 SendAnywhere.propTypes = {
-    where: propTypes.string.isRequired
+    description: propTypes.string.isRequired,
+    where: propTypes.string.isRequired,
+    link: propTypes.string.isRequired,
 }

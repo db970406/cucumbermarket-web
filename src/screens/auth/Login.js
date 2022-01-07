@@ -20,7 +20,7 @@ import { socialLogin } from "../../utils/socialLogin"
 import { colors } from '../../utils/styles';
 
 const SocialLogins = styled.div`
-    padding:20px;
+    margin-top:5px;
     display:flex;
     flex-direction:column;
     justify-content:center;

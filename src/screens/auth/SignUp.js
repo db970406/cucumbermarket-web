@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/shared/Button';
-import Divider from '../../components/shared/Divider';
 import FormBox from '../../components/shared/FormBox';
 import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
@@ -88,7 +87,7 @@ export default function SignUp() {
         const success = async (position) => {
             const { latitude: lat, longitude: lon } = position.coords
 
-            const API_KEY = "d325bc7c04d8e6c362499ea0e8ef735c"
+            const API_KEY = "d325bc7c04d8e6c362499ea0e8ef735c" // 숨길 방법을 찾아야 된다.
             const apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${API_KEY}`
 
             const data = await (await fetch(apiUrl)).json()
@@ -221,7 +220,6 @@ export default function SignUp() {
                     where="로그인"
                 />
             </FormBox>
-            <Divider />
         </AuthLayout>
     )
 }

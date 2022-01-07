@@ -18,11 +18,22 @@ const Container = styled.div`
     flex-direction:column;
 `;
 
+
 const MainBox = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
     max-width:350px;
     width:100%;
     border:${colors.green} 2px solid;
     border-radius:15px;
+    padding:20px;
+`
+const Logo = styled.img`
+    max-width:40%;
+    height:70px;
+    margin : 0 auto;
+    margin-bottom:10px;
 `
 
 // 로그인 회원가입에 쓰일 레이아웃
@@ -32,6 +43,7 @@ export default function AuthLayout({ children, title }) {
             <Container>
                 <Helmet title={title} />
                 <MainBox>
+                    <Logo src={require("../../images/cucumber.png")} />
                     {children}
                 </MainBox>
             </Container>

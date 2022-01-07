@@ -7,7 +7,6 @@
 import styled from 'styled-components'
 
 const FormBox = styled.form`
-    padding:20px;
 `
 
 export default FormBox
