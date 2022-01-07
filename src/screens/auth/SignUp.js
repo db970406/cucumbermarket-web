@@ -8,6 +8,7 @@ import { gql, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { kakaoLocationApi } from '../../apis/locationApi';
 import AuthLayout from '../../components/auth/AuthLayout';
 import Button from '../../components/shared/Button';
 import FormBox from '../../components/shared/FormBox';
@@ -70,33 +71,27 @@ export default function SignUp() {
             alert("비밀번호가 일치하지 않습니다.")
             return;
         }
+
         signUp({
             variables: {
                 name,
                 username,
                 email,
-                location: location === "동의" ? currentLocation : null,
+                location: location === "동의" ? currentLocation : undefined,
                 password
             }
         })
     }
 
 
-    // 유저의 현 위치를 구하는 API(openweathermap 이용)
-    const getLocation = () => {
+    // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
+    useEffect(() => {
         const success = async (position) => {
             const { latitude: lat, longitude: lon } = position.coords
-
-            const API_KEY = "d325bc7c04d8e6c362499ea0e8ef735c" // 숨길 방법을 찾아야 된다.
-            const apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${API_KEY}`
-
-            const data = await (await fetch(apiUrl)).json()
-            setCurrentLocation(data[0].local_names.ko)
+            const getLocation = await kakaoLocationApi(lat, lon)
+            setCurrentLocation(getLocation)
         }
         navigator.geolocation.getCurrentPosition(success)
-    }
-    useEffect(() => {
-        getLocation()
     }, [])
 
     return (

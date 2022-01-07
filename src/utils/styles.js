@@ -17,7 +17,8 @@ export const colors = {
     blue: "#0095f6",
     orange: "#FF8A3D",
     darkgray: "rgba(0,0,0,0.4)",
-    lightgray: "rgba(255,255,255,0.5)"
+    lightgray: "rgba(255,255,255,0.5)",
+    pink: "tomato",
 }
 
 // Theme으로 부여할 prop
@@ -26,12 +27,15 @@ export const darkTheme = {
     color: colors.white,
     accent: colors.green,
     themeGray: colors.lightgray,
+    header: colors.darkgray,
+
 }
 export const lightTheme = {
     bgColor: colors.white,
     color: colors.black,
     accent: colors.green,
-    themeGray: colors.darkgray
+    themeGray: colors.darkgray,
+    header: colors.lightgray,
 }
 
 // 전역 Styles 적용
@@ -55,6 +59,7 @@ export const GlobalStyles = createGlobalStyle`
         color:white;
         border:none;
         cursor:pointer;
+        background:none;
     }
     input{
         background-color:${props => props.theme.bgColor};
