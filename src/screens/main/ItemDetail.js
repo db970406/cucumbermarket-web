@@ -21,7 +21,9 @@ import { darkModeVar } from '../../utils/apollo'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { useState } from 'react'
+import Button from '../../components/shared/Button'
+import { Link } from "react-router-dom"
 
 const Container = styled.div`
     display:flex;
@@ -57,6 +59,15 @@ const UserInfo = styled.div`
 
 const PhotoCase = styled.div`
     width:100%;
+    .slick-dots li button:before{
+        opacity: .25;
+        color: ${colors.green};
+    }
+    .slick-dots li.slick-active button:before{
+        opacity: .75;
+        color: ${colors.green};
+    }
+
 `
 const ItemPhoto = styled.img`
     width:100%;
@@ -67,10 +78,9 @@ const MetaData = styled.div`
     width:100%;
 `
 
-const Actions = styled.div`
+const Buttons = styled.div`
     display:flex;
     justify-content:space-between;
-    align-items:center;
 `
 const LikeData = styled.div`
     display:flex;
@@ -83,14 +93,7 @@ const LikeCount = styled.span`
     font-size:14px;
     margin-left:5px;
 `
-const ChatBtn = styled.button`
-    background-color:${colors.green};
-    padding:10px;
-    border-radius:7px;
-    span{
-        color:${colors.white};
-    }
-`
+
 const Description = styled.p`
     margin:10px;
     font-size:14px;
@@ -125,6 +128,7 @@ const SEE_ITEM = gql`
 
 export default function ItemDetail() {
     const darkMode = useReactiveVar(darkModeVar)
+    const [itemData, setItemData] = useState({})
 
     // 파라미터에서 id를 뽑아 resolver의 variables로 줄 것이다.
     const { id } = useParams()
@@ -132,7 +136,8 @@ export default function ItemDetail() {
     const { data, loading } = useQuery(SEE_ITEM, {
         variables: {
             id: parseInt(id)
-        }
+        },
+        onCompleted: ({ seeItem }) => setItemData(seeItem)
     })
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
@@ -175,52 +180,53 @@ export default function ItemDetail() {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        autoplay: true
+        autoplay: true,
+        dots: true,
     };
     return (
-        <MainLayout title={data?.seeItem?.title} loading={loading}>
+        <MainLayout title={itemData?.title} loading={loading}>
             <Container>
                 <Header>
-                    <Title>{data?.seeItem?.title}</Title>
-                    <UserData>
-                        <UserAvatar img={data?.seeItem?.user?.avatar} size={40} />
-                        <UserInfo>
-                            <Username name={data?.seeItem?.user?.name} size={20} />
-                            <UserLocation location={data?.seeItem?.user?.location} size={16} />
-                        </UserInfo>
-                    </UserData>
+                    <Title>{itemData?.title}</Title>
+                    <Link to={`/user/${itemData?.user?.id}`}>
+                        <UserData>
+                            <UserAvatar img={itemData?.user?.avatar} size={40} />
+                            <UserInfo>
+                                <Username name={itemData?.user?.name} size={20} />
+                                <UserLocation location={itemData?.user?.location} size={16} />
+                            </UserInfo>
+                        </UserData>
+                    </Link>
                 </Header>
                 <PhotoCase>
                     <Slider {...settings}>
-                        {data?.seeItem?.itemPhotos?.map(itemPhoto =>
+                        {itemData?.itemPhotos?.map(itemPhoto =>
                             <ItemPhoto
                                 key={itemPhoto.id}
                                 src={itemPhoto.file}
-                                alt={data?.seeItem?.title}
+                                alt={itemData?.title}
                             />
                         )}
                     </Slider>
                 </PhotoCase>
                 <MetaData>
-                    {!data?.seeItem?.isMine ? (
-                        <Actions>
+                    {!itemData?.isMine ? (
+                        <Buttons>
                             <LikeData>
-                                <LikeBtn onClick={toggleLike} isLiked={data?.seeItem?.isLiked}>
+                                <LikeBtn onClick={toggleLike} isLiked={itemData?.isLiked}>
                                     <FontAwesomeIcon
-                                        icon={data?.seeItem?.isLiked ? solidHeart : faHeart}
+                                        icon={itemData?.isLiked ? solidHeart : faHeart}
                                         size="2x"
-                                        color={data?.seeItem?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                                        color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                                     />
                                 </LikeBtn>
-                                <LikeCount>{data?.seeItem?.likeCount} 개의 관심</LikeCount>
+                                <LikeCount>{itemData?.likeCount} 개의 관심</LikeCount>
                             </LikeData>
-                            <ChatBtn>
-                                <span>실시간 채팅</span>
-                            </ChatBtn>
-                        </Actions>
+                            <Button text="실시간 채팅" onClick={() => null} />
+                        </Buttons>
                     ) : null}
                     <Description>
-                        {data?.seeItem?.description}
+                        {itemData?.description}
                     </Description>
                 </MetaData>
             </Container>

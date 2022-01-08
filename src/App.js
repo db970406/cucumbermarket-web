@@ -15,37 +15,54 @@ import { client, darkModeVar, isLoggedInVar } from './utils/apollo';
 import { darkTheme, GlobalStyles, lightTheme } from './utils/styles';
 import SignUp from './screens/auth/SignUp';
 import ItemDetail from './screens/main/ItemDetail';
+import UserDetail from './screens/main/UserDetail';
+import UserEditProfile from './screens/main/UserEditProfile';
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
   const darkMode = useReactiveVar(darkModeVar)
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <HelmetProvider>
+    <HelmetProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
           <GlobalStyles />
           <Router>
-            <Switch>
-              <Route path="/" exact>
-                {isLoggedIn ? <Home /> : <Login />}
-              </Route>
-              {!isLoggedIn ? (
+            {isLoggedIn ? (
+              <Switch>
+                <Route path="/" exact>
+                  <Home />
+                </Route>
+                <Route path="/item/:id" exact>
+                  <ItemDetail />
+                </Route>
+                <Route path="/user/:id" exact>
+                  <UserDetail />
+                </Route>
+                <Route path="/user/:id/edit" exact>
+                  <UserEditProfile />
+                </Route>
+                <Route>
+                  <NotFound />
+                </Route>
+              </Switch>
+            ) : (
+              <Switch>
+                <Route path="/" exact>
+                  <Login />
+                </Route>
                 <Route path="/sign-up" exact>
                   <SignUp />
                 </Route>
-              ) : null}
-              <Route path="/item/:id" exact>
-                <ItemDetail />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
+                <Route exact>
+                  <NotFound />
+                </Route>
+              </Switch>
+            )}
           </Router>
-        </HelmetProvider>
-      </ThemeProvider>
-    </ApolloProvider>
+        </ThemeProvider>
+      </ApolloProvider>
+    </HelmetProvider>
   );
 }
 

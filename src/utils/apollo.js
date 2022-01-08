@@ -8,6 +8,7 @@
 
 import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
+import { createUploadLink } from 'apollo-upload-client'
 
 /* 
 로그인 구현부
@@ -21,10 +22,14 @@ export const logUserIn = (token) => {
     window.location.reload()
 }
 export const logUserOut = (history) => {
+    window.location.reload()
     isLoggedInVar(false)
     localStorage.removeItem(TOKEN)
     history.replace()
-    window.location.reload()
+
+    const a = document.createElement("a")
+    a.href = "/"
+    a.click()
 }
 
 
@@ -44,7 +49,7 @@ export const getLightMode = () => {
 }
 
 
-const httpLink = createHttpLink({
+const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",
 })
 const authLink = setContext((_, { headers }) => {
@@ -56,6 +61,6 @@ const authLink = setContext((_, { headers }) => {
     }
 })
 export const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink.concat(uploadHttpLink),
     cache: new InMemoryCache()
 })

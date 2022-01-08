@@ -206,6 +206,8 @@ export default function SignUp() {
                     loading={loading}
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
+                    width="100%"
+                    auth
                 />
                 <SendAnywhere
                     link="/"
