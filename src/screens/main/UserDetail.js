@@ -16,6 +16,7 @@ import UserAvatar from '../../components/main/UserAvatar'
 import UserLocation from '../../components/main/UserLocation'
 import Username from '../../components/main/Username'
 import Button from '../../components/shared/Button'
+import { USER_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
 import { logUserOut } from '../../utils/apollo'
 
 const Container = styled.div`
@@ -41,12 +42,14 @@ const Flex = styled.div`
     flex-wrap:wrap;
     gap:40px;
     margin:0 auto;
+    margin-top:20px;
     padding:20px;
 `
 const Top = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-between;
+    margin-bottom:20px;
 `
 const Bottom = styled.div`
 
@@ -55,18 +58,18 @@ const Buttons = styled.div`
     display:flex;
     flex-direction:column;
 `
+const Introduce = styled.span`
+    padding:20px;
+    font-size:16px;
+`
 
 
 const SEE_USER = gql`
     query seeUser($id:Int!){
         seeUser(id:$id){
-            id
-            name
-            email
-            username
+            ...UserDefaultFragment
             location
             introduce
-            avatar
             isMe
             items{
                 id
@@ -82,6 +85,7 @@ const SEE_USER = gql`
             
         }
     }
+    ${USER_DEFAULT_FRAGMENT}
 `
 
 const UserDetail = () => {
@@ -96,7 +100,6 @@ const UserDetail = () => {
         onCompleted: ({ seeUser }) => setUserData(seeUser)
     })
 
-    const goToEditProfile = () => <Link to={"/zzz"} />
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -111,10 +114,15 @@ const UserDetail = () => {
                     <Buttons>
                         {userData?.isMe ? (
                             <>
-                                <Link to={`/user/${userData?.id}/edit`}>
-                                    <Button text="정보 수정" />
-                                </Link>
-                                <Button text="로그아웃" logout onClick={() => logUserOut(history)} />
+                                <Button
+                                    text="정보 수정"
+                                    onClick={() => history.push(`/user/${userData?.id}/edit`)}
+                                />
+                                <Button
+                                    text="로그아웃"
+                                    logout
+                                    onClick={() => logUserOut(history)}
+                                />
                             </>
                         ) : (
                             <Button text="대화하기" onClick={() => null} />
@@ -123,6 +131,7 @@ const UserDetail = () => {
                     </Buttons>
                 </Top>
                 <Bottom>
+                    <Introduce>{userData?.introduce}</Introduce>
                     <Flex>
                         {userData?.items?.map(item =>
                             <DisplayItem

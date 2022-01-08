@@ -22,3 +22,14 @@ export const ITEM_DEFAULT_FRAGMENT = gql`
         isLiked
     }
 `
+
+export const USER_DEFAULT_FRAGMENT = gql`
+    fragment UserDefaultFragment on User{
+        id
+        socialLogin
+        name
+        email
+        username
+        avatar
+    }
+`

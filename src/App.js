@@ -23,9 +23,9 @@ function App() {
   const darkMode = useReactiveVar(darkModeVar)
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <HelmetProvider>
+    <HelmetProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
           <GlobalStyles />
           <Router>
             {isLoggedIn ? (
@@ -60,9 +60,9 @@ function App() {
               </Switch>
             )}
           </Router>
-        </HelmetProvider>
-      </ThemeProvider>
-    </ApolloProvider>
+        </ThemeProvider>
+      </ApolloProvider>
+    </HelmetProvider>
   );
 }
 
