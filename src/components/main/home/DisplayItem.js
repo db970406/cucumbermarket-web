@@ -27,9 +27,6 @@ const PhotoCase = styled.div`
     width:200px;
     height:200px;
     img{
-        margin:0 auto;
-        width:100%;
-        height:100%;
         border-radius:7px;
     }
 `
@@ -44,7 +41,7 @@ const MetaData = styled.div`
 `
 const Title = styled.span`
     margin:7px 0;
-    font-size:14px;
+    font-size:16px;
     font-weight:600;
 `
 const UserData = styled.div`
@@ -61,9 +58,11 @@ const LikeData = styled.div`
     margin-top:10px;
 `
 const LikeBtn = styled.button`
+    padding-left:0;
 `
 const LikeCount = styled.span`
     font-size:12px;
+    color:${props => props.theme.themeGray};
 `
 
 const TOGGLE_LIKE_MUTATION = gql`
@@ -75,7 +74,7 @@ const TOGGLE_LIKE_MUTATION = gql`
     }
 `
 
-const DisplayItem = ({ id, title, description, user, itemPhotos, isMine, likes, likeCount, isLiked }) => {
+const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }) => {
     const darkMode = useReactiveVar(darkModeVar)
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업

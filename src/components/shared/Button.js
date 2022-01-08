@@ -9,10 +9,13 @@ import styled from "styled-components"
 import { colors } from '../../utils/styles'
 
 const SButton = styled.button`
-    background-color:${props => props.logout ? colors.pink : colors.green} ;
+    background-color:${props => props.logout ? colors.red : colors.green} ;
     padding:10px 15px;;
     border-radius:7px;
-    opacity:${props => props.disabled ? 0.3 : 1};
+    opacity:${props => props.disabled ? 0.3 : 0.8};
+    &:hover{
+        opacity: 1;
+    }
     margin:5px 0;
 `
 const ButtonText = styled.span`

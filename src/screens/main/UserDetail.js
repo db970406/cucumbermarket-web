@@ -18,6 +18,7 @@ import Username from '../../components/main/Username'
 import Button from '../../components/shared/Button'
 import { USER_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
 import { logUserOut } from '../../utils/apollo'
+import { colors } from '../../utils/styles'
 
 const Container = styled.div`
     display:flex;
@@ -28,9 +29,10 @@ const Container = styled.div`
 const UserData = styled.div`
     display:flex;
     align-items:center;
-    padding:20px;
     justify-content:flex-start;
-    
+    @media screen and (max-width: 550px) {
+        display:none;
+    }
 `
 const UserInfo = styled.div`
     display:flex;
@@ -43,26 +45,31 @@ const Flex = styled.div`
     gap:40px;
     margin:0 auto;
     margin-top:20px;
-    padding:20px;
 `
 const Top = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:20px;
+    margin-bottom:30px;
 `
 const Bottom = styled.div`
-
+    margin-top:30px;
 `
 const Buttons = styled.div`
     display:flex;
     flex-direction:column;
+    justify-content:flex-start;
 `
 const Introduce = styled.span`
-    padding:20px;
     font-size:16px;
 `
-
+const NowSelling = styled.p`
+    font-size:16px;
+    span{
+        color:${colors.green};
+        font-size:20px;
+    }
+`
 
 const SEE_USER = gql`
     query seeUser($id:Int!){
@@ -93,7 +100,7 @@ const UserDetail = () => {
     const [userData, setUserData] = useState({})
     const history = useHistory()
 
-    const { data, loading } = useQuery(SEE_USER, {
+    const { loading } = useQuery(SEE_USER, {
         variables: {
             id: parseInt(id)
         },
@@ -130,8 +137,11 @@ const UserDetail = () => {
 
                     </Buttons>
                 </Top>
+                <Introduce>{userData?.introduce}</Introduce>
                 <Bottom>
-                    <Introduce>{userData?.introduce}</Introduce>
+                    <NowSelling>
+                        <span>{userData?.name}</span> 님이 판매중인 물건
+                    </NowSelling>
                     <Flex>
                         {userData?.items?.map(item =>
                             <DisplayItem

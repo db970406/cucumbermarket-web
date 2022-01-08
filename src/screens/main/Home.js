@@ -39,7 +39,7 @@ const Flex = styled.div`
 export default function Home() {
     const [itemsData, setItemsData] = useState([])
 
-    const { data, loading } = useQuery(SEE_ITEMS, {
+    const { loading } = useQuery(SEE_ITEMS, {
         onCompleted: ({ seeItems }) => setItemsData(seeItems)
     })
     return (

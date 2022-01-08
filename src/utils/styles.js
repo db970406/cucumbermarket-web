@@ -16,8 +16,8 @@ export const colors = {
     red: "#b92b27",
     blue: "#0095f6",
     orange: "#FF8A3D",
-    opacityDarkgray: "rgba(0,0,0,0.4)",
-    opacityLightgray: "rgba(230,230,230,0.3)",
+    opacityDarkgray: "rgba(0,0,0,0.5)",
+    opacityLightgray: "rgba(230,230,230,0.5)",
     darkgray: "rgb(30,30,30)",
     lightgray: "rgb(240,240,240)",
     pink: "tomato",
@@ -46,6 +46,7 @@ export const GlobalStyles = createGlobalStyle`
         box-sizing:border-box;
     }
     body{
+        min-width:450px;
         background-color:${props => props.theme.bgColor};
         color:${props => props.theme.color};
         font-family: 'Open Sans', sans-serif;

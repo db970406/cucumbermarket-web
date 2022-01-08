@@ -15,6 +15,22 @@ import Button from "../../components/shared/Button"
 import { kakaoLocationApi } from '../../apis/locationApi'
 import { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
+import styled from 'styled-components'
+import { colors } from '../../utils/styles'
+
+const FileInput = styled.label`
+    padding: 10px 15px;
+    background-color:${colors.green};
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    input{
+        display:none;
+    }
+    font-size:12px;
+    text-align:center;
+    display:inline-block;
+`
 
 const EDIT_USER = gql`
     mutation editUser(
@@ -40,7 +56,7 @@ export default function UserEditProfile() {
     const [currentLocation, setCurrentLocation] = useState("")
     const { data: userData } = useLoggedInUser()
 
-    const { register, handleSubmit, clearErrors, formState } = useForm({
+    const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange",
         defaultValues: {
             name: userData?.seeLoggedInUser.name
@@ -49,7 +65,6 @@ export default function UserEditProfile() {
 
     const editUserCompleted = ({ editUser }) => {
         const { ok, error } = editUser
-        console.log(error)
         if (ok) {
             history.push(`/user/${userData?.seeLoggedInUser?.id}`);
             window.location.reload()
@@ -64,7 +79,7 @@ export default function UserEditProfile() {
 
         editUser({
             variables: {
-                name,
+                ...(name && { name }),
                 ...(introduce && { introduce }),
                 ...(avatar && { avatar }),
                 location: location === "동의" ? currentLocation : undefined,
@@ -87,10 +102,16 @@ export default function UserEditProfile() {
             !userData?.seeLoggedInUser?.socialLogin ? (
             <AuthLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
                 <form onSubmit={handleSubmit(onValid)}>
-                    <input
-                        {...register("avatar")}
-                        type="file"
-                    />
+                    <FileInput htmlFor="file-input">
+                        아바타 업로드
+                        <input id="file-input"
+                            {...register("avatar")}
+                            type="file"
+                        />
+                    </FileInput>
+                    {watch("avatar")?.length > 0 ? (
+                        <span>저장 되었습니다.</span>
+                    ) : null}
                     <Input
                         onChange={clearError}
                         {...register("name", {
@@ -133,12 +154,13 @@ export default function UserEditProfile() {
                     />
                     <Button
                         auth
+                        disabled={loading}
                         loading={loading}
                         text={`${userData?.seeLoggedInUser?.name}님의 정보 수정`}
                         onClick={handleSubmit(onValid)}
                     />
                 </form>
-            </AuthLayout>
+            </AuthLayout >
         ) : null
     )
 }
