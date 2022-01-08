@@ -18,6 +18,10 @@ import UserLocation from '../UserLocation';
 import Username from '../Username';
 
 const Container = styled.div`
+    transition:all 0.2s ease-in-out;
+    &:hover{
+        transform:scale(1.1);
+    }
 `
 const PhotoCase = styled.div`
     width:200px;
@@ -27,7 +31,6 @@ const PhotoCase = styled.div`
         width:100%;
         height:100%;
         border-radius:7px;
-        
     }
 `
 const ItemPhoto = styled.img`
@@ -110,13 +113,17 @@ const DisplayItem = ({ id, title, description, user, itemPhotos, isMine, likes, 
             </Link>
             <MetaData>
                 <Title>{title}</Title>
-                <UserData>
-                    <UserAvatar img={user.avatar} size={30} />
-                    <UserInfo>
-                        <Username name={user.name} size={14} />
-                        <UserLocation location={user.location} size={12} />
-                    </UserInfo>
-                </UserData>
+                {user ? (
+                    <Link to={`/user/${user.id}`}>
+                        <UserData>
+                            <UserAvatar img={user.avatar} size={30} />
+                            <UserInfo>
+                                <Username name={user.name} size={14} />
+                                <UserLocation location={user.location} size={12} />
+                            </UserInfo>
+                        </UserData>
+                    </Link>
+                ) : null}
                 <LikeData>
                     {!isMine ? (
                         <LikeBtn onClick={toggleLike} isLiked={isLiked}>

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : ------
+수정일 : 2022.01.08
 */
 
 import { useReactiveVar } from '@apollo/client'
@@ -15,13 +15,12 @@ import { colors } from '../../utils/styles'
 import UserAvatar from './UserAvatar'
 
 const Container = styled.header`
-    padding:20px 30px;
+    padding:20px 70px;
     display:flex;
     justify-content:space-around;
     align-items:center;
     position:sticky;
     top:0;
-    border-bottom:0.5px solid ${colors.lightgray};
     background-color:${props => props.theme.header};
     z-index:1;
 `
@@ -39,7 +38,6 @@ const Tab = styled.button`
 
 export default function Header() {
     const { data: userData } = useLoggedInUser()
-    const darkMode = useReactiveVar(darkModeVar)
 
     return (
         <Container>
@@ -50,9 +48,11 @@ export default function Header() {
                 <Tab>
                     <FontAwesomeIcon color={colors.green} icon={faSearch} size="lg" />
                 </Tab>
-                <Tab>
-                    <UserAvatar img={userData?.seeLoggedInUser?.avatar} size={30} />
-                </Tab>
+                <Link to={`/user/${userData?.seeLoggedInUser?.id}`}>
+                    <Tab>
+                        <UserAvatar img={userData?.seeLoggedInUser?.avatar} size={30} />
+                    </Tab>
+                </Link>
             </Tabs>
         </Container>
     )

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.07
+수정일 : 2022.01.08
 */
 // CSS의 큰 틀을 담당하는 파일
 
@@ -16,8 +16,10 @@ export const colors = {
     red: "#b92b27",
     blue: "#0095f6",
     orange: "#FF8A3D",
-    darkgray: "rgba(0,0,0,0.4)",
-    lightgray: "rgba(230,230,230,0.3)",
+    opacityDarkgray: "rgba(0,0,0,0.4)",
+    opacityLightgray: "rgba(230,230,230,0.3)",
+    darkgray: "rgb(30,30,30)",
+    lightgray: "rgb(240,240,240)",
     pink: "tomato",
 }
 
@@ -26,15 +28,14 @@ export const darkTheme = {
     bgColor: colors.black,
     color: colors.white,
     accent: colors.green,
-    themeGray: colors.lightgray,
+    themeGray: colors.opacityLightgray,
     header: colors.darkgray,
-
 }
 export const lightTheme = {
     bgColor: colors.white,
     color: colors.black,
     accent: colors.green,
-    themeGray: colors.darkgray,
+    themeGray: colors.opacityDarkgray,
     header: colors.lightgray,
 }
 
@@ -49,7 +50,7 @@ export const GlobalStyles = createGlobalStyle`
         color:${props => props.theme.color};
         font-family: 'Open Sans', sans-serif;
         font-family: 'Roboto', sans-serif;
-        font-size:14px;
+        font-size:12px;
     }
     a{
         text-decoration:none;

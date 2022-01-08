@@ -21,10 +21,14 @@ export const logUserIn = (token) => {
     window.location.reload()
 }
 export const logUserOut = (history) => {
+    window.location.reload()
     isLoggedInVar(false)
     localStorage.removeItem(TOKEN)
     history.replace()
-    window.location.reload()
+
+    const a = document.createElement("a")
+    a.href = "/"
+    a.click()
 }
 
 

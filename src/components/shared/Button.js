@@ -9,21 +9,30 @@ import styled from "styled-components"
 import { colors } from '../../utils/styles'
 
 const SButton = styled.button`
-    background-color:${colors.green} ;
-    width:100%;
-    margin:0 auto;
-    padding:15px;
+    background-color:${props => props.logout ? colors.pink : colors.green} ;
+    padding:10px 15px;;
     border-radius:7px;
     opacity:${props => props.disabled ? 0.3 : 1};
-    margin-top:15px;
+    margin:5px 0;
 `
 const ButtonText = styled.span`
     text-align:center;
 `
 
-export default function Button({ loading, text, disabled, onClick }) {
+export default function Button({ loading, text, disabled, onClick, auth, logout }) {
     return (
-        <SButton disabled={disabled} onClick={onClick}>
+        <SButton
+            logout={logout}
+            disabled={disabled}
+            onClick={onClick}
+            style={{
+                ...(auth && {
+                    marginInline: "auto",
+                    marginTop: 15,
+                    width: "100%"
+                })
+            }}
+        >
             <ButtonText>
                 {loading ? "처리중입니다..." : text}
             </ButtonText>
@@ -35,5 +44,6 @@ Button.propTypes = {
     text: propTypes.string.isRequired,
     loading: propTypes.bool,
     disabled: propTypes.bool,
-    onClick: propTypes.func
+    onClick: propTypes.func,
+    width: propTypes.string,
 }
