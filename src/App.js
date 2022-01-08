@@ -16,6 +16,7 @@ import { darkTheme, GlobalStyles, lightTheme } from './utils/styles';
 import SignUp from './screens/auth/SignUp';
 import ItemDetail from './screens/main/ItemDetail';
 import UserDetail from './screens/main/UserDetail';
+import UserEditProfile from './screens/main/UserEditProfile';
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
@@ -39,7 +40,7 @@ function App() {
                   <UserDetail />
                 </Route>
                 <Route path="/user/:id/edit" exact>
-                  <UserDetail />
+                  <UserEditProfile />
                 </Route>
                 <Route>
                   <NotFound />
@@ -58,7 +59,6 @@ function App() {
                 </Route>
               </Switch>
             )}
-
           </Router>
         </HelmetProvider>
       </ThemeProvider>

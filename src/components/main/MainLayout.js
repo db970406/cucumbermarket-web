@@ -9,11 +9,10 @@ import styled, { css } from 'styled-components';
 import propTypes from "prop-types"
 import Header from './Header';
 import Darkmode from '../shared/Darkmode';
+import BaseContainer from '../shared/BaseContainer';
 
-const Container = styled.div`
-    display:flex;
-    flex-direction:column;
-    height:100vh;
+const Container = styled(BaseContainer)`
+    margin-top:30px;
 `
 const LoadingText = styled.span`
     font-size:25px;
@@ -35,9 +34,9 @@ const Body = styled.div`
 export default function MainLayout({ children, loading, title }) {
     return (
         <>
+            <Header />
             <Container>
                 <Helmet title={title} />
-                <Header />
                 <Body wait={Boolean(loading)}>
                     {loading ? (
                         <LoadingText>잠시만 기다려주세요!</LoadingText>

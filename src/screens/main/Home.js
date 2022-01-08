@@ -22,7 +22,6 @@ const SEE_ITEMS = gql`
 
 const Container = styled.div`
     flex:1;
-    max-width:1000px;
     display:flex;
     justify-content:center;
     margin:0 auto;

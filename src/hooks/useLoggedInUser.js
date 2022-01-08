@@ -13,6 +13,7 @@ const SEE_LOGGED_IN_USER = gql`
     query seeLoggedInUser{
         seeLoggedInUser{
             id
+            socialLogin
             username
             avatar
         }
