@@ -96,6 +96,7 @@ const UserDetail = () => {
         onCompleted: ({ seeUser }) => setUserData(seeUser)
     })
 
+    const goToEditProfile = () => <Link to={"/zzz"} />
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -110,7 +111,9 @@ const UserDetail = () => {
                     <Buttons>
                         {userData?.isMe ? (
                             <>
-                                <Button text="정보 수정" />
+                                <Link to={`/user/${userData?.id}/edit`}>
+                                    <Button text="정보 수정" />
+                                </Link>
                                 <Button text="로그아웃" logout onClick={() => logUserOut(history)} />
                             </>
                         ) : (

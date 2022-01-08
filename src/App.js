@@ -27,25 +27,38 @@ function App() {
         <HelmetProvider>
           <GlobalStyles />
           <Router>
-            <Switch>
-              <Route path="/" exact>
-                {isLoggedIn ? <Home /> : <Login />}
-              </Route>
-              {!isLoggedIn ? (
+            {isLoggedIn ? (
+              <Switch>
+                <Route path="/" exact>
+                  <Home />
+                </Route>
+                <Route path="/item/:id" exact>
+                  <ItemDetail />
+                </Route>
+                <Route path="/user/:id" exact>
+                  <UserDetail />
+                </Route>
+                <Route path="/user/:id/edit" exact>
+                  <UserDetail />
+                </Route>
+                <Route>
+                  <NotFound />
+                </Route>
+              </Switch>
+            ) : (
+              <Switch>
+                <Route path="/" exact>
+                  <Login />
+                </Route>
                 <Route path="/sign-up" exact>
                   <SignUp />
                 </Route>
-              ) : null}
-              <Route path="/item/:id" exact>
-                <ItemDetail />
-              </Route>
-              <Route path="/user/:id" exact>
-                <UserDetail />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
+                <Route exact>
+                  <NotFound />
+                </Route>
+              </Switch>
+            )}
+
           </Router>
         </HelmetProvider>
       </ThemeProvider>
