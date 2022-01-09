@@ -17,6 +17,7 @@ import SignUp from './screens/auth/SignUp';
 import ItemDetail from './screens/main/ItemDetail';
 import UserDetail from './screens/main/UserDetail';
 import UserEditProfile from './screens/main/UserEditProfile';
+import GetTokenFromUrl from './utils/GetTokenFromUrl';
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
@@ -53,6 +54,9 @@ function App() {
                 </Route>
                 <Route path="/sign-up" exact>
                   <SignUp />
+                </Route>
+                <Route path="/naver">
+                  <GetTokenFromUrl />
                 </Route>
                 <Route exact>
                   <NotFound />

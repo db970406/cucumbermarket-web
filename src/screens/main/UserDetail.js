@@ -7,7 +7,6 @@
 
 import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import DisplayItem from '../../components/main/home/DisplayItem'
@@ -121,10 +120,12 @@ const UserDetail = () => {
                     <Buttons>
                         {userData?.isMe ? (
                             <>
-                                <Button
-                                    text="정보 수정"
-                                    onClick={() => history.push(`/user/${userData?.id}/edit`)}
-                                />
+                                {!userData?.socialLogin ? (
+                                    <Button
+                                        text="정보 수정"
+                                        onClick={() => history.push(`/user/${userData?.id}/edit`)}
+                                    />
+                                ) : null}
                                 <Button
                                     text="로그아웃"
                                     logout

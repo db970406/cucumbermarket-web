@@ -79,7 +79,7 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
     const updateToggleLike = (cache, { data }) => {
-        const { toggleLike: { ok, error } } = data
+        const { toggleLike: { ok } } = data
         if (ok) {
             cache.modify({
                 id: `Item:${id}`,
