@@ -11,7 +11,7 @@ import { logUserIn } from './apollo';
 const GetTokenFromUrl = async () => {
     const location = useLocation();
 
-    if (location.hash.length > 1) {
+    const processLogin = async () => {
         const token = location.hash.split('=')[1].split('&')[0];
         const response = await fetch(`http://localhost:4000/social/naver`, {
             method: "POST",
@@ -24,9 +24,9 @@ const GetTokenFromUrl = async () => {
         })
         if (response.status === 200) {
             const { jwtToken } = await response.json()
-            console.log("jwt : ", jwtToken)
             logUserIn(jwtToken)
         }
     }
+    processLogin()
 }
 export default GetTokenFromUrl
