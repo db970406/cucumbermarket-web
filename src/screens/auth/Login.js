@@ -15,7 +15,7 @@ import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
 import SendAnywhere from '../../components/shared/SendAnywhere';
 import { logUserIn } from '../../utils/apollo';
-import { socialLogin } from "../../utils/socialLogin"
+import NaverLogin from '../../utils/NaverLogin';
 import { colors } from '../../utils/styles';
 
 const SocialLogins = styled.div`
@@ -23,16 +23,7 @@ const SocialLogins = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
-`
-const SocialLoginBtn = styled.button`
-    height:50px;
     margin:0 auto;
-    text-align:center;
-    background: none;
-`
-const Img = styled.img`
-    width:100%;
-    height:100%;
 `
 
 const Greeting = styled.span`
@@ -161,9 +152,7 @@ export default function Login() {
             </form>
             <Divider />
             <SocialLogins>
-                <SocialLoginBtn /* onClick={() => socialLogin("naver")} */>
-                    <Img src={require("../../images/naverLogin.png")} />
-                </SocialLoginBtn>
+                <NaverLogin />
             </SocialLogins>
         </AuthLayout>
     )

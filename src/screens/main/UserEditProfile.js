@@ -64,7 +64,7 @@ export default function UserEditProfile() {
     })
 
     const editUserCompleted = ({ editUser }) => {
-        const { ok, error } = editUser
+        const { ok } = editUser
         if (ok) {
             history.push(`/user/${userData?.seeLoggedInUser?.id}`);
             window.location.reload()

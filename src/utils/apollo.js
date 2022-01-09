@@ -6,7 +6,7 @@
 
 // ApolloClient 관련파일
 
-import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client"
+import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { createUploadLink } from 'apollo-upload-client'
 
@@ -19,17 +19,15 @@ export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)))
 export const logUserIn = (token) => {
     isLoggedInVar(true)
     localStorage.setItem(TOKEN, token)
-    window.location.reload()
+    window.location.href = "/"
 }
 export const logUserOut = (history) => {
     window.location.reload()
     isLoggedInVar(false)
     localStorage.removeItem(TOKEN)
     history.replace()
+    window.location.href = "/"
 
-    const a = document.createElement("a")
-    a.href = "/"
-    a.click()
 }
 
 

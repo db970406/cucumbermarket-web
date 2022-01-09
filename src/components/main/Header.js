@@ -4,13 +4,11 @@
 수정일 : 2022.01.08
 */
 
-import { useReactiveVar } from '@apollo/client'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import useLoggedInUser from '../../hooks/useLoggedInUser'
-import { darkModeVar } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import UserAvatar from './UserAvatar'
 

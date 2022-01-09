@@ -133,7 +133,7 @@ export default function ItemDetail() {
     // 파라미터에서 id를 뽑아 resolver의 variables로 줄 것이다.
     const { id } = useParams()
 
-    const { data, loading } = useQuery(SEE_ITEM, {
+    const { loading } = useQuery(SEE_ITEM, {
         variables: {
             id: parseInt(id)
         },
@@ -142,7 +142,7 @@ export default function ItemDetail() {
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
     const updateToggleLike = (cache, { data }) => {
-        const { toggleLike: { ok, error } } = data
+        const { toggleLike: { ok } } = data
         const result = cache.readFragment({
             id: `Item:${id}`,
             fragment: gql`
