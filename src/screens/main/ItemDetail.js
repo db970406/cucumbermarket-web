@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : ------
+수정일 : 2022.01.10
 */
 // 클릭한 아이템의 상세정보를 보여주는 페이지
 
@@ -24,6 +24,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState } from 'react'
 import Button from '../../components/shared/Button'
 import { Link } from "react-router-dom"
+import DropDownMenu from '../../components/main/DropDownMenu'
 
 const Container = styled.div`
     display:flex;
@@ -35,6 +36,7 @@ const Container = styled.div`
     margin : 0 auto;
     margin-top:30px;
     max-width:700px;
+    margin-bottom:30px;
 `
 const Header = styled.header`
     display:flex;
@@ -43,9 +45,10 @@ const Header = styled.header`
     padding:20px;
     justify-content:space-between;
 `
-const Title = styled.span`
+const Title = styled.h4`
     font-size:24px;
     font-weight:700;
+    margin-bottom:10px;
 `
 
 const UserData = styled.div`
@@ -59,6 +62,7 @@ const UserInfo = styled.div`
 
 const PhotoCase = styled.div`
     width:100%;
+    background-color:${({ theme }) => theme.bgColor} ;
     .slick-dots li button:before{
         opacity: .25;
         color: ${colors.green};
@@ -74,7 +78,7 @@ const ItemPhoto = styled.img`
     max-height:500px;
 `
 const MetaData = styled.div`
-    padding:10px;
+    padding:20px;
     width:100%;
 `
 
@@ -91,11 +95,11 @@ const LikeBtn = styled.button`
 `
 const LikeCount = styled.span`
     font-size:14px;
-    margin-left:5px;
+    color:${props => props.theme.themeGray};
 `
 
 const Description = styled.p`
-    margin:10px;
+    margin:20px 0px 10px 0;
     font-size:14px;
     // 콘텐츠가 다음 줄로 넘어가고 필요한 경우 단어 줄 바꿈이 발생한다.
     word-wrap: break-word;
@@ -187,7 +191,6 @@ export default function ItemDetail() {
         <MainLayout title={itemData?.title} loading={loading}>
             <Container>
                 <Header>
-                    <Title>{itemData?.title}</Title>
                     <Link to={`/user/${itemData?.user?.id}`}>
                         <UserData>
                             <UserAvatar img={itemData?.user?.avatar} size={40} />
@@ -197,6 +200,14 @@ export default function ItemDetail() {
                             </UserInfo>
                         </UserData>
                     </Link>
+                    {itemData?.isMine ? (
+                        <DropDownMenu
+                            link1={`/item/${itemData?.id}/edit`}
+                            text1='수정하기'
+                            link2={`/item/${itemData?.id}/delete`}
+                            text2='삭제하기'
+                        />
+                    ) : null}
                 </Header>
                 <PhotoCase>
                     <Slider {...settings}>
@@ -210,6 +221,7 @@ export default function ItemDetail() {
                     </Slider>
                 </PhotoCase>
                 <MetaData>
+                    <Title>{itemData?.title}</Title>
                     {!itemData?.isMine ? (
                         <Buttons>
                             <LikeData>
@@ -220,11 +232,11 @@ export default function ItemDetail() {
                                         color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                                     />
                                 </LikeBtn>
-                                <LikeCount>{itemData?.likeCount} 개의 관심</LikeCount>
                             </LikeData>
                             <Button text="실시간 채팅" onClick={() => null} />
                         </Buttons>
                     ) : null}
+                    <LikeCount>{itemData?.likeCount} 개의 관심</LikeCount>
                     <Description>
                         {itemData?.description}
                     </Description>

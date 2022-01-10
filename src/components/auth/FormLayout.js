@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.07
+수정일 : 2022.01.10
 */
 
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ const Logo = styled.img`
 `
 
 // 로그인 회원가입에 쓰일 레이아웃
-export default function AuthLayout({ children, title }) {
+export default function FormLayout({ children, title }) {
     return (
         <>
             <Container>
@@ -40,6 +40,6 @@ export default function AuthLayout({ children, title }) {
     )
 }
 
-AuthLayout.propTypes = {
+FormLayout.propTypes = {
     title: propTypes.string.isRequired
 }

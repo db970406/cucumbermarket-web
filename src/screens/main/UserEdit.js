@@ -1,13 +1,12 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : ------
+수정일 : 2022.01.10
 */
 // 본인인 유저만이 입장할 수 있는 페이지로 정보를 수정하는 페이지이다.
 
 import { useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
-import AuthLayout from '../../components/auth/AuthLayout'
 import FormError from '../../components/shared/FormError'
 import Input from '../../components/shared/Input'
 import useLoggedInUser from '../../hooks/useLoggedInUser'
@@ -17,6 +16,8 @@ import { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import styled from 'styled-components'
 import { colors } from '../../utils/styles'
+import NotAuthorized from '../../components/shared/NotAuthorized'
+import FormLayout from '../../components/auth/FormLayout'
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -50,7 +51,7 @@ const EDIT_USER = gql`
         }
     }
 `
-export default function UserEditProfile() {
+export default function UserEdit() {
     const { id } = useParams()
     const history = useHistory()
     const [currentLocation, setCurrentLocation] = useState("")
@@ -100,7 +101,7 @@ export default function UserEditProfile() {
     return (
         parseInt(id) === userData?.seeLoggedInUser?.id &&
             !userData?.seeLoggedInUser?.socialLogin ? (
-            <AuthLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
+            <FormLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
                 <form onSubmit={handleSubmit(onValid)}>
                     <FileInput htmlFor="file-input">
                         아바타 업로드
@@ -160,7 +161,9 @@ export default function UserEditProfile() {
                         onClick={handleSubmit(onValid)}
                     />
                 </form>
-            </AuthLayout >
-        ) : null
+            </FormLayout >
+        ) : (
+            <NotAuthorized />
+        )
     )
 }

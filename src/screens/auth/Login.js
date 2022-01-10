@@ -1,14 +1,14 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.10
 */
 
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import AuthLayout from '../../components/auth/AuthLayout';
+import FormLayout from '../../components/auth/FormLayout';
 import Button from '../../components/shared/Button';
 import Divider from '../../components/shared/Divider';
 import FormError from '../../components/shared/FormError';
@@ -85,7 +85,7 @@ export default function Login() {
 
 
     return (
-        <AuthLayout title="Log In">
+        <FormLayout title="Log In">
             <form onClick={handleSubmit(onValid)}>
                 {state?.message ? (
                     <Greeting>{state?.message}</Greeting>
@@ -142,7 +142,7 @@ export default function Login() {
                     disabled={!formState.isValid || loading}
                     loading={loading}
                     width="100%"
-                    auth
+                    isLong
                 />
                 <SendAnywhere
                     link="sign-up"
@@ -154,6 +154,6 @@ export default function Login() {
             <SocialLogins>
                 <NaverLogin />
             </SocialLogins>
-        </AuthLayout>
+        </FormLayout>
     )
 }

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.08
+수정일 : 2022.01.10
 */
 
 import propTypes from "prop-types"
@@ -22,14 +22,14 @@ const ButtonText = styled.span`
     text-align:center;
 `
 
-export default function Button({ loading, text, disabled, onClick, auth, logout }) {
+export default function Button({ loading, text, disabled, onClick, isLong, logout }) {
     return (
         <SButton
             logout={logout}
             disabled={disabled}
             onClick={onClick}
             style={{
-                ...(auth && {
+                ...(isLong && {
                     marginInline: "auto",
                     marginTop: 15,
                     width: "100%"

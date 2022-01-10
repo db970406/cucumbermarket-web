@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : ------
+수정일 : 2022.01.10
 */
 // 유저의 상세정보를 보여주는 페이지
 
@@ -9,7 +9,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import DisplayItem from '../../components/main/home/DisplayItem'
+import DisplayItem from '../../components/main/DisplayItem'
 import MainLayout from "../../components/main/MainLayout"
 import UserAvatar from '../../components/main/UserAvatar'
 import UserLocation from '../../components/main/UserLocation'
