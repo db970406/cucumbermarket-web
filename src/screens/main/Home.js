@@ -1,13 +1,13 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.07
+수정일 : 2022.01.10
 */
 
 import { gql, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import styled from 'styled-components';
-import DisplayItem from '../../components/main/home/DisplayItem';
+import DisplayItem from '../../components/main/DisplayItem';
 import MainLayout from '../../components/main/MainLayout';
 import { ITEM_DEFAULT_FRAGMENT } from '../../components/shared/fragments';
 

@@ -1,11 +1,12 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.10
 */
 
 import styled from 'styled-components'
 import { colors } from '../../utils/styles'
+import propTypes from "prop-types"
 
 const ErrorText = styled.span`
     color:${colors.red};
@@ -19,4 +20,8 @@ export default function FormError({ text }) {
     return (
         <ErrorText>{text}</ErrorText>
     )
+}
+
+FormError.propTypes = {
+    text: propTypes.string
 }

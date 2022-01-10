@@ -1,10 +1,10 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.07
+수정일 : 2022.01.10
 */
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Darkmode from '../shared/Darkmode';
 import Helmet from '../shared/Helmet';
 import propTypes from 'prop-types';
@@ -12,9 +12,14 @@ import FormBox from './FormBox';
 import BaseContainer from '../shared/BaseContainer';
 
 const Container = styled(BaseContainer)`
-    height:100vh;
-    justify-content:center;
+    margin-top:50px;
     align-items:center;
+    ${({ auth }) => auth ? css`
+        justify-content:center;
+        height:100vh;
+    `: css`
+        justify-content:flex-start;
+    `}
 `;
 
 const Logo = styled.img`
@@ -25,13 +30,13 @@ const Logo = styled.img`
 `
 
 // 로그인 회원가입에 쓰일 레이아웃
-export default function AuthLayout({ children, title }) {
+export default function FormLayout({ children, title, logo, auth }) {
     return (
         <>
-            <Container>
+            <Container auth={auth}>
                 <Helmet title={title} />
                 <FormBox>
-                    <Logo src={require("../../images/cucumber.png")} />
+                    {logo ? <Logo src={require("../../images/cucumber.png")} /> : null}
                     {children}
                 </FormBox>
             </Container>
@@ -40,6 +45,8 @@ export default function AuthLayout({ children, title }) {
     )
 }
 
-AuthLayout.propTypes = {
-    title: propTypes.string.isRequired
+FormLayout.propTypes = {
+    title: propTypes.string.isRequired,
+    logo: propTypes.bool,
+    auth: propTypes.bool,
 }

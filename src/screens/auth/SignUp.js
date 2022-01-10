@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.10
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { kakaoLocationApi } from '../../apis/locationApi';
-import AuthLayout from '../../components/auth/AuthLayout';
+import FormLayout from '../../components/auth/FormLayout';
 import Button from '../../components/shared/Button';
 import FormError from '../../components/shared/FormError';
 import Input from '../../components/shared/Input';
@@ -93,7 +93,7 @@ export default function SignUp() {
     }, [])
 
     return (
-        <AuthLayout title="Sign Up">
+        <FormLayout auth logo title="Sign Up">
             <form onSubmit={handleSubmit(onValid)}>
                 <Input
                     onChange={clearError}
@@ -207,7 +207,7 @@ export default function SignUp() {
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
                     width="100%"
-                    auth
+                    isLong
                 />
                 <SendAnywhere
                     link="/"
@@ -215,6 +215,6 @@ export default function SignUp() {
                     where="로그인"
                 />
             </form>
-        </AuthLayout>
+        </FormLayout>
     )
 }

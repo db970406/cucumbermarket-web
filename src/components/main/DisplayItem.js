@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : ------
+수정일 : 2022.01.10
 */
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
@@ -11,11 +11,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { darkModeVar } from '../../../utils/apollo';
-import { colors } from '../../../utils/styles';
-import UserAvatar from '../UserAvatar';
-import UserLocation from '../UserLocation';
-import Username from '../Username';
+import { darkModeVar } from '../../utils/apollo';
+import { colors } from '../../utils/styles';
+import UserAvatar from './UserAvatar';
+import UserLocation from './UserLocation';
+import Username from './Username';
 
 const Container = styled.div`
     transition:all 0.2s ease-in-out;

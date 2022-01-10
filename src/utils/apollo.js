@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.07
+수정일 : 2022.01.10
 */
 
 // ApolloClient 관련파일
@@ -45,7 +45,6 @@ export const getLightMode = () => {
     darkModeVar(false)
     localStorage.removeItem(DARKMODE)
 }
-
 
 const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",
