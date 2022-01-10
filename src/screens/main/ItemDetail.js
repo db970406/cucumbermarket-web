@@ -18,13 +18,12 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { colors } from '../../utils/styles'
 import { darkModeVar } from '../../utils/apollo'
-import Slider from 'react-slick'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useState } from 'react'
 import Button from '../../components/shared/Button'
 import { Link } from "react-router-dom"
 import DropDownMenu from '../../components/main/DropDownMenu'
+import PhotoSlider from '../../components/main/PhotoSlider'
+import ItemPhoto from '../../components/main/ItemPhoto'
 
 const Container = styled.div`
     display:flex;
@@ -60,23 +59,6 @@ const UserInfo = styled.div`
     flex-direction:column;
 `
 
-const PhotoCase = styled.div`
-    width:100%;
-    background-color:${({ theme }) => theme.bgColor} ;
-    .slick-dots li button:before{
-        opacity: .25;
-        color: ${colors.green};
-    }
-    .slick-dots li.slick-active button:before{
-        opacity: .75;
-        color: ${colors.green};
-    }
-
-`
-const ItemPhoto = styled.img`
-    width:100%;
-    max-height:500px;
-`
 const MetaData = styled.div`
     padding:20px;
     width:100%;
@@ -115,7 +97,7 @@ const TOGGLE_LIKE_MUTATION = gql`
 `
 
 
-const SEE_ITEM = gql`
+export const SEE_ITEM = gql`
     query seeItem($id:Int!){
         seeItem(id:$id){
             ...ItemDefaultFragment
@@ -177,16 +159,6 @@ export default function ItemDetail() {
         update: updateToggleLike
     })
 
-    // itemPhotos 슬라이더로 자동 재생되게 설정하였음
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        autoplay: true,
-        dots: true,
-    };
     return (
         <MainLayout title={itemData?.title} loading={loading}>
             <Container>
@@ -202,24 +174,29 @@ export default function ItemDetail() {
                     </Link>
                     {itemData?.isMine ? (
                         <DropDownMenu
-                            link1={`/item/${itemData?.id}/edit`}
-                            text1='수정하기'
-                            link2={`/item/${itemData?.id}/delete`}
-                            text2='삭제하기'
+                            link1={
+                                <Link to={`/item/${itemData?.id}/edit`}>
+                                    수정하기
+                                </Link>
+                            }
+                            link2={
+                                <Link to={`/item/${itemData?.id}/delete`}>
+                                    삭제하기
+                                </Link>
+                            }
                         />
                     ) : null}
                 </Header>
-                <PhotoCase>
-                    <Slider {...settings}>
-                        {itemData?.itemPhotos?.map(itemPhoto =>
-                            <ItemPhoto
-                                key={itemPhoto.id}
-                                src={itemPhoto.file}
-                                alt={itemData?.title}
-                            />
-                        )}
-                    </Slider>
-                </PhotoCase>
+                <PhotoSlider>
+                    {itemData?.itemPhotos?.map(photo =>
+                        <ItemPhoto
+                            key={photo.id}
+                            src={photo.file}
+                            alt={itemData?.title}
+                            maxHeight={500}
+                        />
+                    )}
+                </PhotoSlider>
                 <MetaData>
                     <Title>{itemData?.title}</Title>
                     {!itemData?.isMine ? (

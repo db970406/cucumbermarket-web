@@ -46,7 +46,6 @@ export const getLightMode = () => {
     localStorage.removeItem(DARKMODE)
 }
 
-
 const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",
 })

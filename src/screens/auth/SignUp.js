@@ -93,7 +93,7 @@ export default function SignUp() {
     }, [])
 
     return (
-        <FormLayout title="Sign Up">
+        <FormLayout auth logo title="Sign Up">
             <form onSubmit={handleSubmit(onValid)}>
                 <Input
                     onChange={clearError}

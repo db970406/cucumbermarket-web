@@ -46,11 +46,7 @@ export default function Login() {
 
     // SignUp이 성공하면 form에 자동적으로 username과 password를 세팅하게 둠
     const { register, handleSubmit, clearErrors, formState } = useForm({
-        mode: "onChange",
-        defaultValues: {
-            username: state?.username ?? "",
-            password: state?.password ?? "",
-        }
+        mode: "onChange"
     })
 
     const clearError = (errorName) => clearErrors(errorName)
@@ -85,14 +81,15 @@ export default function Login() {
 
 
     return (
-        <FormLayout title="Log In">
+        <FormLayout auth logo title="Log In">
             <form onClick={handleSubmit(onValid)}>
                 {state?.message ? (
                     <Greeting>{state?.message}</Greeting>
                 ) : null}
                 <Input
+                    defaultValue={state?.username}
                     placeholder="아이디를 입력하세요."
-                    onChange={clearError}
+                    onFocus={() => clearError('username')}
                     {...register("username", {
                         required: true,
                         minLength: {
@@ -113,9 +110,10 @@ export default function Login() {
                 <FormError text={formState.errors?.username?.message} />
 
                 <Input
+                    defaultValue={state?.password}
                     type="password"
                     placeholder="비밀번호를 입력하세요."
-                    onChange={clearError}
+                    onFocus={() => clearError("password")}
                     {...register("password", {
                         required: true,
                         minLength: {
@@ -138,7 +136,6 @@ export default function Login() {
 
                 <Button
                     text='Log In'
-                    onClick={handleSubmit(onValid)}
                     disabled={!formState.isValid || loading}
                     loading={loading}
                     width="100%"

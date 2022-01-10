@@ -6,7 +6,7 @@
 // 본인인 유저만이 입장할 수 있는 페이지로 정보를 수정하는 페이지이다.
 
 import { useForm } from 'react-hook-form'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
 import FormError from '../../components/shared/FormError'
 import Input from '../../components/shared/Input'
 import useLoggedInUser from '../../hooks/useLoggedInUser'
@@ -18,6 +18,14 @@ import styled from 'styled-components'
 import { colors } from '../../utils/styles'
 import NotAuthorized from '../../components/shared/NotAuthorized'
 import FormLayout from '../../components/auth/FormLayout'
+import ItemPhoto from '../../components/main/ItemPhoto';
+import MainLayout from '../../components/main/MainLayout';
+
+const Container = styled.div`
+    max-width:600px;
+    width:100%;
+    margin:0 auto;
+`
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -31,6 +39,7 @@ const FileInput = styled.label`
     font-size:12px;
     text-align:center;
     display:inline-block;
+    margin-right:10px;
 `
 
 const EDIT_USER = gql`
@@ -54,6 +63,7 @@ const EDIT_USER = gql`
 export default function UserEdit() {
     const { id } = useParams()
     const history = useHistory()
+    const { state } = useLocation()
     const [currentLocation, setCurrentLocation] = useState("")
     const { data: userData } = useLoggedInUser()
 
@@ -101,67 +111,78 @@ export default function UserEdit() {
     return (
         parseInt(id) === userData?.seeLoggedInUser?.id &&
             !userData?.seeLoggedInUser?.socialLogin ? (
-            <FormLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
-                <form onSubmit={handleSubmit(onValid)}>
-                    <FileInput htmlFor="file-input">
-                        아바타 업로드
-                        <input id="file-input"
-                            {...register("avatar")}
-                            type="file"
+            <MainLayout title={`${userData?.seeLoggedInUser?.name} 수정`} loading={!state}>
+                <Container>
+                    <ItemPhoto
+                        src={state?.avatar}
+                        alt={userData?.seeLoggedInUser?.name}
+                        maxHeight={200}
+                        maxWidth={200}
+                    />
+                </Container>
+                <FormLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
+                    <form onSubmit={handleSubmit(onValid)}>
+                        <FileInput htmlFor="file-input">
+                            아바타 업로드
+                            <input id="file-input"
+                                {...register("avatar")}
+                                type="file"
+                            />
+                        </FileInput>
+                        {watch("avatar")?.length > 0 ? (
+                            <span>저장 되었습니다.</span>
+                        ) : null}
+                        <Input
+                            onChange={clearError}
+                            {...register("name", {
+                                minLength: {
+                                    value: 2,
+                                    message: "이름은 2글자 이상이어야 합니다."
+                                },
+                                maxLength: {
+                                    value: 8,
+                                    message: "이름은 8글자 이하이어야 합니다."
+                                }
+                            })}
+                            placeholder="이름을 입력하세요."
+                            isError={Boolean(formState.errors?.name?.message)}
                         />
-                    </FileInput>
-                    {watch("avatar")?.length > 0 ? (
-                        <span>저장 되었습니다.</span>
-                    ) : null}
-                    <Input
-                        onChange={clearError}
-                        {...register("name", {
-                            minLength: {
-                                value: 2,
-                                message: "이름은 2글자 이상이어야 합니다."
-                            },
-                            maxLength: {
-                                value: 8,
-                                message: "이름은 8글자 이하이어야 합니다."
-                            }
-                        })}
-                        placeholder="이름을 입력하세요."
-                        isError={Boolean(formState.errors?.name?.message)}
-                    />
-                    <FormError text={formState.errors?.name?.message} />
+                        <FormError text={formState.errors?.name?.message} />
 
-                    <Input
-                        onChange={clearError}
-                        {...register("introduce", {
-                            maxLength: {
-                                value: 49,
-                                message: "소개글은 50글자 이하까지만 가능합니다."
-                            }
-                        })}
-                        placeholder="소개를 입력하세요."
-                        maxLength={50}
-                        isError={Boolean(formState.errors?.introduce?.message)}
-                    />
-                    <FormError text={formState.errors?.introduce?.message} />
+                        <Input
+                            onChange={clearError}
+                            {...register("introduce", {
+                                maxLength: {
+                                    value: 49,
+                                    message: "소개글은 50글자 이하까지만 가능합니다."
+                                }
+                            })}
+                            placeholder="소개를 입력하세요."
+                            maxLength={50}
+                            isError={Boolean(formState.errors?.introduce?.message)}
+                        />
+                        <FormError text={formState.errors?.introduce?.message} />
 
-                    <Input
-                        onChange={clearError}
-                        {...register("location", {
-                            maxLength: 2
-                        })}
-                        type="text"
-                        placeholder='"동의"를 입력하시면 현 위치가 공유됩니다.'
-                        maxLength={2}
-                    />
-                    <Button
-                        auth
-                        disabled={loading}
-                        loading={loading}
-                        text={`${userData?.seeLoggedInUser?.name}님의 정보 수정`}
-                        onClick={handleSubmit(onValid)}
-                    />
-                </form>
-            </FormLayout >
+                        <Input
+                            onChange={clearError}
+                            {...register("location", {
+                                maxLength: 2
+                            })}
+                            type="text"
+                            placeholder='"동의"를 입력하시면 현 위치가 공유됩니다.'
+                            maxLength={2}
+                        />
+                        <Button
+                            auth
+                            disabled={loading}
+                            loading={loading}
+                            text={`${userData?.seeLoggedInUser?.name}님의 정보 수정`}
+                            onClick={handleSubmit(onValid)}
+                            isLong
+                        />
+                    </form>
+                </FormLayout >
+            </MainLayout>
         ) : (
             <NotAuthorized />
         )

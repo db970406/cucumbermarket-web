@@ -106,6 +106,11 @@ const UserDetail = () => {
         onCompleted: ({ seeUser }) => setUserData(seeUser)
     })
 
+    const sendUserEdit = () => {
+        return history.push(`/user/${userData?.id}/edit`, {
+            avatar: userData?.avatar
+        })
+    }
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -123,7 +128,7 @@ const UserDetail = () => {
                                 {!userData?.socialLogin ? (
                                     <Button
                                         text="정보 수정"
-                                        onClick={() => history.push(`/user/${userData?.id}/edit`)}
+                                        onClick={sendUserEdit}
                                     />
                                 ) : null}
                                 <Button
