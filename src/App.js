@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { ApolloProvider, useReactiveVar } from '@apollo/client';
@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { ThemeProvider } from 'styled-components';
 import Login from './screens/auth/Login';
 import Home from './screens/main/Home';
-import NotFound from './components/shared/NotFound';
 import { client, darkModeVar, isLoggedInVar } from './utils/apollo';
 import { darkTheme, GlobalStyles, lightTheme } from './utils/styles';
 import SignUp from './screens/auth/SignUp';
@@ -21,6 +20,7 @@ import ItemEdit from './screens/main/ItemEdit';
 import ItemUpload from './screens/main/ItemUpload';
 import ItemDelete from './screens/main/ItemDelete';
 import ItemDetail from './screens/main/ItemDetail';
+import NotFound from './components/shared/utils/NotFound';
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
@@ -56,6 +56,7 @@ function App() {
                 <Route path="/user/:id/edit" exact>
                   <UserEdit />
                 </Route>
+
                 <Route>
                   <NotFound />
                 </Route>
@@ -71,7 +72,8 @@ function App() {
                 <Route path="/naver">
                   <GetTokenFromUrl />
                 </Route>
-                <Route exact>
+
+                <Route>
                   <NotFound />
                 </Route>
               </Switch>

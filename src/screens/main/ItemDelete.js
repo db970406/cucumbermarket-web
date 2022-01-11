@@ -1,15 +1,16 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : ------
+수정일 : 2022.01.11
 */
-// Item
+// Item 삭제
 
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import NotAuthorized from '../../components/shared/NotAuthorized';
+import { useHistory, useParams } from 'react-router-dom';
+import NotAuthorized from '../../components/shared/utils/NotAuthorized';
 import useItemIsMine from '../../hooks/useItemIsMine';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 
 const DELETE_ITEM = gql`
     mutation deleteItem($id:Int!){
@@ -21,18 +22,30 @@ const DELETE_ITEM = gql`
 `
 export default function ItemDelete() {
     const { id } = useParams()
+    const { data: loggedInUser } = useLoggedInUser()
 
     // 아이템의 소유자가 아니면 되돌려보내는 hook
     const { data, loading } = useItemIsMine(id)
 
     const history = useHistory()
 
-    const deleteItemCompleted = ({ deleteItem }) => {
-        const { ok, error } = deleteItem
+    const updateDeleteItem = (cache, { data }) => {
+        const { deleteItem: { ok, error } } = data
         if (!ok) {
             alert(error);
             return;
         }
+        cache.evict({
+            id: `Item:${id}`
+        })
+        cache.modify({
+            id: `User:${loggedInUser?.seeLoggedInUser?.id}`,
+            fields: {
+                itemCount(prev) {
+                    return prev - 1
+                }
+            }
+        })
         history.push("/")
         return;
     }
@@ -40,7 +53,7 @@ export default function ItemDelete() {
         variables: {
             id: parseInt(id)
         },
-        onCompleted: deleteItemCompleted
+        update: updateDeleteItem
     })
 
     useEffect(() => {

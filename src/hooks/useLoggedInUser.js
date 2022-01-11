@@ -6,7 +6,7 @@
 
 import { gql, useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { USER_DEFAULT_FRAGMENT } from '../components/shared/fragments'
+import { USER_DEFAULT_FRAGMENT } from '../components/shared/utils/fragments'
 import { logUserOut } from '../utils/apollo'
 
 // 현재 로그인한 유저의 정보를 1차적으로 가져와준다(Header에 avatar를 넣기 위한 목적이 큼).

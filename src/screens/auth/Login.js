@@ -1,22 +1,22 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import FormLayout from '../../components/auth/FormLayout';
-import Button from '../../components/shared/Button';
-import Divider from '../../components/shared/Divider';
-import FormError from '../../components/shared/FormError';
-import Input from '../../components/shared/Input';
-import SendAnywhere from '../../components/shared/SendAnywhere';
+import FormLayout from '../../components/layouts/FormLayout';
+import Button from '../../components/shared/buttons/Button';
+import Divider from '../../components/shared/utils/Divider';
+import SendAnywhere from '../../components/shared/utils/SendAnywhere';
 import { logUserIn } from '../../utils/apollo';
 import NaverLogin from '../../utils/NaverLogin';
 import { colors } from '../../utils/styles';
+import Input from '../../components/shared/form/Input';
+import InputError from '../../components/shared/form/InputError';
 
 const SocialLogins = styled.div`
     margin-top:5px;
@@ -107,7 +107,7 @@ export default function Login() {
                     })}
                     isError={Boolean(formState.errors?.username?.message)}
                 />
-                <FormError text={formState.errors?.username?.message} />
+                <InputError text={formState.errors?.username?.message} />
 
                 <Input
                     defaultValue={state?.password}
@@ -132,14 +132,14 @@ export default function Login() {
                     lastOne
                     isError={Boolean(formState.errors?.password?.message)}
                 />
-                <FormError text={formState.errors?.password?.message} />
+                <InputError text={formState.errors?.password?.message} />
 
                 <Button
                     text='Log In'
                     disabled={!formState.isValid || loading}
                     loading={loading}
                     width="100%"
-                    isLong
+                    longtype
                 />
                 <SendAnywhere
                     link="sign-up"

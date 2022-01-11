@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -9,11 +9,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { kakaoLocationApi } from '../../apis/locationApi';
-import FormLayout from '../../components/auth/FormLayout';
-import Button from '../../components/shared/Button';
-import FormError from '../../components/shared/FormError';
-import Input from '../../components/shared/Input';
-import SendAnywhere from '../../components/shared/SendAnywhere';
+import FormLayout from '../../components/layouts/FormLayout';
+import Button from '../../components/shared/buttons/Button';
+import InputError from '../../components/shared/form/InputError';
+import Input from '../../components/shared/form/Input';
+import SendAnywhere from '../../components/shared/utils/SendAnywhere';
 
 const SIGNUP_MUTATION = gql`
     mutation signUp(
@@ -107,7 +107,7 @@ export default function SignUp() {
                     placeholder="이름을 입력하세요."
                     isError={Boolean(formState.errors?.name?.message)}
                 />
-                <FormError text={formState.errors?.name?.message} />
+                <InputError text={formState.errors?.name?.message} />
 
                 <Input
                     onChange={clearError}
@@ -121,7 +121,7 @@ export default function SignUp() {
                     placeholder="이메일을 입력하세요."
                     isError={Boolean(formState.errors?.email?.message)}
                 />
-                <FormError text={formState.errors?.email?.message} />
+                <InputError text={formState.errors?.email?.message} />
 
                 <Input
                     onChange={clearError}
@@ -143,7 +143,7 @@ export default function SignUp() {
                     placeholder="아이디를 입력하세요."
                     isError={Boolean(formState.errors?.username?.message)}
                 />
-                <FormError text={formState.errors?.username?.message} />
+                <InputError text={formState.errors?.username?.message} />
 
                 <Input
                     onChange={clearError}
@@ -176,7 +176,7 @@ export default function SignUp() {
                     placeholder='비밀번호를 입력하세요.'
                     isError={Boolean(formState.errors?.password?.message)}
                 />
-                <FormError text={formState.errors?.password?.message} />
+                <InputError text={formState.errors?.password?.message} />
 
                 <Input
                     onChange={clearError}
@@ -199,7 +199,7 @@ export default function SignUp() {
                     placeholder='확인 비밀번호를 입력하세요.'
                     isError={Boolean(formState.errors?.password2?.message)}
                 />
-                <FormError text={formState.errors?.password2?.message} />
+                <InputError text={formState.errors?.password2?.message} />
 
                 <Button
                     text='회원가입'
@@ -207,7 +207,7 @@ export default function SignUp() {
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
                     width="100%"
-                    isLong
+                    longtype
                 />
                 <SendAnywhere
                     link="/"

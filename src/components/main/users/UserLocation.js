@@ -1,30 +1,31 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import styled from 'styled-components'
 import propTypes from "prop-types"
 
-const Name = styled.span`
+const Location = styled.span`
 `
 
-export default function Username({ name, size }) {
+export default function UserLocation({ location, size }) {
     return (
-        <Name
+        <Location
             style={{
                 fontWeight: 500,
                 fontSize: size,
-                marginInline: 5
+                marginInline: 5,
+                marginTop: 5,
             }}
         >
-            {name}
-        </Name>
+            {location}
+        </Location>
     )
 }
 
-Username.propTypes = {
-    name: propTypes.string,
+UserLocation.propTypes = {
+    location: propTypes.string,
     size: propTypes.number.isRequired,
 }

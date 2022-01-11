@@ -1,20 +1,20 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : ------
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import FormLayout from '../../components/auth/FormLayout';
-import ItemPhoto from '../../components/main/ItemPhoto';
-import MainLayout from '../../components/main/MainLayout';
-import PhotoSlider from '../../components/main/PhotoSlider';
-import Button from '../../components/shared/Button';
-import FormError from '../../components/shared/FormError';
-import Input from '../../components/shared/Input';
+import FormLayout from '../../components/layouts/FormLayout';
+import ItemPhoto from '../../components/main/items/ItemPhoto';
+import MainLayout from '../../components/layouts/MainLayout';
+import PhotoSlider from '../../components/main/items/PhotoSlider';
+import Button from '../../components/shared/buttons/Button';
+import InputError from '../../components/shared/form/InputError';
+import Input from '../../components/shared/form/Input';
 import useItemIsMine from '../../hooks/useItemIsMine';
 import { colors } from '../../utils/styles';
 import { useState, useEffect } from "react"
@@ -149,15 +149,11 @@ export default function ItemEdit() {
                         placeholder="제목을 입력하세요."
                         isError={Boolean(formState.errors?.title?.message)}
                     />
-                    <FormError text={formState.errors?.title?.message} />
+                    <InputError text={formState.errors?.title?.message} />
                     <Input
                         defaultValue={itemData?.seeItem?.description}
                         onChange={clearError}
                         {...register("description", {
-                            minLength: {
-                                value: 2,
-                                message: "제목은 2글자 이상이어야 합니다."
-                            },
                             maxLength: {
                                 value: 299,
                                 message: "설명글은 300자 미만이어야 합니다."
@@ -166,10 +162,10 @@ export default function ItemEdit() {
                         placeholder="설명글을 입력하세요."
                         isError={Boolean(formState.errors?.description?.message)}
                     />
-                    <FormError text={formState.errors?.description?.message} />
+                    <InputError text={formState.errors?.description?.message} />
                     <Button
                         text='물건 정보 수정'
-                        isLong
+                        longtype
                         loading={loading}
                         disabled={!formState.isValid || loading}
                         onClick={handleSubmit(onValid)}

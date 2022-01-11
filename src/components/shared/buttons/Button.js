@@ -1,12 +1,12 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import propTypes from "prop-types"
 import styled from "styled-components"
-import { colors } from '../../utils/styles'
+import { colors } from '../../../utils/styles'
 
 const SButton = styled.button`
     background-color:${props => props.logout ? colors.red : colors.green} ;
@@ -22,14 +22,14 @@ const ButtonText = styled.span`
     text-align:center;
 `
 
-export default function Button({ loading, text, disabled, onClick, isLong, logout }) {
+export default function Button({ loading, text, disabled, onClick, longtype, logout }) {
     return (
         <SButton
             logout={logout}
             disabled={disabled}
             onClick={onClick}
             style={{
-                ...(isLong && {
+                ...(longtype && {
                     marginInline: "auto",
                     marginTop: 15,
                     width: "100%"

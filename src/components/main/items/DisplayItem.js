@@ -1,26 +1,24 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { darkModeVar } from '../../utils/apollo';
-import { colors } from '../../utils/styles';
-import UserAvatar from './UserAvatar';
-import UserLocation from './UserLocation';
-import Username from './Username';
+import { darkModeVar } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
+import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
+import UserData from '../users/UserData';
 
 const Container = styled.div`
     transition:all 0.2s ease-in-out;
     &:hover{
-        transform:scale(1.1);
+        transform:scale(1.05);
     }
 `
 const PhotoCase = styled.div`
@@ -40,25 +38,9 @@ const MetaData = styled.div`
     flex-direction:column;
 `
 const Title = styled.span`
-    margin:7px 0;
+    margin:3px 0 7px 0;
     font-size:16px;
-    font-weight:600;
-`
-const UserData = styled.div`
-    display:flex;
-    align-items:center;
-    margin-top:10px;
-`
-const UserInfo = styled.div`
-    display:flex;
-    flex-direction:column;
-`
-
-const LikeData = styled.div`
-    margin-top:10px;
-`
-const LikeBtn = styled.button`
-    padding-left:0;
+    font-weight:700;
 `
 const LikeCount = styled.span`
     font-size:12px;
@@ -105,7 +87,7 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
             <Link to={`/item/${id}`}>
                 <PhotoCase>
                     <ItemPhoto
-                        src={itemPhotos[0].file}
+                        src={itemPhotos[0]?.file}
                         alt={title}
                     />
                 </PhotoCase>
@@ -114,29 +96,28 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                 <Title>{title}</Title>
                 {user ? (
                     <Link to={`/user/${user.id}`}>
-                        <UserData>
-                            <UserAvatar img={user.avatar} size={30} />
-                            <UserInfo>
-                                <Username name={user.name} size={14} />
-                                <UserLocation location={user.location} size={12} />
-                            </UserInfo>
-                        </UserData>
+                        <UserData
+                            avatar={user.avatar}
+                            name={user.name}
+                            location={user.location}
+                            avatarSize={30}
+                            nameSize={14}
+                            locationSize={12}
+                        />
                     </Link>
                 ) : null}
-                <LikeData>
-                    {!isMine ? (
-                        <LikeBtn onClick={toggleLike} isLiked={isLiked}>
-                            <FontAwesomeIcon
-                                icon={isLiked ? solidHeart : faHeart}
-                                size="lg"
-                                color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
-                            />
-                        </LikeBtn>
-                    ) : null}
-                    <LikeCount>관심 : {likeCount}</LikeCount>
-                </LikeData>
+                {!isMine ? (
+                    <FontAwesomeBtn
+                        onClick={toggleLike}
+                        checkState={isLiked}
+                        icon={isLiked ? solidHeart : faHeart}
+                        size={"lg"}
+                        color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                    />
+                ) : null}
+                <LikeCount>관심 : {likeCount}</LikeCount>
             </MetaData>
-        </Container>
+        </Container >
     )
 }
 

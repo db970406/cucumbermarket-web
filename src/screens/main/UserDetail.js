@@ -1,21 +1,19 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 // 유저의 상세정보를 보여주는 페이지
 
 import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import styled from 'styled-components'
-import DisplayItem from '../../components/main/DisplayItem'
-import MainLayout from "../../components/main/MainLayout"
-import UserAvatar from '../../components/main/UserAvatar'
-import UserLocation from '../../components/main/UserLocation'
-import Username from '../../components/main/Username'
-import Button from '../../components/shared/Button'
-import { USER_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
+import styled, { css } from 'styled-components'
+import DisplayItem from '../../components/main/items/DisplayItem'
+import MainLayout from "../../components/layouts/MainLayout"
+import UserData from '../../components/main/users/UserData'
+import Button from '../../components/shared/buttons/Button'
+import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/utils/fragments'
 import { logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 
@@ -25,18 +23,14 @@ const Container = styled.div`
     max-width:1000px;
     margin:0 auto;
 `
-const UserData = styled.div`
+const User = styled.div`
     display:flex;
     align-items:center;
-    justify-content:flex-start;
-    @media screen and (max-width: 550px) {
-        display:none;
-    }
+    justify-content:space-between;
+    margin-bottom:30px;
 `
-const UserInfo = styled.div`
-    display:flex;
-    flex-direction:column;
-    margin-left:30px;
+const Items = styled.div`
+    margin-top:30px;
 `
 const Flex = styled.div`
     display:flex;
@@ -45,59 +39,80 @@ const Flex = styled.div`
     margin:0 auto;
     margin-top:20px;
 `
-const Top = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:30px;
-`
-const Bottom = styled.div`
-    margin-top:30px;
+
+const Introduce = styled.span`
+    font-size:16px;
 `
 const Buttons = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
 `
-const Introduce = styled.span`
-    font-size:16px;
+
+const Tabs = styled.p`
 `
-const NowSelling = styled.p`
-    font-size:16px;
+const Tab = styled.button`
+    ${({ isFocused }) => isFocused ?
+        css`
+        span{
+            color:${colors.green};
+            font-weight:600;
+        }
+        div{
+            margin-top:7px;
+            height:3px;
+            background-color:${colors.green};
+        }
+    `:
+        css`
+        span{
+            color:${({ theme }) => theme.color};
+            font-weight:400;
+        }
+        div{
+            display:none;
+        }
+    `
+    }
     span{
-        color:${colors.green};
-        font-size:20px;
+        font-size: 14px;
+        margin-left: 2px;
+    }
+    &:hover{
+        span{
+            color:${colors.green};
+        }
     }
 `
 
 const SEE_USER = gql`
-    query seeUser($id:Int!){
-        seeUser(id:$id){
+    query seeUser($id: Int!){
+        seeUser(id: $id){
             ...UserDefaultFragment
             location
             introduce
             isMe
             items{
-                id
-                title
-                itemPhotos{
-                    id
-                    file
-                }
-                isMine
-                likeCount
-                isLiked
+                ...ItemDisplayFragment
             }
-            
+            likes{
+                ...ItemDisplayFragment
+            }
+            itemCount
+            likeCount
         }
     }
     ${USER_DEFAULT_FRAGMENT}
+    ${ITEM_DISPLAY_FRAGMENT}
 `
 
 const UserDetail = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
     const history = useHistory()
+    const [tabFocus, setTabFocus] = useState(true)
+    const focusChange = (bool) => setTabFocus(bool)
+
 
     const { loading } = useQuery(SEE_USER, {
         variables: {
@@ -111,17 +126,19 @@ const UserDetail = () => {
             avatar: userData?.avatar
         })
     }
+
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
-                <Top isMe={userData?.isMe}>
-                    <UserData>
-                        <UserAvatar img={userData?.avatar} size={70} />
-                        <UserInfo>
-                            <Username name={userData?.name} size={28} />
-                            <UserLocation location={userData?.location} size={24} />
-                        </UserInfo>
-                    </UserData>
+                <User isMe={userData?.isMe}>
+                    <UserData
+                        avatar={userData?.avatar}
+                        name={userData?.name}
+                        location={userData?.location}
+                        avatarSize={70}
+                        nameSize={24}
+                        locationSize={20}
+                    />
                     <Buttons>
                         {userData?.isMe ? (
                             <>
@@ -140,23 +157,38 @@ const UserDetail = () => {
                         ) : (
                             <Button text="대화하기" onClick={() => null} />
                         )}
-
                     </Buttons>
-                </Top>
+                </User>
                 <Introduce>{userData?.introduce}</Introduce>
-                <Bottom>
-                    <NowSelling>
-                        <span>{userData?.name}</span> 님이 판매중인 물건
-                    </NowSelling>
+                <Items>
+                    <Tabs>
+                        <Tab isFocused={tabFocus} onClick={() => focusChange(true)}>
+                            <span>판매 물건 ({userData?.itemCount})</span>
+                            <div />
+                        </Tab>
+                        <Tab isFocused={!tabFocus} onClick={() => focusChange(false)}>
+                            <span>관심 물건 ({userData?.likeCount})</span>
+                            <div />
+                        </Tab>
+                    </Tabs>
                     <Flex>
-                        {userData?.items?.map(item =>
-                            <DisplayItem
-                                key={item.id}
-                                {...item}
-                            />
+                        {tabFocus ? (
+                            userData?.items?.map(item =>
+                                <DisplayItem
+                                    key={item.id}
+                                    {...item}
+                                />
+                            )
+                        ) : (
+                            userData?.likes?.map(item =>
+                                <DisplayItem
+                                    key={item.id}
+                                    {...item}
+                                />
+                            )
                         )}
                     </Flex>
-                </Bottom>
+                </Items>
             </Container>
         </MainLayout>
     )

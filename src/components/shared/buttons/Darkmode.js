@@ -6,10 +6,10 @@
 
 import { useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
-import { darkModeVar, getDarkMode, getLightMode } from '../../utils/apollo'
+import { darkModeVar, getDarkMode, getLightMode } from '../../../utils/apollo'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
-import { colors } from '../../utils/styles'
+import { colors } from '../../../utils/styles'
 
 const Button = styled.button`
     position:fixed;
