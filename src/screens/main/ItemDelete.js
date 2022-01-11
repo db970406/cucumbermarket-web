@@ -27,12 +27,15 @@ export default function ItemDelete() {
 
     const history = useHistory()
 
-    const deleteItemCompleted = ({ deleteItem }) => {
-        const { ok, error } = deleteItem
+    const updateDeleteItem = (cache, { data }) => {
+        const { deleteItem: { ok, error } } = data
         if (!ok) {
             alert(error);
             return;
         }
+        cache.evict({
+            id: `Item:${id}`
+        })
         history.push("/")
         return;
     }
@@ -40,7 +43,7 @@ export default function ItemDelete() {
         variables: {
             id: parseInt(id)
         },
-        onCompleted: deleteItemCompleted
+        update: updateDeleteItem
     })
 
     useEffect(() => {
