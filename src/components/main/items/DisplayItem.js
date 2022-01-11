@@ -87,7 +87,7 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
             <Link to={`/item/${id}`}>
                 <PhotoCase>
                     <ItemPhoto
-                        src={itemPhotos[0].file}
+                        src={itemPhotos[0]?.file}
                         alt={title}
                     />
                 </PhotoCase>

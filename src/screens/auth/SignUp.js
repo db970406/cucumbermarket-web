@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { kakaoLocationApi } from '../../apis/locationApi';
 import FormLayout from '../../components/layouts/FormLayout';
 import Button from '../../components/shared/buttons/Button';
-import FormError from '../../components/shared/form/FormError';
+import InputError from '../../components/shared/form/InputError';
 import Input from '../../components/shared/form/Input';
 import SendAnywhere from '../../components/shared/utils/SendAnywhere';
 
@@ -107,7 +107,7 @@ export default function SignUp() {
                     placeholder="이름을 입력하세요."
                     isError={Boolean(formState.errors?.name?.message)}
                 />
-                <FormError text={formState.errors?.name?.message} />
+                <InputError text={formState.errors?.name?.message} />
 
                 <Input
                     onChange={clearError}
@@ -121,7 +121,7 @@ export default function SignUp() {
                     placeholder="이메일을 입력하세요."
                     isError={Boolean(formState.errors?.email?.message)}
                 />
-                <FormError text={formState.errors?.email?.message} />
+                <InputError text={formState.errors?.email?.message} />
 
                 <Input
                     onChange={clearError}
@@ -143,7 +143,7 @@ export default function SignUp() {
                     placeholder="아이디를 입력하세요."
                     isError={Boolean(formState.errors?.username?.message)}
                 />
-                <FormError text={formState.errors?.username?.message} />
+                <InputError text={formState.errors?.username?.message} />
 
                 <Input
                     onChange={clearError}
@@ -176,7 +176,7 @@ export default function SignUp() {
                     placeholder='비밀번호를 입력하세요.'
                     isError={Boolean(formState.errors?.password?.message)}
                 />
-                <FormError text={formState.errors?.password?.message} />
+                <InputError text={formState.errors?.password?.message} />
 
                 <Input
                     onChange={clearError}
@@ -199,7 +199,7 @@ export default function SignUp() {
                     placeholder='확인 비밀번호를 입력하세요.'
                     isError={Boolean(formState.errors?.password2?.message)}
                 />
-                <FormError text={formState.errors?.password2?.message} />
+                <InputError text={formState.errors?.password2?.message} />
 
                 <Button
                     text='회원가입'

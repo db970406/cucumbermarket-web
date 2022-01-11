@@ -1,13 +1,13 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 // 본인인 유저만이 입장할 수 있는 페이지로 정보를 수정하는 페이지이다.
 
 import { useForm } from 'react-hook-form'
 import { useHistory, useParams, useLocation } from 'react-router-dom'
-import FormError from '../../components/shared/form/FormError'
+import InputError from '../../components/shared/form/InputError'
 import Input from '../../components/shared/form/Input'
 import useLoggedInUser from '../../hooks/useLoggedInUser'
 import Button from "../../components/shared/buttons/Button"
@@ -147,7 +147,7 @@ export default function UserEdit() {
                             placeholder="이름을 입력하세요."
                             isError={Boolean(formState.errors?.name?.message)}
                         />
-                        <FormError text={formState.errors?.name?.message} />
+                        <InputError text={formState.errors?.name?.message} />
 
                         <Input
                             onChange={clearError}
@@ -161,7 +161,7 @@ export default function UserEdit() {
                             maxLength={50}
                             isError={Boolean(formState.errors?.introduce?.message)}
                         />
-                        <FormError text={formState.errors?.introduce?.message} />
+                        <InputError text={formState.errors?.introduce?.message} />
 
                         <Input
                             onChange={clearError}

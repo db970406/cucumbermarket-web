@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import styled from 'styled-components'
@@ -16,12 +16,12 @@ const ErrorText = styled.span`
 
 `
 
-export default function FormError({ text }) {
+export default function InputError({ text }) {
     return (
         <ErrorText>{text}</ErrorText>
     )
 }
 
-FormError.propTypes = {
+InputError.propTypes = {
     text: propTypes.string
 }
