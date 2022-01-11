@@ -6,18 +6,23 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
+import propTypes from "prop-types"
 
 const BtnContainer = styled.div`
-    margin-bottom:3px;
 `
 const Btn = styled.button`
     padding-left:0;
 `
 
 
-export default function FontAwesomeBtn({ onClick, checkState, icon, size, color }) {
+export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight }) {
     return (
-        <BtnContainer>
+        <BtnContainer
+            style={{
+                marginRight,
+                marginBottom: 3
+            }}
+        >
             <Btn onClick={onClick}>
                 <FontAwesomeIcon
                     icon={icon}
@@ -27,4 +32,10 @@ export default function FontAwesomeBtn({ onClick, checkState, icon, size, color 
             </Btn>
         </BtnContainer>
     )
+}
+
+FontAwesomeBtn.propTypes = {
+    onClick: propTypes.func.isRequired,
+    size: propTypes.string,
+    color: propTypes.string
 }

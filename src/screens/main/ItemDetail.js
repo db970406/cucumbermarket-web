@@ -38,7 +38,7 @@ const Header = styled.header`
     display:flex;
     flex-direction:row;
     align-items:center;
-    padding:20px;
+    padding:10px;
     justify-content:space-between;
 `
 const Title = styled.h4`

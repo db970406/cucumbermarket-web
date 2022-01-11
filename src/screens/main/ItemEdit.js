@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : ------
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -169,7 +169,7 @@ export default function ItemEdit() {
                     <FormError text={formState.errors?.description?.message} />
                     <Button
                         text='물건 정보 수정'
-                        isLong
+                        longtype
                         loading={loading}
                         disabled={!formState.isValid || loading}
                         onClick={handleSubmit(onValid)}

@@ -38,7 +38,7 @@ const MetaData = styled.div`
     flex-direction:column;
 `
 const Title = styled.span`
-    margin:7px 0;
+    margin:3px 0 7px 0;
     font-size:16px;
     font-weight:700;
 `

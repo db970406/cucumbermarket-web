@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { ApolloProvider, useReactiveVar } from '@apollo/client';
@@ -56,6 +56,7 @@ function App() {
                 <Route path="/user/:id/edit" exact>
                   <UserEdit />
                 </Route>
+
                 <Route>
                   <NotFound />
                 </Route>
@@ -71,7 +72,8 @@ function App() {
                 <Route path="/naver">
                   <GetTokenFromUrl />
                 </Route>
-                <Route exact>
+
+                <Route>
                   <NotFound />
                 </Route>
               </Switch>

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -207,7 +207,7 @@ export default function SignUp() {
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
                     width="100%"
-                    isLong
+                    longtype
                 />
                 <SendAnywhere
                     link="/"
