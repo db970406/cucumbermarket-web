@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useQuery } from '@apollo/client';
@@ -9,15 +9,15 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import DisplayItem from '../../components/main/DisplayItem';
 import MainLayout from '../../components/main/MainLayout';
-import { ITEM_DEFAULT_FRAGMENT } from '../../components/shared/fragments';
+import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/fragments';
 
 const SEE_ITEMS = gql`
     query seeItems{
         seeItems{
-            ...ItemDefaultFragment
+            ...ItemDisplayFragment
         }
     }
-    ${ITEM_DEFAULT_FRAGMENT}
+    ${ITEM_DISPLAY_FRAGMENT}
 `
 
 const Container = styled.div`

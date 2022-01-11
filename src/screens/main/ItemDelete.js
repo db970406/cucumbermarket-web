@@ -1,15 +1,16 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : ------
+수정일 : 2022.01.11
 */
-// Item
+// Item 삭제
 
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import NotAuthorized from '../../components/shared/NotAuthorized';
 import useItemIsMine from '../../hooks/useItemIsMine';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 
 const DELETE_ITEM = gql`
     mutation deleteItem($id:Int!){
@@ -21,6 +22,7 @@ const DELETE_ITEM = gql`
 `
 export default function ItemDelete() {
     const { id } = useParams()
+    const { data: loggedInUser } = useLoggedInUser()
 
     // 아이템의 소유자가 아니면 되돌려보내는 hook
     const { data, loading } = useItemIsMine(id)
@@ -35,6 +37,14 @@ export default function ItemDelete() {
         }
         cache.evict({
             id: `Item:${id}`
+        })
+        cache.modify({
+            id: `User:${loggedInUser?.seeLoggedInUser?.id}`,
+            fields: {
+                itemCount(prev) {
+                    return prev - 1
+                }
+            }
         })
         history.push("/")
         return;

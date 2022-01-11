@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
@@ -40,7 +40,7 @@ const MetaData = styled.div`
 const Title = styled.span`
     margin:7px 0;
     font-size:16px;
-    font-weight:600;
+    font-weight:700;
 `
 
 const LikeData = styled.div`

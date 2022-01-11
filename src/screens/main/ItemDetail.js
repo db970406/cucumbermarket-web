@@ -1,18 +1,15 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.10
+수정일 : 2022.01.11
 */
 // 클릭한 아이템의 상세정보를 보여주는 페이지
 
 import { useParams } from "react-router-dom"
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
-import { ITEM_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
+import { ITEM_DETAIL_FRAGMENT } from '../../components/shared/fragments'
 import MainLayout from '../../components/main/MainLayout'
 import styled from 'styled-components'
-import UserAvatar from '../../components/main/UserAvatar'
-import Username from '../../components/main/Username'
-import UserLocation from '../../components/main/UserLocation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
@@ -92,16 +89,11 @@ const TOGGLE_LIKE_MUTATION = gql`
 export const SEE_ITEM = gql`
     query seeItem($id:Int!){
         seeItem(id:$id){
-            ...ItemDefaultFragment
-            description
-            likes{
-                id
-                username
-                avatar
-            }
+            ...ItemDetailFragment
+            
         }
     }
-    ${ITEM_DEFAULT_FRAGMENT}
+    ${ITEM_DETAIL_FRAGMENT}
 `
 
 export default function ItemDetail() {
