@@ -7,12 +7,12 @@
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { darkModeVar } from '../../utils/apollo';
 import { colors } from '../../utils/styles';
+import FontAwesomeBtn from '../shared/FontAwesomeBtn';
 import UserData from './UserData';
 
 const Container = styled.div`
@@ -41,13 +41,6 @@ const Title = styled.span`
     margin:7px 0;
     font-size:16px;
     font-weight:700;
-`
-
-const LikeData = styled.div`
-    margin-top:10px;
-`
-const LikeBtn = styled.button`
-    padding-left:0;
 `
 const LikeCount = styled.span`
     font-size:12px;
@@ -113,20 +106,18 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                         />
                     </Link>
                 ) : null}
-                <LikeData>
-                    {!isMine ? (
-                        <LikeBtn onClick={toggleLike} isLiked={isLiked}>
-                            <FontAwesomeIcon
-                                icon={isLiked ? solidHeart : faHeart}
-                                size="lg"
-                                color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
-                            />
-                        </LikeBtn>
-                    ) : null}
-                    <LikeCount>관심 : {likeCount}</LikeCount>
-                </LikeData>
+                {!isMine ? (
+                    <FontAwesomeBtn
+                        onClick={toggleLike}
+                        checkState={isLiked}
+                        icon={isLiked ? solidHeart : faHeart}
+                        size={"2x"}
+                        color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                    />
+                ) : null}
+                <LikeCount>관심 : {likeCount}</LikeCount>
             </MetaData>
-        </Container>
+        </Container >
     )
 }
 

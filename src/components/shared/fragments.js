@@ -9,7 +9,7 @@ import { gql } from '@apollo/client';
 // GraphQL 양식 작성 시 자주 쓰는 항목들을 fragment화 해놓은 파일
 
 export const ITEM_DETAIL_FRAGMENT = gql`
-    fragment ItemDefaultFragment on Item{
+    fragment ItemDetailFragment on Item{
         id
         title
         description

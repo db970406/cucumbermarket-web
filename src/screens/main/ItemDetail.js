@@ -10,7 +10,6 @@ import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
 import { ITEM_DETAIL_FRAGMENT } from '../../components/shared/fragments'
 import MainLayout from '../../components/main/MainLayout'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { colors } from '../../utils/styles'
@@ -22,13 +21,13 @@ import DropDownMenu from '../../components/main/DropDownMenu'
 import PhotoSlider from '../../components/main/PhotoSlider'
 import ItemPhoto from '../../components/main/ItemPhoto'
 import UserData from '../../components/main/UserData'
+import FontAwesomeBtn from '../../components/shared/FontAwesomeBtn'
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
     flex:1;
     justify-content:center;
-    border:${props => props.theme.themeGray} 1px solid;
     border-radius:20px;
     margin : 0 auto;
     margin-top:30px;
@@ -45,25 +44,20 @@ const Header = styled.header`
 const Title = styled.h4`
     font-size:24px;
     font-weight:700;
-    margin-bottom:10px;
+    margin-bottom:5px;
 `
 
 const MetaData = styled.div`
-    padding:20px;
+    padding:15px;
     width:100%;
 `
 
 const Buttons = styled.div`
     display:flex;
     justify-content:space-between;
-`
-const LikeData = styled.div`
-    display:flex;
     align-items:center;
 `
-const LikeBtn = styled.button`
-    
-`
+
 const LikeCount = styled.span`
     font-size:14px;
     color:${props => props.theme.themeGray};
@@ -85,12 +79,10 @@ const TOGGLE_LIKE_MUTATION = gql`
     }
 `
 
-
 export const SEE_ITEM = gql`
     query seeItem($id:Int!){
         seeItem(id:$id){
             ...ItemDetailFragment
-            
         }
     }
     ${ITEM_DETAIL_FRAGMENT}
@@ -186,15 +178,12 @@ export default function ItemDetail() {
                     <Title>{itemData?.title}</Title>
                     {!itemData?.isMine ? (
                         <Buttons>
-                            <LikeData>
-                                <LikeBtn onClick={toggleLike} isLiked={itemData?.isLiked}>
-                                    <FontAwesomeIcon
-                                        icon={itemData?.isLiked ? solidHeart : faHeart}
-                                        size="2x"
-                                        color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
-                                    />
-                                </LikeBtn>
-                            </LikeData>
+                            <FontAwesomeBtn
+                                onClick={toggleLike}
+                                icon={itemData?.isLiked ? solidHeart : faHeart}
+                                size="2x"
+                                color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                            />
                             <Button text="실시간 채팅" onClick={() => null} />
                         </Buttons>
                     ) : null}
