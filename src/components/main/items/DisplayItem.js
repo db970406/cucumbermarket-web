@@ -10,10 +10,10 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { darkModeVar } from '../../utils/apollo';
-import { colors } from '../../utils/styles';
-import FontAwesomeBtn from '../shared/FontAwesomeBtn';
-import UserData from './UserData';
+import { darkModeVar } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
+import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
+import UserData from '../users/UserData';
 
 const Container = styled.div`
     transition:all 0.2s ease-in-out;
@@ -111,7 +111,7 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                         onClick={toggleLike}
                         checkState={isLiked}
                         icon={isLiked ? solidHeart : faHeart}
-                        size={"2x"}
+                        size={"lg"}
                         color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                     />
                 ) : null}

@@ -5,7 +5,7 @@
 */
 
 import styled from 'styled-components';
-import { colors } from '../../utils/styles';
+import { colors } from '../../../utils/styles';
 
 const Input = styled.input`
     width:100%;

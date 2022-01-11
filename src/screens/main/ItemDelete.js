@@ -8,7 +8,7 @@
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import NotAuthorized from '../../components/shared/NotAuthorized';
+import NotAuthorized from '../../components/shared/utils/NotAuthorized';
 import useItemIsMine from '../../hooks/useItemIsMine';
 import useLoggedInUser from '../../hooks/useLoggedInUser';
 

@@ -6,7 +6,7 @@
 
 import Slider from 'react-slick'
 import styled from 'styled-components';
-import { colors } from '../../utils/styles';
+import { colors } from '../../../utils/styles';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

@@ -5,7 +5,7 @@
 */
 
 import styled from 'styled-components';
-import { colors } from '../../utils/styles';
+import { colors } from '../../../utils/styles';
 
 const FormBox = styled.div`
     display:flex;

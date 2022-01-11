@@ -7,9 +7,9 @@
 import { gql, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import styled from 'styled-components';
-import DisplayItem from '../../components/main/DisplayItem';
-import MainLayout from '../../components/main/MainLayout';
-import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/fragments';
+import DisplayItem from '../../components/main/items/DisplayItem';
+import MainLayout from '../../components/layouts/MainLayout';
+import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/utils/fragments';
 
 const SEE_ITEMS = gql`
     query seeItems{

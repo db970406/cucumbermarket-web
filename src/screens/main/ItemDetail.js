@@ -7,21 +7,21 @@
 
 import { useParams } from "react-router-dom"
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
-import { ITEM_DETAIL_FRAGMENT } from '../../components/shared/fragments'
-import MainLayout from '../../components/main/MainLayout'
+import { ITEM_DETAIL_FRAGMENT } from '../../components/shared/utils/fragments'
+import MainLayout from '../../components/layouts/MainLayout'
 import styled from 'styled-components'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { colors } from '../../utils/styles'
 import { darkModeVar } from '../../utils/apollo'
 import { useState } from 'react'
-import Button from '../../components/shared/Button'
+import Button from '../../components/shared/buttons/Button'
 import { Link } from "react-router-dom"
-import DropDownMenu from '../../components/main/DropDownMenu'
-import PhotoSlider from '../../components/main/PhotoSlider'
-import ItemPhoto from '../../components/main/ItemPhoto'
-import UserData from '../../components/main/UserData'
-import FontAwesomeBtn from '../../components/shared/FontAwesomeBtn'
+import PhotoSlider from '../../components/main/items/PhotoSlider'
+import ItemPhoto from '../../components/main/items/ItemPhoto'
+import UserData from '../../components/main/users/UserData'
+import FontAwesomeBtn from '../../components/shared/buttons/FontAwesomeBtn'
+import DropDownMenu from '../../components/main/items/DropDownMenu'
 
 const Container = styled.div`
     display:flex;

@@ -8,15 +8,15 @@ import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import FormLayout from '../../components/auth/FormLayout';
-import Button from '../../components/shared/Button';
-import Divider from '../../components/shared/Divider';
-import FormError from '../../components/shared/FormError';
-import Input from '../../components/shared/Input';
-import SendAnywhere from '../../components/shared/SendAnywhere';
+import FormLayout from '../../components/layouts/FormLayout';
+import Button from '../../components/shared/buttons/Button';
+import Divider from '../../components/shared/utils/Divider';
+import SendAnywhere from '../../components/shared/utils/SendAnywhere';
 import { logUserIn } from '../../utils/apollo';
 import NaverLogin from '../../utils/NaverLogin';
 import { colors } from '../../utils/styles';
+import FormError from '../../components/shared/form/FormError';
+import Input from '../../components/shared/form/Input';
 
 const SocialLogins = styled.div`
     margin-top:5px;

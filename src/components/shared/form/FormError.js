@@ -5,7 +5,7 @@
 */
 
 import styled from 'styled-components'
-import { colors } from '../../utils/styles'
+import { colors } from '../../../utils/styles'
 import propTypes from "prop-types"
 
 const ErrorText = styled.span`

@@ -7,10 +7,12 @@
 import { faBackspace, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import useLoggedInUser from '../../hooks/useLoggedInUser'
-import { colors } from '../../utils/styles'
-import FontAwesomeBtn from '../shared/FontAwesomeBtn'
+import useLoggedInUser from '../../../hooks/useLoggedInUser'
+import { colors } from '../../../utils/styles'
+import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
 import UserAvatar from './UserAvatar'
+import { useReactiveVar } from "@apollo/client"
+import { darkModeVar } from "../../../utils/apollo"
 
 const Container = styled.header`
     padding:20px 70px;
@@ -41,6 +43,7 @@ const Tab = styled.button`
 `
 
 export default function Header() {
+    const darkMode = useReactiveVar(darkModeVar)
     const { data: loggedInUser } = useLoggedInUser()
     const history = useHistory()
 
@@ -53,13 +56,13 @@ export default function Header() {
                     <FontAwesomeBtn
                         icon={faBackspace}
                         size={"2x"}
-                        color={colors.pink}
+                        color={darkMode ? colors.white : colors.black}
                         onClick={() => history.goBack()}
                     />
                 </GoBack>
             )}
             <Tab onClick={() => sendWhere("/")}>
-                <Logo src={require("../../images/cucumber.png")} />
+                <Logo src={require("../../../images/cucumber.png")} />
             </Tab>
             <Tabs>
                 <FontAwesomeBtn

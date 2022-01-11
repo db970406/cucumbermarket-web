@@ -5,11 +5,11 @@
 */
 
 import styled, { css } from 'styled-components'
-import Darkmode from '../shared/Darkmode';
-import Helmet from '../shared/Helmet';
+import Darkmode from '../shared/buttons/Darkmode';
+import Helmet from '../shared/utils/Helmet';
 import propTypes from 'prop-types';
-import FormBox from './FormBox';
-import BaseContainer from '../shared/BaseContainer';
+import FormBox from '../shared/form/FormBox';
+import BaseContainer from './BaseContainer';
 
 const Container = styled(BaseContainer)`
     margin-top:50px;

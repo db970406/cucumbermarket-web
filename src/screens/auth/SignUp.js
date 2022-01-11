@@ -9,11 +9,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { kakaoLocationApi } from '../../apis/locationApi';
-import FormLayout from '../../components/auth/FormLayout';
-import Button from '../../components/shared/Button';
-import FormError from '../../components/shared/FormError';
-import Input from '../../components/shared/Input';
-import SendAnywhere from '../../components/shared/SendAnywhere';
+import FormLayout from '../../components/layouts/FormLayout';
+import Button from '../../components/shared/buttons/Button';
+import FormError from '../../components/shared/form/FormError';
+import Input from '../../components/shared/form/Input';
+import SendAnywhere from '../../components/shared/utils/SendAnywhere';
 
 const SIGNUP_MUTATION = gql`
     mutation signUp(

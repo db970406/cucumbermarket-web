@@ -7,9 +7,9 @@
 import { Helmet } from 'react-helmet-async';
 import styled, { css } from 'styled-components';
 import propTypes from "prop-types"
-import Header from './Header';
-import Darkmode from '../shared/Darkmode';
-import BaseContainer from '../shared/BaseContainer';
+import Header from '../main/users/Header';
+import Darkmode from '../shared/buttons/Darkmode';
+import BaseContainer from './BaseContainer';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;

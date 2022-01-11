@@ -12,7 +12,7 @@ const Img = styled.img`
 export default function UserAvatar({ img, size }) {
     return (
         <Img
-            src={img === null ? require("../../images/default-avatar.jpg") : img}
+            src={img === null ? require("../../../images/default-avatar.jpg") : img}
             style={{
                 width: size,
                 height: size,

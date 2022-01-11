@@ -7,7 +7,7 @@
 import propTypes from "prop-types"
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { colors } from '../../utils/styles'
+import { colors } from '../../../utils/styles'
 
 const Container = styled.div`
     display:flex;

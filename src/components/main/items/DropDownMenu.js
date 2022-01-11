@@ -9,8 +9,8 @@ import { useReactiveVar } from '@apollo/client';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
-import { darkModeVar } from '../../utils/apollo';
-import { colors } from '../../utils/styles';
+import { darkModeVar } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
 
 const DropDown = styled.div`
     padding: 4px;

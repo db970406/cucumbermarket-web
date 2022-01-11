@@ -7,19 +7,19 @@
 
 import { useForm } from 'react-hook-form'
 import { useHistory, useParams, useLocation } from 'react-router-dom'
-import FormError from '../../components/shared/FormError'
-import Input from '../../components/shared/Input'
+import FormError from '../../components/shared/form/FormError'
+import Input from '../../components/shared/form/Input'
 import useLoggedInUser from '../../hooks/useLoggedInUser'
-import Button from "../../components/shared/Button"
+import Button from "../../components/shared/buttons/Button"
 import { kakaoLocationApi } from '../../apis/locationApi'
 import { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import styled from 'styled-components'
 import { colors } from '../../utils/styles'
-import NotAuthorized from '../../components/shared/NotAuthorized'
-import FormLayout from '../../components/auth/FormLayout'
-import ItemPhoto from '../../components/main/ItemPhoto';
-import MainLayout from '../../components/main/MainLayout';
+import NotAuthorized from '../../components/shared/utils/NotAuthorized'
+import FormLayout from '../../components/layouts/FormLayout'
+import ItemPhoto from '../../components/main/items/ItemPhoto';
+import MainLayout from '../../components/layouts/MainLayout';
 
 const Container = styled.div`
     max-width:600px;

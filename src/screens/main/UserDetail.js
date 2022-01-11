@@ -9,11 +9,11 @@ import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import DisplayItem from '../../components/main/DisplayItem'
-import MainLayout from "../../components/main/MainLayout"
-import UserData from '../../components/main/UserData'
-import Button from '../../components/shared/Button'
-import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
+import DisplayItem from '../../components/main/items/DisplayItem'
+import MainLayout from "../../components/layouts/MainLayout"
+import UserData from '../../components/main/users/UserData'
+import Button from '../../components/shared/buttons/Button'
+import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/utils/fragments'
 import { logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 
