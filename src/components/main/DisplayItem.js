@@ -13,9 +13,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { darkModeVar } from '../../utils/apollo';
 import { colors } from '../../utils/styles';
-import UserAvatar from './UserAvatar';
-import UserLocation from './UserLocation';
-import Username from './Username';
+import UserData from './UserData';
 
 const Container = styled.div`
     transition:all 0.2s ease-in-out;
@@ -43,15 +41,6 @@ const Title = styled.span`
     margin:7px 0;
     font-size:16px;
     font-weight:600;
-`
-const UserData = styled.div`
-    display:flex;
-    align-items:center;
-    margin-top:10px;
-`
-const UserInfo = styled.div`
-    display:flex;
-    flex-direction:column;
 `
 
 const LikeData = styled.div`
@@ -114,13 +103,14 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                 <Title>{title}</Title>
                 {user ? (
                     <Link to={`/user/${user.id}`}>
-                        <UserData>
-                            <UserAvatar img={user.avatar} size={30} />
-                            <UserInfo>
-                                <Username name={user.name} size={14} />
-                                <UserLocation location={user.location} size={12} />
-                            </UserInfo>
-                        </UserData>
+                        <UserData
+                            avatar={user.avatar}
+                            name={user.name}
+                            location={user.location}
+                            avatarSize={30}
+                            nameSize={14}
+                            locationSize={12}
+                        />
                     </Link>
                 ) : null}
                 <LikeData>

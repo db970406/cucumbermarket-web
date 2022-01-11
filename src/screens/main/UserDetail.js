@@ -11,9 +11,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import DisplayItem from '../../components/main/DisplayItem'
 import MainLayout from "../../components/main/MainLayout"
-import UserAvatar from '../../components/main/UserAvatar'
-import UserLocation from '../../components/main/UserLocation'
-import Username from '../../components/main/Username'
+import UserData from '../../components/main/UserData'
 import Button from '../../components/shared/Button'
 import { USER_DEFAULT_FRAGMENT } from '../../components/shared/fragments'
 import { logUserOut } from '../../utils/apollo'
@@ -25,19 +23,7 @@ const Container = styled.div`
     max-width:1000px;
     margin:0 auto;
 `
-const UserData = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    @media screen and (max-width: 550px) {
-        display:none;
-    }
-`
-const UserInfo = styled.div`
-    display:flex;
-    flex-direction:column;
-    margin-left:30px;
-`
+
 const Flex = styled.div`
     display:flex;
     flex-wrap:wrap;
@@ -62,12 +48,16 @@ const Buttons = styled.div`
 const Introduce = styled.span`
     font-size:16px;
 `
-const NowSelling = styled.p`
+const Tabs = styled.p`
     font-size:16px;
     span{
         color:${colors.green};
         font-size:20px;
     }
+`
+const Tab = styled.button`
+    color:${colors.green};
+    font-size:16px;
 `
 
 const SEE_USER = gql`
@@ -88,7 +78,8 @@ const SEE_USER = gql`
                 likeCount
                 isLiked
             }
-            
+            itemCount
+            likeCount
         }
     }
     ${USER_DEFAULT_FRAGMENT}
@@ -115,13 +106,14 @@ const UserDetail = () => {
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
                 <Top isMe={userData?.isMe}>
-                    <UserData>
-                        <UserAvatar img={userData?.avatar} size={70} />
-                        <UserInfo>
-                            <Username name={userData?.name} size={28} />
-                            <UserLocation location={userData?.location} size={24} />
-                        </UserInfo>
-                    </UserData>
+                    <UserData
+                        avatar={userData?.avatar}
+                        name={userData?.name}
+                        location={userData?.location}
+                        avatarSize={70}
+                        nameSize={24}
+                        locationSize={20}
+                    />
                     <Buttons>
                         {userData?.isMe ? (
                             <>
@@ -145,9 +137,17 @@ const UserDetail = () => {
                 </Top>
                 <Introduce>{userData?.introduce}</Introduce>
                 <Bottom>
-                    <NowSelling>
-                        <span>{userData?.name}</span> 님이 판매중인 물건
-                    </NowSelling>
+                    <Tabs>
+                        <span>{userData?.name}</span>님의
+                        <Tab>
+                            판매 물건
+                            <span>( {userData?.itemCount} )</span>
+                        </Tab>
+                        <Tab>
+                            관심 물건
+                            <span> ( {userData?.likeCount} )</span>
+                        </Tab>
+                    </Tabs>
                     <Flex>
                         {userData?.items?.map(item =>
                             <DisplayItem

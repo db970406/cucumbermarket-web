@@ -24,6 +24,7 @@ import { Link } from "react-router-dom"
 import DropDownMenu from '../../components/main/DropDownMenu'
 import PhotoSlider from '../../components/main/PhotoSlider'
 import ItemPhoto from '../../components/main/ItemPhoto'
+import UserData from '../../components/main/UserData'
 
 const Container = styled.div`
     display:flex;
@@ -48,15 +49,6 @@ const Title = styled.h4`
     font-size:24px;
     font-weight:700;
     margin-bottom:10px;
-`
-
-const UserData = styled.div`
-    display:flex;
-    align-items:center;
-`
-const UserInfo = styled.div`
-    display:flex;
-    flex-direction:column;
 `
 
 const MetaData = styled.div`
@@ -164,13 +156,14 @@ export default function ItemDetail() {
             <Container>
                 <Header>
                     <Link to={`/user/${itemData?.user?.id}`}>
-                        <UserData>
-                            <UserAvatar img={itemData?.user?.avatar} size={40} />
-                            <UserInfo>
-                                <Username name={itemData?.user?.name} size={20} />
-                                <UserLocation location={itemData?.user?.location} size={16} />
-                            </UserInfo>
-                        </UserData>
+                        <UserData
+                            avatar={itemData?.user?.avatar}
+                            name={itemData?.user?.name}
+                            location={itemData?.user?.location}
+                            avatarSize={40}
+                            nameSize={16}
+                            locationSize={14}
+                        />
                     </Link>
                     {itemData?.isMine ? (
                         <DropDownMenu
