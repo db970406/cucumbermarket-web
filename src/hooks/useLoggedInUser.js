@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : ------
+수정일 : 2022.01.12
 */
 
 import { gql, useQuery } from '@apollo/client'
@@ -30,5 +30,6 @@ export default function useLoggedInUser() {
         onCompleted: seeLoggedInUserCompleted
     })
 
-    return { data }
+    const loggedInUser = data?.seeLoggedInUser
+    return { loggedInUser }
 }

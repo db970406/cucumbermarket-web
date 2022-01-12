@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 
 import { faBackspace, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
@@ -44,7 +44,7 @@ const Tab = styled.button`
 
 export default function Header() {
     const darkMode = useReactiveVar(darkModeVar)
-    const { data: loggedInUser } = useLoggedInUser()
+    const { loggedInUser } = useLoggedInUser()
     const history = useHistory()
 
     const sendWhere = (path) => history.push(path)
@@ -79,8 +79,8 @@ export default function Header() {
                     onClick={() => sendWhere(`/item/upload`)}
                     marginRight={20}
                 />
-                <Tab onClick={() => sendWhere(`/user/${loggedInUser?.seeLoggedInUser?.id}`)}>
-                    <UserAvatar img={loggedInUser?.seeLoggedInUser?.avatar} size={30} />
+                <Tab onClick={() => sendWhere(`/user/${loggedInUser?.id}`)}>
+                    <UserAvatar img={loggedInUser?.avatar} size={30} />
                 </Tab>
             </Tabs>
         </Container>

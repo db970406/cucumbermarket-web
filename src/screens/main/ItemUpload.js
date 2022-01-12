@@ -15,6 +15,7 @@ import { colors } from '../../utils/styles';
 import InputError from '../../components/shared/form/InputError';
 import Button from '../../components/shared/buttons/Button';
 import MainLayout from '../../components/layouts/MainLayout';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -51,15 +52,26 @@ export default function ItemUpload() {
     const history = useHistory()
     const { register, handleSubmit, clearErrors, formState } = useForm()
     const clearError = (errorName) => clearErrors(errorName)
+    const { loggedInUser } = useLoggedInUser()
 
     const updateUploadItem = (cache, { data }) => {
         const { uploadItem } = data
-
         if (uploadItem.id) {
             cache.modify({
                 id: `ROOT_QUERY`,
                 fields: {
                     seeItems(prev) {
+                        return [uploadItem, ...prev]
+                    }
+                }
+            })
+            cache.modify({
+                id: `User:${loggedInUser?.id}`,
+                fields: {
+                    itemCount(prev) {
+                        return prev + 1
+                    },
+                    items(prev) {
                         return [uploadItem, ...prev]
                     }
                 }
@@ -76,6 +88,7 @@ export default function ItemUpload() {
     const onValid = (data) => {
         if (loading) return;
         const { title, description, files } = data
+        console.log(files)
         uploadItemMutation({
             variables: {
                 title,
@@ -96,7 +109,6 @@ export default function ItemUpload() {
                         })}
                         type="file"
                         accept='.jpg,.jpeg,.png'
-                        multiple
                         required
                     />
 
@@ -109,6 +121,7 @@ export default function ItemUpload() {
                                 message: "제목은 2글자 이상이어야 합니다."
                             }
                         })}
+                        required
                         placeholder="제목을 입력하세요."
                         isError={Boolean(formState.errors?.title?.message)}
                     />

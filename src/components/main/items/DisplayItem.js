@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
@@ -10,6 +10,7 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
 import { darkModeVar } from '../../../utils/apollo';
 import { colors } from '../../../utils/styles';
 import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
@@ -58,11 +59,58 @@ const TOGGLE_LIKE_MUTATION = gql`
 
 const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }) => {
     const darkMode = useReactiveVar(darkModeVar)
+    const { loggedInUser } = useLoggedInUser()
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
     const updateToggleLike = (cache, { data }) => {
         const { toggleLike: { ok } } = data
         if (ok) {
+            const photoPressedLike = cache.writeFragment({
+                id: `Item:${id}`,
+                fragment: gql`
+                    fragment itemDisplay on Item{
+                        id
+                        title
+                        itemPhotos{
+                            id
+                            file
+                        }
+                        isMine
+                        likeCount
+                        isLiked
+                    }
+                `,
+                data: {
+                    id,
+                    title,
+                    itemPhotos,
+                    isMine,
+                    likeCount,
+                    isLiked
+                }
+            })
+            console.log(photoPressedLike)
+
+            cache.modify({
+                id: `User:${loggedInUser?.id}`,
+                fields: {
+                    likeCount(prev) {
+                        return isLiked ? prev - 1 : prev + 1
+                    },
+                    likes(prev) {
+                        /*
+                        관심을 누른 상태라면 존재하는 likes 배열에서 write한 fragment와 같은 값을 배열에서 제거한다.
+                        const clearMyLikes = prev.filter(item => item.__ref !== photoPressedLike.__ref)
+
+                        관심을 누르지 않았다면 write한 fragment를 likes 배열에 추가한다.
+                        return isLiked ? clearMyLikes : [photoPressedLike, ...prev]
+                        */
+
+                        // 유저 사용성을 고려했을 때 관심 해제 시 UserDetail에서 해당 Item을 바로 사라지게 하는 것보단 Item은 두되 관심만 해제시키는게 나은 듯?
+                        return prev
+                    }
+                }
+            })
             cache.modify({
                 id: `Item:${id}`,
                 fields: {
