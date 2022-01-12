@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 // 클릭한 아이템의 상세정보를 보여주는 페이지
 
@@ -95,11 +95,12 @@ export default function ItemDetail() {
     // 파라미터에서 id를 뽑아 resolver의 variables로 줄 것이다.
     const { id } = useParams()
 
+    const seeItemCompleted = ({ seeItem }) => setItemData(seeItem)
     const { loading } = useQuery(SEE_ITEM, {
         variables: {
             id: parseInt(id)
         },
-        onCompleted: ({ seeItem }) => setItemData(seeItem)
+        onCompleted: seeItemCompleted
     })
 
     // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
