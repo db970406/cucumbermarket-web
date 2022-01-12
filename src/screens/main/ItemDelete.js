@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 // Item 삭제
 
@@ -37,6 +37,15 @@ export default function ItemDelete() {
         }
         cache.evict({
             id: `Item:${id}`
+        })
+        cache.modify({
+            id: `ROOT_QUERY`,
+            fields: {
+                seeItems(prev) {
+                    const filteredItems = prev.filter(item => item.id !== parseInt(id))
+                    return [...filteredItems]
+                }
+            }
         })
         cache.modify({
             id: `User:${loggedInUser?.seeLoggedInUser?.id}`,

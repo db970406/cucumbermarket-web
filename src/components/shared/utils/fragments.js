@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 
 import { gql } from '@apollo/client';
@@ -40,7 +40,7 @@ export const ITEM_DISPLAY_FRAGMENT = gql`
     fragment ItemDisplayFragment on Item{
         id
         title
-            itemPhotos{
+        itemPhotos{
             id
             file
         }

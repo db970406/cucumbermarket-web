@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : 2022.01.11
+수정일 : 2022.01.12
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -53,29 +53,30 @@ export default function ItemUpload() {
     const clearError = (errorName) => clearErrors(errorName)
 
     const updateUploadItem = (cache, { data }) => {
-        const { uploadItem: cacheUploadItem } = data
-        console.log(cacheUploadItem)
-        if (cacheUploadItem.id) {
+        const { uploadItem } = data
+
+        if (uploadItem.id) {
             cache.modify({
                 id: `ROOT_QUERY`,
                 fields: {
-                    seeItems: {
-                        ...cacheUploadItem
+                    seeItems(prev) {
+                        return [uploadItem, ...prev]
                     }
                 }
             })
+
             history.push("/")
         }
     }
 
-    const [uploadItem, { loading }] = useMutation(UPLOAD_ITEM, {
+    const [uploadItemMutation, { loading }] = useMutation(UPLOAD_ITEM, {
         update: updateUploadItem
     })
 
     const onValid = (data) => {
         if (loading) return;
         const { title, description, files } = data
-        uploadItem({
+        uploadItemMutation({
             variables: {
                 title,
                 description,
@@ -87,7 +88,7 @@ export default function ItemUpload() {
     return (
         <MainLayout title="물건 업로드">
             <FormLayout title="물건 업로드">
-                <form encType="multipart/form-data" onSubmit={handleSubmit(onValid)}>
+                <form onSubmit={handleSubmit(onValid)}>
 
                     <input id="file-input"
                         {...register("files", {
@@ -95,6 +96,7 @@ export default function ItemUpload() {
                         })}
                         type="file"
                         accept='.jpg,.jpeg,.png'
+                        multiple
                         required
                     />
 
