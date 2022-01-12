@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.11
-수정일 : ------
+수정일 : 2022.01.12
 */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,10 +12,10 @@ const BtnContainer = styled.div`
 `
 const Btn = styled.button`
     padding-left:0;
+    opacity:${props => props.disabled ? 0.4 : 1};
 `
 
-
-export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight }) {
+export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight, disabled }) {
     return (
         <BtnContainer
             style={{
@@ -23,7 +23,7 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
                 marginBottom: 3
             }}
         >
-            <Btn onClick={onClick}>
+            <Btn onClick={onClick} disabled={disabled}>
                 <FontAwesomeIcon
                     icon={icon}
                     size={size}

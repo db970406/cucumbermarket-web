@@ -14,6 +14,7 @@ const Container = styled.div`
     display:flex;
     align-items:center;
     justify-content:flex-start;
+    margin:7px 0;
     @media screen and (max-width: 550px) {
         display:none;
     }
@@ -21,7 +22,7 @@ const Container = styled.div`
 const UserInfo = styled.div`
     display:flex;
     flex-direction:column;
-    margin-left:5px;
+    margin-left:3px;
 `
 
 export default function UserData({ avatar, name, location, avatarSize, nameSize, locationSize }) {

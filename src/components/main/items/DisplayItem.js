@@ -71,6 +71,12 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                     fragment itemDisplay on Item{
                         id
                         title
+                        user{
+                            id
+                            name
+                            avatar
+                            location
+                        }
                         itemPhotos{
                             id
                             file
@@ -83,13 +89,13 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                 data: {
                     id,
                     title,
+                    user,
                     itemPhotos,
                     isMine,
                     likeCount,
                     isLiked
                 }
             })
-            console.log(photoPressedLike)
 
             cache.modify({
                 id: `User:${loggedInUser?.id}`,
@@ -143,11 +149,11 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
             <MetaData>
                 <Title>{title}</Title>
                 {user ? (
-                    <Link to={`/user/${user.id}`}>
+                    <Link to={`/user/${user?.id}`}>
                         <UserData
-                            avatar={user.avatar}
-                            name={user.name}
-                            location={user.location}
+                            avatar={user?.avatar}
+                            name={user?.name}
+                            location={user?.location}
                             avatarSize={30}
                             nameSize={14}
                             locationSize={12}
@@ -175,7 +181,7 @@ DisplayItem.propTypes = {
     user: propTypes.shape({
         id: propTypes.number.isRequired,
         name: propTypes.string.isRequired,
-        username: propTypes.string.isRequired,
+        location: propTypes.string.isRequired,
         avatar: propTypes.string,
     }),
     itemPhotos: propTypes.arrayOf(propTypes.shape({

@@ -44,6 +44,12 @@ export const ITEM_DISPLAY_FRAGMENT = gql`
             id
             file
         }
+        user{
+            id
+            name
+            avatar
+            location
+        }
         isMine
         likeCount
         isLiked
