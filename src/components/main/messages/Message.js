@@ -13,6 +13,7 @@ import { colors } from '../../../utils/styles'
 const Container = styled.div`
     display:flex;
     flex-direction:${({ isMine }) => isMine ? "row-reverse" : "row"};
+    text-align:${({ isMine }) => isMine ? "right" : "left"};
     align-items:center;
     justify-content:flex-start;
     margin:10px;
@@ -27,10 +28,11 @@ const MessageBubble = styled.div`
     padding:10px;
     border-radius:7px;
     margin:5px;
-    text-align:center;
+    text-align:${({ isMine }) => isMine ? "right" : "left"};
 `
 const MessageText = styled.span`    
     color:white;
+    
 `
 
 export default function Message({

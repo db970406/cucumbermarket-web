@@ -4,9 +4,9 @@
 수정일 : ------
 */
 
-import { gql, useMutation, useQuery, useReactiveVar } from '@apollo/client'
+import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import { faArrowCircleUp, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { darkModeVar, showChatRoomVar } from '../../../utils/apollo'
@@ -27,6 +27,7 @@ const Container = styled.div`
     position:fixed;
     bottom:5px;
     right:5px;
+    z-index:1;
 `
 const InputContainer = styled.div`
     // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하고 Input의 길이 조절을 위함
@@ -55,12 +56,18 @@ const RoomInfo = styled.div`
 const RoomTitle = styled.span`
     font-size:14px;
 `
+const RoomMain = styled.div`
+    overflow:scroll;
+    height:100%;
+    padding-bottom:70px;
+    bottom:0;
+`
 
 const SEE_ROOM = gql`
-    query seeRoom($id:Int!){
+    query seeRoom($id:Int!,$offset:Int){
         seeRoom(id:$id){
             id
-            messages{
+            messages(offset:$offset){
                 ...MessageDefaultFragment
             }
             unreadCount
@@ -77,17 +84,62 @@ const CREATE_MESSAGE = gql`
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
 
+const REALTIME_ROOM = gql`
+    subscription realtimeRoom($id:Int!){
+        realtimeRoom(id:$id){
+            ...MessageDefaultFragment
+        }
+    }
+    ${MESSAGE_DEFAULT_FRAGMENT}
+`
+
 const MessageRoom = ({ userId }) => {
     const darkMode = useReactiveVar(darkModeVar)
+
     const [messageData, setMessageData] = useState([])
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, setValue } = useForm()
+    const [fetching, setFetching] = useState(false)
 
-
-    const { data, loading } = useQuery(SEE_ROOM, {
+    const { data, loading, fetchMore, subscribeToMore } = useQuery(SEE_ROOM, {
         variables: {
-            id: userId
+            id: userId,
+            offset: 0
         }
     })
+
+    const { cache } = useApolloClient()
+    const realtimeUpdate = (prevQuery, { subscriptionData }) => {
+        const { data: { realtimeRoom: newMessage } } = subscriptionData
+        if (newMessage.id) {
+            const incomingMessage = cache.writeFragment({
+                id: `Message:${newMessage.id}`,
+                fragment: gql`
+                    fragment NewMessage on Message{
+                        id
+                        payload
+                        user{
+                            id
+                            name
+                            avatar
+                        }
+                        isMine
+                        read
+                    }
+                `,
+                data: newMessage
+            })
+            cache.modify({
+                id: `Room:${data?.seeRoom?.id}`,
+                fields: {
+                    messages(prev) {
+                        const existingMessage = prev.find(aMessage => aMessage.__ref === incomingMessage.__ref)
+                        if (existingMessage) return prev;
+                        return [...prev, newMessage]
+                    }
+                }
+            })
+        }
+    }
 
     const updateCreateMessage = (cache, { data: { createMessage } }) => {
         if (createMessage.id) {
@@ -99,6 +151,7 @@ const MessageRoom = ({ userId }) => {
                     }
                 }
             })
+            setValue("message", "")
         }
     }
 
@@ -117,10 +170,44 @@ const MessageRoom = ({ userId }) => {
         })
     }
 
+    const room = useRef()
+    const fetchMoreMessages = () => {
+        // 추가 데이터를 로드하는 상태로 전환
+        setFetching(true);
+        fetchMore({
+            variables: {
+                id: userId,
+                offset: messageData?.length
+            }
+        })
+        // 추가 데이터 로드 끝
+        setFetching(false);
+    };
+
+    const scroll = () => {
+        const scrollHeight = room.current.scrollHeight;
+        const scrollTop = room.current.scrollTop;
+        const clientHeight = room.current.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight && fetching === false) {
+            // 페이지 끝에 도달하면 추가 데이터를 받아온다
+            fetchMoreMessages();
+        }
+    }
 
     useEffect(() => {
-        setMessageData(data?.seeRoom?.messages)
+        if (data) {
+            setMessageData(data?.seeRoom?.messages)
+            subscribeToMore({
+                document: REALTIME_ROOM,
+                variables: {
+                    id: data?.seeRoom?.id
+                },
+                updateQuery: realtimeUpdate
+            })
+        }
     }, [data])
+
     return (
         loading ? (
             "wait..."
@@ -134,17 +221,19 @@ const MessageRoom = ({ userId }) => {
                         color={darkMode ? colors.white : colors.black}
                     />
                 </RoomInfo>
-                {messageData?.map(message =>
-                    <Message
-                        key={message.id}
-                        avatar={message.user.avatar}
-                        avatarSize={35}
-                        name={message.user.name}
-                        nameSize={14}
-                        isMine={message.isMine}
-                        message={message.payload}
-                    />
-                )}
+                <RoomMain onScroll={scroll} ref={room}>
+                    {messageData?.map(message =>
+                        <Message
+                            key={message?.id}
+                            avatar={message?.user?.avatar}
+                            avatarSize={35}
+                            name={message?.user?.name}
+                            nameSize={14}
+                            isMine={message.isMine}
+                            message={message.payload}
+                        />
+                    )}
+                </RoomMain>
 
                 <InputContainer>
                     <Input

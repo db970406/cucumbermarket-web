@@ -189,7 +189,7 @@ export default function ItemDetail() {
                             />
                             <Button
                                 text="실시간 채팅"
-                                onClick={() => showChatRoomVar(true)}
+                                onClick={() => showChatRoomVar(showChatRoom ? false : true)}
                             />
                         </Buttons>
                     ) : null}
