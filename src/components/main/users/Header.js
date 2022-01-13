@@ -80,7 +80,7 @@ export default function Header() {
 
     const getSearchMode = (bool) => setSearchMode(bool)
 
-    const { register, handleSubmit, formState } = useForm({
+    const { register, handleSubmit, formState, setValue } = useForm({
         mode: "onChange"
     })
 
@@ -88,6 +88,7 @@ export default function Header() {
         history.push("/", {
             searchItems
         })
+        setValue("keyword", "")
     }
     const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
@@ -103,10 +104,8 @@ export default function Header() {
         })
     }
 
-    const sendWhere = (path) => {
-        history.push(path)
-        window.location.reload()
-    }
+    const sendWhere = (path) => history.push(path)
+
     const { pathname } = window.location
 
     return (

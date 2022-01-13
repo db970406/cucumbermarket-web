@@ -17,16 +17,16 @@ import { MESSAGE_DEFAULT_FRAGMENT } from '../../shared/utils/fragments'
 import Message from './Message'
 
 const Container = styled.div`
+    position:fixed;
+    bottom:0;
+    right:0;
     background-color:${({ theme }) => theme.bgColor} ;
-    max-width:300px;
     width:100%;
-    max-height:400px;
+    max-width:300px;
     height:100%;
+    max-height:400px;
     border:${colors.green} 1px solid;
     border-radius:15px;
-    position:fixed;
-    bottom:5px;
-    right:5px;
     z-index:1;
 `
 const InputContainer = styled.div`
@@ -34,11 +34,12 @@ const InputContainer = styled.div`
     margin:0 10px;
     display:flex;
     align-items:center;
-    position:fixed;
+    position:absolute;
     max-width:280px;
     width:100%;
-    bottom:10px;
+    bottom:0;
     transition:all 0.3s ease-in-out;
+    background-color:${props => props.theme.bgColor};
 `
 const SearchBtn = styled.div`
     // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하기 위함
@@ -58,8 +59,11 @@ const RoomTitle = styled.span`
 `
 const RoomMain = styled.div`
     overflow:scroll;
+    ::-webkit-scrollbar{
+        display:none;
+    };
     height:100%;
-    padding-bottom:70px;
+    padding-bottom:50px;
     bottom:0;
 `
 

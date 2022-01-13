@@ -32,7 +32,7 @@ const MessageBubble = styled.div`
 `
 const MessageText = styled.span`    
     color:white;
-    
+    font-weight:600;
 `
 
 export default function Message({
