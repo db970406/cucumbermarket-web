@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.13
 */
 
 // ApolloClient 관련파일
@@ -45,6 +45,9 @@ export const getLightMode = () => {
     darkModeVar(false)
     localStorage.removeItem(DARKMODE)
 }
+
+export const showChatRoomVar = makeVar(false)
+
 
 const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : ------
+수정일 : 2022.01.13
 */
 
 import styled from 'styled-components'
@@ -25,7 +25,14 @@ const UserInfo = styled.div`
     margin-left:3px;
 `
 
-export default function UserData({ avatar, name, location, avatarSize, nameSize, locationSize }) {
+export default function UserData({
+    avatar,
+    name,
+    location,
+    avatarSize,
+    nameSize,
+    locationSize,
+}) {
     return (
         <Container>
             <UserAvatar img={avatar} size={avatarSize} />

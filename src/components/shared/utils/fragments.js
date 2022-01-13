@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.12
+수정일 : 2022.01.13
 */
 
 import { gql } from '@apollo/client';
@@ -64,5 +64,19 @@ export const USER_DEFAULT_FRAGMENT = gql`
         email
         username
         avatar
+    }
+`
+
+export const MESSAGE_DEFAULT_FRAGMENT = gql`
+    fragment MessageDefaultFragment on Message{
+        id
+        payload
+        user{
+            id
+            name
+            avatar
+        }
+        isMine
+        read
     }
 `
