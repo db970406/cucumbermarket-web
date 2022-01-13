@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.11
+수정일 : 2022.01.13
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -93,7 +93,7 @@ export default function SignUp() {
     }, [])
 
     return (
-        <FormLayout auth logo title="Sign Up">
+        <FormLayout auth logo title="회원가입">
             <form onSubmit={handleSubmit(onValid)}>
                 <Input
                     onChange={clearError}

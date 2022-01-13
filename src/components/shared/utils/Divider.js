@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.13
 */
 
 import styled from 'styled-components'
@@ -31,7 +31,7 @@ const Divider = () => {
     return (
         <SDivider>
             <div></div>
-            <span>or</span>
+            <span>sns</span>
             <div></div>
         </SDivider>
     )

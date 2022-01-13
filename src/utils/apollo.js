@@ -1,14 +1,16 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.13
 */
 
 // ApolloClient 관련파일
 
-import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client"
+import { ApolloClient, InMemoryCache, makeVar, split } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
+import { getMainDefinition, offsetLimitPagination } from '@apollo/client/utilities'
 import { createUploadLink } from 'apollo-upload-client'
+import { WebSocketLink } from '@apollo/client/link/ws';
 
 /* 
 로그인 구현부
@@ -27,7 +29,6 @@ export const logUserOut = (history) => {
     localStorage.removeItem(TOKEN)
     history.replace()
     window.location.href = "/"
-
 }
 
 
@@ -46,9 +47,9 @@ export const getLightMode = () => {
     localStorage.removeItem(DARKMODE)
 }
 
-const uploadHttpLink = createUploadLink({
-    uri: "http://localhost:4000/graphql",
-})
+export const showChatRoomVar = makeVar(false)
+
+
 const authLink = setContext((_, { headers }) => {
     return {
         headers: {
@@ -57,7 +58,42 @@ const authLink = setContext((_, { headers }) => {
         }
     }
 })
+const uploadHttpLink = createUploadLink({
+    uri: "http://localhost:4000/graphql",
+})
+
+const wsLink = new WebSocketLink({
+    uri: 'ws://localhost:4000/graphql',
+    options: {
+        reconnect: true,
+        connectionParams: () => ({
+            token: localStorage.getItem(TOKEN)
+        })
+    }
+});
+const httpLinks = authLink.concat(uploadHttpLink)
+
+const splitLink = split(
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+        );
+    },
+    wsLink,
+    httpLinks,
+);
+
 export const client = new ApolloClient({
-    link: authLink.concat(uploadHttpLink),
-    cache: new InMemoryCache()
+    link: splitLink,
+    cache: new InMemoryCache({
+        typePolicies: {
+            Room: {
+                fields: {
+                    messages: offsetLimitPagination()
+                }
+            }
+        }
+    })
 })

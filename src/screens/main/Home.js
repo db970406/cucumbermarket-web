@@ -30,6 +30,7 @@ const Container = styled.div`
 const SearchAlarm = styled.p`
     font-size:14px;
     margin-bottom:30px;
+    cursor:pointer;
 `
 
 // Main에 display될 item들의 배치
@@ -47,15 +48,25 @@ export default function Home() {
     const [searchData, setSearchData] = useState([])
 
     const { loading } = useQuery(SEE_ITEMS, {
-        onCompleted: ({ seeItems }) => setItemsData(seeItems)
+        onCompleted: ({ seeItems }) => {
+            setItemsData(seeItems)
+            setSearchData([])
+        }
     })
 
+    const resetSearch = () => setSearchData([])
     useEffect(() => {
-        setSearchData(state?.searchItems)
+        if (state?.searchItems) {
+            setSearchData(state?.searchItems)
+            state.searchItems = []
+        }
     }, [state])
+
     return (
         <MainLayout title="오이마켓" loading={loading || itemsData?.length === 0}>
-            {searchData?.length > 0 ? <SearchAlarm>검색 결과입니다.</SearchAlarm> : null}
+            {searchData?.length > 0 ? (
+                <SearchAlarm onClick={resetSearch}>검색 취소</SearchAlarm>
+            ) : null}
             <Container>
                 <Flex>
                     {searchData?.length > 0 ? (

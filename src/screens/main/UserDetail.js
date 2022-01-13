@@ -77,6 +77,7 @@ const Tab = styled.button`
     span{
         font-size: 14px;
         margin-left: 2px;
+        padding:5px;
     }
     &:hover{
         span{

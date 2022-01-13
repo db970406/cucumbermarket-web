@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.11
+수정일 : 2022.01.13
 */
 
 import propTypes from "prop-types"
@@ -14,7 +14,7 @@ const SButton = styled.button`
     border-radius:7px;
     opacity:${props => props.disabled ? 0.3 : 0.8};
     &:hover{
-        opacity: 1;
+        ${props => props.disabled ? 0.3 : 1};
     }
     margin:5px 0;
 `

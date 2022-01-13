@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.11
+수정일 : 2022.01.13
 */
 
 import { gql, useMutation } from '@apollo/client';
@@ -17,18 +17,23 @@ import NaverLogin from '../../utils/NaverLogin';
 import { colors } from '../../utils/styles';
 import Input from '../../components/shared/form/Input';
 import InputError from '../../components/shared/form/InputError';
+import GithubLogin from '../../utils/GithubLogin';
 
 const SocialLogins = styled.div`
     margin-top:5px;
     display:flex;
-    flex-direction:column;
     justify-content:center;
+    align-items:center;
     margin:0 auto;
+    gap:10px;
 `
 
 const Greeting = styled.span`
     color:${colors.green};
     text-align:center;
+`
+
+const GithubLoginBox = styled.div`
 `
 
 const LOGIN_MUTATION = gql`
@@ -81,7 +86,7 @@ export default function Login() {
 
 
     return (
-        <FormLayout auth logo title="Log In">
+        <FormLayout auth logo title="로그인">
             <form onClick={handleSubmit(onValid)}>
                 {state?.message ? (
                     <Greeting>{state?.message}</Greeting>
@@ -135,7 +140,7 @@ export default function Login() {
                 <InputError text={formState.errors?.password?.message} />
 
                 <Button
-                    text='Log In'
+                    text="로그인"
                     disabled={!formState.isValid || loading}
                     loading={loading}
                     width="100%"
@@ -150,6 +155,7 @@ export default function Login() {
             <Divider />
             <SocialLogins>
                 <NaverLogin />
+                <GithubLogin />
             </SocialLogins>
         </FormLayout>
     )
