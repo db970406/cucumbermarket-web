@@ -13,13 +13,15 @@ import { darkModeVar, showChatRoomVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
 import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
 import Input from '../../shared/form/Input'
+import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
 import { MESSAGE_DEFAULT_FRAGMENT } from '../../shared/utils/fragments'
 import Message from './Message'
 
 const Container = styled.div`
     position:fixed;
-    bottom:0;
-    right:0;
+    overflow: hidden;
+    bottom:5px;
+    right:5px;
     background-color:${({ theme }) => theme.bgColor} ;
     width:100%;
     max-width:300px;
@@ -28,23 +30,7 @@ const Container = styled.div`
     border:${colors.green} 1px solid;
     border-radius:15px;
     z-index:1;
-`
-const InputContainer = styled.div`
-    // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하고 Input의 길이 조절을 위함
-    margin:0 10px;
-    display:flex;
-    align-items:center;
-    position:absolute;
-    max-width:280px;
-    width:100%;
-    bottom:0;
-    transition:all 0.3s ease-in-out;
-    background-color:${props => props.theme.bgColor};
-`
-const SearchBtn = styled.div`
-    // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하기 위함
-    position:absolute;
-    right:10px;
+    
 `
 
 const RoomInfo = styled.div`
@@ -63,8 +49,14 @@ const RoomMain = styled.div`
         display:none;
     };
     height:100%;
-    padding-bottom:50px;
+    padding-bottom:80px;
     bottom:0;
+`
+const PositionAbsolute = styled.div`
+    position:absolute;
+    bottom:2px;
+    width:100%;
+    margin: 0 auto;
 `
 
 const SEE_ROOM = gql`
@@ -239,22 +231,21 @@ const MessageRoom = ({ userId }) => {
                     )}
                 </RoomMain>
 
-                <InputContainer>
-                    <Input
-                        {...register("message", {
-                            required: true,
-                        })}
-                        required
-                    />
-                    <SearchBtn>
-                        <FontAwesomeBtn
-                            icon={faArrowCircleUp}
-                            size={"lg"}
-                            onClick={handleSubmit(onValid)}
-                            color={darkMode ? colors.white : colors.black}
+                <PositionAbsolute>
+                    <InputWithFontAwesome
+                        icon={faArrowCircleUp}
+                        size={"lg"}
+                        onClick={handleSubmit(onValid)}
+                        color={darkMode ? colors.white : colors.black}
+                    >
+                        <Input
+                            {...register("message", {
+                                required: true,
+                            })}
+                            required
                         />
-                    </SearchBtn>
-                </InputContainer>
+                    </InputWithFontAwesome>
+                </PositionAbsolute>
             </Container>
         )
     )

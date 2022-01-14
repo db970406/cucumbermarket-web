@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.11
-수정일 : 2022.01.12
+수정일 : 2022.01.14
 */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -35,7 +35,7 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
 }
 
 FontAwesomeBtn.propTypes = {
-    onClick: propTypes.func.isRequired,
+    onClick: propTypes.func,
     size: propTypes.string,
     color: propTypes.string
 }

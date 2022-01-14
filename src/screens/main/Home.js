@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.12
+수정일 : 2022.01.14
 */
 
 import { gql, useQuery } from '@apollo/client';
@@ -54,7 +54,11 @@ export default function Home() {
         }
     })
 
-    const resetSearch = () => setSearchData([])
+    const resetSearch = () => {
+        setSearchData([])
+        state.searchItems = []
+    }
+
     useEffect(() => {
         if (state?.searchItems) {
             setSearchData(state?.searchItems)
