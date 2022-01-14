@@ -4,7 +4,7 @@
 수정일 : 2022.01.14
 */
 
-import { faBackspace, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faBackspace, faEraser, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import useLoggedInUser from '../../../hooks/useLoggedInUser'
@@ -12,8 +12,8 @@ import { colors } from '../../../utils/styles'
 import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
 import UserAvatar from './UserAvatar'
 import { gql, useLazyQuery, useReactiveVar } from "@apollo/client"
-import { darkModeVar } from "../../../utils/apollo"
-import { useState } from 'react'
+import { darkModeVar, searchDataVar } from "../../../utils/apollo"
+import { useEffect, useState } from 'react'
 import Input from '../../shared/form/Input'
 import { useForm } from 'react-hook-form'
 import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments'
@@ -22,7 +22,7 @@ import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
 const Container = styled.header`
     padding:20px 70px;
     display:flex;
-    justify-content:space-between;
+    justify-content:space-around;
     align-items:center;
     position:sticky;
     top:0;
@@ -62,6 +62,7 @@ const SEARCH_ITEMS = gql`
 
 export default function Header() {
     const [searchMode, setSearchMode] = useState(false)
+    const searchData = useReactiveVar(searchDataVar)
     const darkMode = useReactiveVar(darkModeVar)
     const { loggedInUser } = useLoggedInUser()
     const history = useHistory()
@@ -77,7 +78,7 @@ export default function Header() {
             searchItems
         })
     }
-    const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
+    const [searchItems, { data, loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
     })
 
@@ -94,15 +95,22 @@ export default function Header() {
 
     const sendWhere = (path) => history.push(path)
 
+    const resetSearch = () => searchDataVar([])
+
     const { pathname } = window.location
 
+    useEffect(() => {
+        if (data?.searchItems) {
+            searchDataVar(data?.searchItems)
+        }
+    }, [data])
     return (
         <Container>
             {pathname === "/" ? null : (
                 <GoBack>
                     <FontAwesomeBtn
                         icon={faBackspace}
-                        size={"2x"}
+                        size={"lg"}
                         color={darkMode ? colors.white : colors.black}
                         onClick={() => history.goBack()}
                     />
@@ -113,33 +121,42 @@ export default function Header() {
             </Tab>
             <Tabs>
                 {pathname === "/" ? (
-                    searchMode ? (
-                        <InputWithFontAwesome
-                            onClick={formState.isValid && searchMode ? handleSubmit(onValid) : () => getSearchMode(false)}
-                            icon={faSearch}
+                    searchData.length > 0 ? (
+                        <FontAwesomeBtn
+                            onClick={() => resetSearch()}
+                            icon={faEraser}
                             color={darkMode ? colors.white : colors.black}
                             size={"lg"}
-                            disabled={!formState.isValid || loading}
-                        >
-                            <Input
-                                placeholder='동네 등 키워드'
-                                {...register("keyword", {
-                                    required: true,
-                                    minLength: {
-                                        value: 2,
-                                        message: "두 글자 이상을 입력하세요."
-                                    }
-                                })}
-                                required
-                            />
-                        </InputWithFontAwesome>
-                    ) : (
-                        <FontAwesomeBtn
-                            icon={faSearch}
-                            size={"lg"}
-                            color={colors.green}
-                            onClick={() => getSearchMode(true)}
                         />
+                    ) : (
+                        searchMode ? (
+                            <InputWithFontAwesome
+                                onClick={formState.isValid && searchMode ? handleSubmit(onValid) : () => getSearchMode(false)}
+                                icon={faSearch}
+                                color={darkMode ? colors.white : colors.black}
+                                size={"lg"}
+                                disabled={!formState.isValid || loading}
+                            >
+                                <Input
+                                    placeholder='동네 등 키워드'
+                                    {...register("keyword", {
+                                        required: true,
+                                        minLength: {
+                                            value: 2,
+                                            message: "두 글자 이상을 입력하세요."
+                                        }
+                                    })}
+                                    required
+                                />
+                            </InputWithFontAwesome>
+                        ) : (
+                            <FontAwesomeBtn
+                                icon={faSearch}
+                                size={"lg"}
+                                color={colors.green}
+                                onClick={() => getSearchMode(true)}
+                            />
+                        )
                     )
                 ) : null}
                 <FontAwesomeBtn

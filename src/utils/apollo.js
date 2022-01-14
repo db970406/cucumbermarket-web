@@ -50,6 +50,7 @@ export const getLightMode = () => {
 export const chatRoomIdVar = makeVar(0)
 export const chatUserIdVar = makeVar(0)
 export const showChatListVar = makeVar(false)
+export const searchDataVar = makeVar([])
 
 
 const authLink = setContext((_, { headers }) => {
