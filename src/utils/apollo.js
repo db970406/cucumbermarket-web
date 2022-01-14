@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.14
 */
 
 // ApolloClient 관련파일
@@ -47,7 +47,9 @@ export const getLightMode = () => {
     localStorage.removeItem(DARKMODE)
 }
 
-export const showChatRoomVar = makeVar(false)
+export const chatRoomIdVar = makeVar(0)
+export const chatUserIdVar = makeVar(0)
+export const showChatListVar = makeVar(false)
 
 
 const authLink = setContext((_, { headers }) => {

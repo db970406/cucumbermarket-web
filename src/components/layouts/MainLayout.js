@@ -10,7 +10,10 @@ import propTypes from "prop-types"
 import Header from '../main/users/Header';
 import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import BaseContainer from './BaseContainer';
-import MyChatRooms from '../shared/buttons/MyChatRoomLists';
+import ChatBtn from '../shared/buttons/ChatBtn';
+import { useReactiveVar } from '@apollo/client';
+import { showChatListVar } from '../../utils/apollo';
+import MessageScreen from '../../screens/main/MessageScreen';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;
@@ -33,6 +36,8 @@ const Body = styled.div`
 
 // 로그인 후 화면들에 쓰일 레이아웃
 export default function MainLayout({ children, loading, title }) {
+    const showChatList = useReactiveVar(showChatListVar)
+
     return (
         <>
             <Header />
@@ -44,7 +49,11 @@ export default function MainLayout({ children, loading, title }) {
                     ) : children}
                 </Body>
             </Container>
-            <MyChatRooms />
+            {showChatList ? (
+                <MessageScreen />
+            ) : (
+                <ChatBtn />
+            )}
             <DarkmodeBtn />
         </>
     )

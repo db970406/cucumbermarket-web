@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.13
+수정일 : 2022.01.14
 */
 // 클릭한 아이템의 상세정보를 보여주는 페이지
 
@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { colors } from '../../utils/styles'
-import { darkModeVar, showChatRoomVar } from '../../utils/apollo'
+import { darkModeVar, chatUserIdVar } from '../../utils/apollo'
 import { useState } from 'react'
 import Button from '../../components/shared/buttons/Button'
 import { Link } from "react-router-dom"
@@ -22,7 +22,7 @@ import ItemPhoto from '../../components/main/items/ItemPhoto'
 import UserData from '../../components/main/users/UserData'
 import FontAwesomeBtn from '../../components/shared/buttons/FontAwesomeBtn'
 import DropDownMenu from '../../components/main/items/DropDownMenu'
-import MessageRoom from '../../components/main/messages/MessageRoom'
+import MessageRoom from './MessageScreen'
 
 const Container = styled.div`
     display:flex;
@@ -91,7 +91,7 @@ export const SEE_ITEM = gql`
 
 export default function ItemDetail() {
     const darkMode = useReactiveVar(darkModeVar)
-    const showChatRoom = useReactiveVar(showChatRoomVar)
+    const chatUserId = useReactiveVar(chatUserIdVar)
     const [itemData, setItemData] = useState({})
 
     // 파라미터에서 id를 뽑아 resolver의 variables로 줄 것이다.
@@ -137,6 +137,9 @@ export default function ItemDetail() {
         },
         update: updateToggleLike
     })
+
+    const enterRoom = (userId) => chatUserIdVar(userId)
+
 
     return (
         <MainLayout title={itemData?.title} loading={loading}>
@@ -187,9 +190,10 @@ export default function ItemDetail() {
                                 size="2x"
                                 color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                             />
+
                             <Button
                                 text="실시간 채팅"
-                                onClick={() => showChatRoomVar(showChatRoom ? false : true)}
+                                onClick={() => enterRoom(itemData?.user?.id)}
                             />
                         </Buttons>
                     ) : null}
@@ -199,10 +203,8 @@ export default function ItemDetail() {
                     </Description>
                 </MetaData>
             </Container>
-            {showChatRoom ? (
-                <MessageRoom
-                    userId={itemData?.user?.id}
-                />
+            {chatUserId ? (
+                <MessageRoom />
             ) : null}
         </MainLayout>
     )

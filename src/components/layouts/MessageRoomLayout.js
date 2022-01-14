@@ -5,10 +5,10 @@
 */
 
 import { useReactiveVar } from '@apollo/client'
-import { faDoorClosed } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { darkModeVar, showChatRoomVar } from '../../utils/apollo'
+import { darkModeVar, showChatListVar, chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import FontAwesomeBtn from '../shared/buttons/FontAwesomeBtn'
 
@@ -46,7 +46,9 @@ const RoomMain = styled.div`
     bottom:0;
 `
 
-export default function MessageLayout({ children, loading, title, closeFn, fetchMore }) {
+export default function MessageRoomLayout({ children, loading, title, fetchMore }) {
+    const chatRoomId = useReactiveVar(chatRoomIdVar)
+    const chatUserId = useReactiveVar(chatUserIdVar)
     const [fetching, setFetching] = useState(false)
     const darkMode = useReactiveVar(darkModeVar)
 
@@ -71,17 +73,36 @@ export default function MessageLayout({ children, loading, title, closeFn, fetch
         }
     }
 
+    const backToLists = () => {
+        chatRoomIdVar(0)
+        chatUserIdVar(0)
+    }
+
+    const closeMessenger = () => {
+        chatRoomIdVar(0)
+        chatUserIdVar(0)
+        showChatListVar(false)
+    }
     return (
         loading ? (
             "wait..."
         ) : (
             <Container>
                 <RoomInfo>
+                    {chatRoomId > 0 || chatUserId > 0 ? (
+                        <FontAwesomeBtn
+                            icon={faArrowCircleLeft}
+                            onClick={() => backToLists()}
+                            color={darkMode ? colors.white : colors.black}
+                            size={"lg"}
+                        />
+                    ) : null}
                     <RoomTitle>{title}</RoomTitle>
                     <FontAwesomeBtn
                         icon={faDoorClosed}
-                        onClick={() => showChatRoomVar(false)}
+                        onClick={() => closeMessenger()}
                         color={darkMode ? colors.white : colors.black}
+                        size={"lg"}
                     />
                 </RoomInfo>
                 <RoomMain onScroll={scroll} ref={room}>

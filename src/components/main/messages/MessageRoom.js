@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
-작성일 : 2022.01.13
-수정일 : 2022.01.14
+작성일 : 2022.01.14
+수정일 : ------
 */
 
 import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import useLoggedInUser from '../../../hooks/useLoggedInUser'
-import { darkModeVar, showChatRoomVar } from '../../../utils/apollo'
+import { darkModeVar, chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
 import MessageLayout from '../../layouts/MessageRoomLayout'
 import Input from '../../shared/form/Input'
@@ -25,10 +25,9 @@ const PositionAbsolute = styled.div`
     width:100%;
     margin: 0 auto;
 `
-
 const SEE_ROOM = gql`
-    query seeRoom($id:Int!,$offset:Int){
-        seeRoom(id:$id){
+    query seeRoom($roomId:Int,$userId:Int,$offset:Int){
+        seeRoom(roomId:$roomId,userId:$userId){
             id
             users{
                 id
@@ -41,6 +40,14 @@ const SEE_ROOM = gql`
         }
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
+`
+const READ_MESSAGES = gql`
+    mutation readMessages($id:Int!){
+        readMessages(id:$id){
+            ok
+            error
+        }
+    }
 `
 const CREATE_MESSAGE = gql`
     mutation createMessage($payload:String!,$roomId:Int,$userId:Int){
@@ -60,17 +67,38 @@ const REALTIME_ROOM = gql`
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
 
-const MessageRoom = ({ userId }) => {
+export default function MessageRoom() {
     const darkMode = useReactiveVar(darkModeVar)
-
+    const chatRoomId = useReactiveVar(chatRoomIdVar)
+    const chatUserId = useReactiveVar(chatUserIdVar)
     const [messageData, setMessageData] = useState([])
     const { register, handleSubmit, setValue } = useForm()
 
+    const updateReadMessages = (cache, { data }) => {
+        const { readMessages: { ok, error } } = data
+        if (!ok) {
+            alert(error)
+            return;
+        }
+        cache.modify({
+            id: `Room:${data?.seeRoom?.id}`,
+            fields: {
+                unreadCount(prev) {
+                    return 0
+                }
+            }
+        })
+    }
+    const [readMessages] = useMutation(READ_MESSAGES, {
+        update: updateReadMessages
+    })
+
     const { data, loading, fetchMore, subscribeToMore } = useQuery(SEE_ROOM, {
         variables: {
-            id: userId,
+            ...(chatRoomId && { roomId: parseInt(chatRoomId) }),
+            ...(chatUserId && { userId: parseInt(chatUserId) }),
             offset: 0
-        }
+        },
     })
 
     const { cache } = useApolloClient()
@@ -131,14 +159,20 @@ const MessageRoom = ({ userId }) => {
         createMessage({
             variables: {
                 payload: message,
-                userId
+                ...(chatRoomId && { roomId: parseInt(chatRoomId) }),
+                ...(chatUserId && { userId: parseInt(chatUserId) }),
             }
         })
     }
 
     useEffect(() => {
-        if (data) {
+        if (data?.seeRoom) {
             setMessageData(data?.seeRoom?.messages)
+            readMessages({
+                variables: {
+                    id: data?.seeRoom?.id
+                }
+            })
             subscribeToMore({
                 document: REALTIME_ROOM,
                 variables: {
@@ -151,6 +185,7 @@ const MessageRoom = ({ userId }) => {
 
     const { loggedInUser } = useLoggedInUser()
     const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id)
+
     return (
         <MessageLayout
             loading={loading}
@@ -158,7 +193,7 @@ const MessageRoom = ({ userId }) => {
             fetchMore={
                 () => fetchMore({
                     variables: {
-                        id: userId,
+                        id: chatRoomId,
                         offset: messageData?.length
                     }
                 })
@@ -175,7 +210,6 @@ const MessageRoom = ({ userId }) => {
                     message={message.payload}
                 />
             )}
-
             <PositionAbsolute>
                 <InputWithFontAwesome
                     icon={faArrowCircleUp}
@@ -194,4 +228,3 @@ const MessageRoom = ({ userId }) => {
         </MessageLayout>
     )
 }
-export default MessageRoom
