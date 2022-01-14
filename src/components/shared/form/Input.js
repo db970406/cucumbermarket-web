@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.14
 */
 
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import { colors } from '../../../utils/styles';
 
 const Input = styled.input`
     width:100%;
-    padding:10px 15px;
+    padding:8px 15px;
     border-radius:7px;
     margin:5px 0;
     &::placeholder{

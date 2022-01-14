@@ -1,11 +1,11 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.11
+수정일 : 2022.01.14
 */
 // 유저의 상세정보를 보여주는 페이지
 
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
@@ -14,8 +14,9 @@ import MainLayout from "../../components/layouts/MainLayout"
 import UserData from '../../components/main/users/UserData'
 import Button from '../../components/shared/buttons/Button'
 import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/utils/fragments'
-import { logUserOut } from '../../utils/apollo'
+import { chatUserIdVar, logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
+import MessageRoom from '../../components/main/messages/MessageRoom'
 
 const Container = styled.div`
     display:flex;
@@ -47,6 +48,9 @@ const Buttons = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
+    @media screen and (max-width: 550px) {
+        display:none;
+    }
 `
 
 const Tabs = styled.p`
@@ -112,6 +116,8 @@ const UserDetail = () => {
     const [userData, setUserData] = useState({})
     const history = useHistory()
     const [tabFocus, setTabFocus] = useState(true)
+    const chatUserId = useReactiveVar(chatUserIdVar)
+
     const focusChange = (bool) => setTabFocus(bool)
 
 
@@ -123,10 +129,12 @@ const UserDetail = () => {
     })
 
     const sendUserEdit = () => {
+        console.log(userData?.id)
         return history.push(`/user/${userData?.id}/edit`, {
             avatar: userData?.avatar
         })
     }
+    const enterRoom = (userId) => chatUserIdVar(userId)
 
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
@@ -146,7 +154,7 @@ const UserDetail = () => {
                                 {!userData?.socialLogin ? (
                                     <Button
                                         text="정보 수정"
-                                        onClick={sendUserEdit}
+                                        onClick={() => sendUserEdit()}
                                     />
                                 ) : null}
                                 <Button
@@ -156,7 +164,10 @@ const UserDetail = () => {
                                 />
                             </>
                         ) : (
-                            <Button text="대화하기" onClick={() => null} />
+                            <Button
+                                text="대화하기"
+                                onClick={() => enterRoom(userData?.id)}
+                            />
                         )}
                     </Buttons>
                 </User>
@@ -191,6 +202,9 @@ const UserDetail = () => {
                     </Flex>
                 </Items>
             </Container>
+            {chatUserId ? (
+                <MessageRoom />
+            ) : null}
         </MainLayout>
     )
 }

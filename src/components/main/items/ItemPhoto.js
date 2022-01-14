@@ -114,7 +114,7 @@ ItemPhoto.propTypes = {
     editMode: propTypes.bool,
     itemId: propTypes.string,
     id: propTypes.number,
-    src: propTypes.string.isRequired,
+    src: propTypes.string,
     maxHeight: propTypes.number,
     maxWidth: propTypes.number
 }

@@ -1,10 +1,10 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.12
+수정일 : 2022.01.14
 */
 
-import { faBackspace, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faBackspace, faEraser, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import useLoggedInUser from '../../../hooks/useLoggedInUser'
@@ -12,11 +12,12 @@ import { colors } from '../../../utils/styles'
 import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
 import UserAvatar from './UserAvatar'
 import { gql, useLazyQuery, useReactiveVar } from "@apollo/client"
-import { darkModeVar } from "../../../utils/apollo"
-import { useState } from 'react'
+import { darkModeVar, searchDataVar } from "../../../utils/apollo"
+import { useEffect, useState } from 'react'
 import Input from '../../shared/form/Input'
 import { useForm } from 'react-hook-form'
 import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments'
+import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
 
 const Container = styled.header`
     padding:20px 70px;
@@ -42,25 +43,12 @@ const Logo = styled.img`
 const Tabs = styled.div`
     display:flex;
     align-items:center;
+    gap:20px;
     @media screen and (max-width:650px){
         display:none;
     }
 `
 const Tab = styled.button`
-`
-const InputContainer = styled.div`
-    // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하고 Input의 길이 조절을 위함
-    margin-right:30px;
-    display:flex;
-    align-items:center;
-    position:relative;
-    width:230px;
-    transition:all 0.3s ease-in-out;
-`
-const SearchBtn = styled.div`
-    // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하기 위함
-    position:absolute;
-    right:10px;
 `
 
 const SEARCH_ITEMS = gql`
@@ -74,6 +62,7 @@ const SEARCH_ITEMS = gql`
 
 export default function Header() {
     const [searchMode, setSearchMode] = useState(false)
+    const searchData = useReactiveVar(searchDataVar)
     const darkMode = useReactiveVar(darkModeVar)
     const { loggedInUser } = useLoggedInUser()
     const history = useHistory()
@@ -88,9 +77,8 @@ export default function Header() {
         history.push("/", {
             searchItems
         })
-        setValue("keyword", "")
     }
-    const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
+    const [searchItems, { data, loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
     })
 
@@ -102,19 +90,27 @@ export default function Header() {
                 keyword
             }
         })
+        setValue("keyword", "")
     }
 
     const sendWhere = (path) => history.push(path)
 
+    const resetSearch = () => searchDataVar([])
+
     const { pathname } = window.location
 
+    useEffect(() => {
+        if (data?.searchItems) {
+            searchDataVar(data?.searchItems)
+        }
+    }, [data])
     return (
         <Container>
             {pathname === "/" ? null : (
                 <GoBack>
                     <FontAwesomeBtn
                         icon={faBackspace}
-                        size={"2x"}
+                        size={"lg"}
                         color={darkMode ? colors.white : colors.black}
                         onClick={() => history.goBack()}
                     />
@@ -124,44 +120,50 @@ export default function Header() {
                 <Logo src={require("../../../images/cucumber.png")} />
             </Tab>
             <Tabs>
-                {searchMode ? (
-                    <InputContainer>
-                        <Input
-                            placeholder='동네 등 키워드를 입력하세요.'
-                            {...register("keyword", {
-                                required: true,
-                                minLength: {
-                                    value: 2,
-                                    message: "두 글자 이상을 입력하세요."
-                                }
-                            })}
-                            required
+                {pathname === "/" ? (
+                    searchData.length > 0 ? (
+                        <FontAwesomeBtn
+                            onClick={() => resetSearch()}
+                            icon={faEraser}
+                            color={darkMode ? colors.white : colors.black}
+                            size={"lg"}
                         />
-                        <SearchBtn onClick={formState.isValid && searchMode ? handleSubmit(onValid) : () => getSearchMode(false)}>
-                            <FontAwesomeBtn
+                    ) : (
+                        searchMode ? (
+                            <InputWithFontAwesome
+                                onClick={formState.isValid && searchMode ? handleSubmit(onValid) : () => getSearchMode(false)}
                                 icon={faSearch}
                                 color={darkMode ? colors.white : colors.black}
                                 size={"lg"}
-                                onClick={() => null}
                                 disabled={!formState.isValid || loading}
+                            >
+                                <Input
+                                    placeholder='동네 등 키워드'
+                                    {...register("keyword", {
+                                        required: true,
+                                        minLength: {
+                                            value: 2,
+                                            message: "두 글자 이상을 입력하세요."
+                                        }
+                                    })}
+                                    required
+                                />
+                            </InputWithFontAwesome>
+                        ) : (
+                            <FontAwesomeBtn
+                                icon={faSearch}
+                                size={"lg"}
+                                color={colors.green}
+                                onClick={() => getSearchMode(true)}
                             />
-                        </SearchBtn>
-                    </InputContainer>
-                ) : (
-                    <FontAwesomeBtn
-                        icon={faSearch}
-                        size={"lg"}
-                        color={colors.green}
-                        onClick={() => getSearchMode(true)}
-                        marginRight={20}
-                    />
-                )}
+                        )
+                    )
+                ) : null}
                 <FontAwesomeBtn
                     icon={faUpload}
                     size={"lg"}
                     color={colors.green}
                     onClick={() => sendWhere(`/item/upload`)}
-                    marginRight={20}
                 />
                 <Tab onClick={() => sendWhere(`/user/${loggedInUser?.id}`)}>
                     <UserAvatar img={loggedInUser?.avatar} size={30} />

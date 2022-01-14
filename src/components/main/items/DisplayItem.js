@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.12
+수정일 : 2022.01.14
 */
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
@@ -113,7 +113,7 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                         */
 
                         // 유저 사용성을 고려했을 때 관심 해제 시 UserDetail에서 해당 Item을 바로 사라지게 하는 것보단 Item은 두되 관심만 해제시키는게 나은 듯?
-                        return prev
+                        return isLiked ? prev : [photoPressedLike, ...prev]
                     }
                 }
             })

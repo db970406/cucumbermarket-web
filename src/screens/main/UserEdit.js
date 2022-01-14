@@ -65,19 +65,19 @@ export default function UserEdit() {
     const history = useHistory()
     const { state } = useLocation()
     const [currentLocation, setCurrentLocation] = useState("")
-    const { data: userData } = useLoggedInUser()
+    const { loggedInUser } = useLoggedInUser()
 
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange",
         defaultValues: {
-            name: userData?.seeLoggedInUser.name
+            name: loggedInUser.name
         }
     })
 
     const editUserCompleted = ({ editUser }) => {
-        const { ok } = editUser
+        const { ok, error } = editUser
         if (ok) {
-            history.push(`/user/${userData?.seeLoggedInUser?.id}`);
+            history.push(`/user/${loggedInUser?.id}`);
             window.location.reload()
         }
     }
@@ -87,7 +87,6 @@ export default function UserEdit() {
     const onValid = (data) => {
         if (loading) return;
         const { name, introduce, location, avatar } = data
-
         editUser({
             variables: {
                 ...(name && { name }),
@@ -108,19 +107,20 @@ export default function UserEdit() {
         }
         navigator.geolocation.getCurrentPosition(success)
     }, [])
+
     return (
-        parseInt(id) === userData?.seeLoggedInUser?.id &&
-            !userData?.seeLoggedInUser?.socialLogin ? (
-            <MainLayout title={`${userData?.seeLoggedInUser?.name} 수정`} loading={!state}>
+        parseInt(id) === loggedInUser?.id &&
+            !loggedInUser?.socialLogin ? (
+            <MainLayout title={`${loggedInUser?.name} 수정`} loading={!state}>
                 <Container>
                     <ItemPhoto
                         src={state?.avatar}
-                        alt={userData?.seeLoggedInUser?.name}
+                        alt={loggedInUser?.name}
                         maxHeight={200}
                         maxWidth={200}
                     />
                 </Container>
-                <FormLayout title={`${userData?.seeLoggedInUser?.name} 수정`}>
+                <FormLayout title={`${loggedInUser?.name} 수정`}>
                     <form onSubmit={handleSubmit(onValid)}>
                         <FileInput htmlFor="file-input">
                             아바타 업로드
@@ -176,7 +176,7 @@ export default function UserEdit() {
                             auth
                             disabled={loading}
                             loading={loading}
-                            text={`${userData?.seeLoggedInUser?.name}님의 정보 수정`}
+                            text={`${loggedInUser?.name}님의 정보 수정`}
                             onClick={handleSubmit(onValid)}
                             isLong
                         />

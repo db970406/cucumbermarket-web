@@ -1,16 +1,17 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.12
+수정일 : 2022.01.14
 */
 
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import DisplayItem from '../../components/main/items/DisplayItem';
 import MainLayout from '../../components/layouts/MainLayout';
 import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/utils/fragments';
 import { useLocation } from 'react-router-dom';
+import { searchDataVar } from '../../utils/apollo';
 
 const SEE_ITEMS = gql`
     query seeItems{
@@ -43,30 +44,15 @@ const Flex = styled.div`
     margin:0 auto;
 `
 export default function Home() {
-    const { state } = useLocation()
     const [itemsData, setItemsData] = useState([])
-    const [searchData, setSearchData] = useState([])
+    const searchData = useReactiveVar(searchDataVar)
 
     const { loading } = useQuery(SEE_ITEMS, {
-        onCompleted: ({ seeItems }) => {
-            setItemsData(seeItems)
-            setSearchData([])
-        }
+        onCompleted: ({ seeItems }) => setItemsData(seeItems)
     })
-
-    const resetSearch = () => setSearchData([])
-    useEffect(() => {
-        if (state?.searchItems) {
-            setSearchData(state?.searchItems)
-            state.searchItems = []
-        }
-    }, [state])
 
     return (
         <MainLayout title="오이마켓" loading={loading || itemsData?.length === 0}>
-            {searchData?.length > 0 ? (
-                <SearchAlarm onClick={resetSearch}>검색 취소</SearchAlarm>
-            ) : null}
             <Container>
                 <Flex>
                     {searchData?.length > 0 ? (

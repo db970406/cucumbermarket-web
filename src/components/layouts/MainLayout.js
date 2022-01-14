@@ -1,15 +1,19 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.14
 */
 
 import { Helmet } from 'react-helmet-async';
 import styled, { css } from 'styled-components';
 import propTypes from "prop-types"
 import Header from '../main/users/Header';
-import Darkmode from '../shared/buttons/Darkmode';
+import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import BaseContainer from './BaseContainer';
+import ChatBtn from '../shared/buttons/ChatBtn';
+import { useReactiveVar } from '@apollo/client';
+import { showChatListVar } from '../../utils/apollo';
+import MessageScreen from '../../screens/main/MessageScreen';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;
@@ -32,6 +36,8 @@ const Body = styled.div`
 
 // 로그인 후 화면들에 쓰일 레이아웃
 export default function MainLayout({ children, loading, title }) {
+    const showChatList = useReactiveVar(showChatListVar)
+
     return (
         <>
             <Header />
@@ -43,7 +49,12 @@ export default function MainLayout({ children, loading, title }) {
                     ) : children}
                 </Body>
             </Container>
-            <Darkmode />
+            {showChatList ? (
+                <MessageScreen />
+            ) : (
+                <ChatBtn />
+            )}
+            <DarkmodeBtn />
         </>
     )
 }
