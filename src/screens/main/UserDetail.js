@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.11
+수정일 : 2022.01.14
 */
 // 유저의 상세정보를 보여주는 페이지
 
@@ -47,6 +47,9 @@ const Buttons = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
+    @media screen and (max-width: 550px) {
+        display:none;
+    }
 `
 
 const Tabs = styled.p`

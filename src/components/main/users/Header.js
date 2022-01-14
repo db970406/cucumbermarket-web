@@ -22,7 +22,7 @@ import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
 const Container = styled.header`
     padding:20px 70px;
     display:flex;
-    justify-content:space-around;
+    justify-content:space-between;
     align-items:center;
     position:sticky;
     top:0;

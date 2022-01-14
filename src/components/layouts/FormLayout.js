@@ -1,11 +1,11 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.10
+수정일 : 2022.01.14
 */
 
 import styled, { css } from 'styled-components'
-import Darkmode from '../shared/buttons/Darkmode';
+import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import Helmet from '../shared/utils/Helmet';
 import propTypes from 'prop-types';
 import FormBox from '../shared/form/FormBox';
@@ -40,7 +40,7 @@ export default function FormLayout({ children, title, logo, auth }) {
                     {children}
                 </FormBox>
             </Container>
-            <Darkmode />
+            <DarkmodeBtn />
         </>
     )
 }

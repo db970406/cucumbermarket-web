@@ -1,15 +1,16 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : ------
+수정일 : 2022.01.14
 */
 
 import { Helmet } from 'react-helmet-async';
 import styled, { css } from 'styled-components';
 import propTypes from "prop-types"
 import Header from '../main/users/Header';
-import Darkmode from '../shared/buttons/Darkmode';
+import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import BaseContainer from './BaseContainer';
+import MyChatRooms from '../shared/buttons/MyChatRoomLists';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;
@@ -43,7 +44,8 @@ export default function MainLayout({ children, loading, title }) {
                     ) : children}
                 </Body>
             </Container>
-            <Darkmode />
+            <MyChatRooms />
+            <DarkmodeBtn />
         </>
     )
 }

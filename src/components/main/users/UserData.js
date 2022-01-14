@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : 2022.01.13
+수정일 : 2022.01.14
 */
 
 import styled from 'styled-components'
@@ -15,9 +15,6 @@ const Container = styled.div`
     align-items:center;
     justify-content:flex-start;
     margin:7px 0;
-    @media screen and (max-width: 550px) {
-        display:none;
-    }
 `
 const UserInfo = styled.div`
     display:flex;
