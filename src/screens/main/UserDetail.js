@@ -129,6 +129,7 @@ const UserDetail = () => {
     })
 
     const sendUserEdit = () => {
+        console.log(userData?.id)
         return history.push(`/user/${userData?.id}/edit`, {
             avatar: userData?.avatar
         })
@@ -153,7 +154,7 @@ const UserDetail = () => {
                                 {!userData?.socialLogin ? (
                                     <Button
                                         text="정보 수정"
-                                        onClick={sendUserEdit}
+                                        onClick={() => sendUserEdit()}
                                     />
                                 ) : null}
                                 <Button
