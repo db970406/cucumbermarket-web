@@ -41,6 +41,9 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
 
 FontAwesomeBtn.propTypes = {
     onClick: propTypes.func,
+    icon: propTypes.object,
     size: propTypes.string,
-    color: propTypes.string
+    color: propTypes.string,
+    marginRight: propTypes.number,
+    disabled: propTypes.bool,
 }

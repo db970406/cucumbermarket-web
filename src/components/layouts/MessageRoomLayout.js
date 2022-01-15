@@ -18,6 +18,7 @@ import styled from 'styled-components'
 import { darkModeVar, showChatListVar, chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import FontAwesomeBtn from '../shared/buttons/FontAwesomeBtn'
+import propTypes from "prop-types"
 
 const Container = styled.div`
     position:fixed;
@@ -123,4 +124,10 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
             </Container>
         )
     )
+}
+
+MessageRoomLayout.propTypes = {
+    loading: propTypes.bool,
+    title: propTypes.string,
+    fetchMore: propTypes.func
 }

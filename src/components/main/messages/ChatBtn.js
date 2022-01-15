@@ -10,9 +10,10 @@
 */
 
 import { gql, useMutation } from '@apollo/client';
-import { MESSAGE_DEFAULT_FRAGMENT } from '../utils/fragments';
-import Button from './Button';
 import { chatUserIdVar } from "../../../utils/apollo"
+import Button from '../../shared/buttons/Button';
+import { MESSAGE_DEFAULT_FRAGMENT } from '../../shared/utils/fragments';
+import propTypes from "prop-types"
 
 const CREATE_ROOM = gql`
     mutation createRoom($id:Int!){
@@ -80,4 +81,9 @@ export default function ChatBtn({ text, userId }) {
             onClick={makeRoom}
         />
     )
+}
+
+ChatBtn.propTypes = {
+    text: propTypes.string,
+    userId: propTypes.number
 }

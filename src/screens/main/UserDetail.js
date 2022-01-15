@@ -22,7 +22,7 @@ import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/s
 import { chatUserIdVar, logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import MessageRoom from '../../components/main/messages/MessageRoom'
-import ChatBtn from '../../components/shared/buttons/ChatBtn'
+import ChatBtn from '../../components/main/messages/ChatBtn'
 
 const Container = styled.div`
     display:flex;

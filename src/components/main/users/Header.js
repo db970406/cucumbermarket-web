@@ -85,12 +85,13 @@ export default function Header() {
     const { register, handleSubmit, formState, setValue } = useForm({
         mode: "onChange"
     })
+
+    // searchItems 성공 시 searchDataVar를 Reactive Variables로 data를 받아놓는다.
     const searchCompleted = ({ searchItems }) => {
-        history.push("/", {
-            searchItems
-        })
+        searchDataVar(searchItems)
+        history.push("/")
     }
-    const [searchItems, { data, loading }] = useLazyQuery(SEARCH_ITEMS, {
+    const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
     })
     const onValid = ({ keyword }) => {
@@ -113,12 +114,6 @@ export default function Header() {
     // path가 "/"인지에 따라 버튼을 다르게 설정하기 위함
     const { pathname } = window.location
 
-    // searchItems 성공 시 searchDataVar를 Reactive Variables로 data를 받아놓는다.
-    useEffect(() => {
-        if (data?.searchItems) {
-            searchDataVar(data?.searchItems)
-        }
-    }, [data])
     return (
         <Container>
             {pathname === "/" ? null : (
@@ -140,8 +135,8 @@ export default function Header() {
                         <FontAwesomeBtn
                             onClick={() => resetSearch()}
                             icon={faEraser}
-                            color={darkMode ? colors.white : colors.black}
-                            size={"lg"}
+                            color={colors.red}
+                            size={"2x"}
                         />
                     ) : (
                         searchMode ? (

@@ -12,6 +12,7 @@
 */
 
 import UserData from '../users/UserData'
+import propTypes from "prop-types"
 
 export default function ChatWithWho({ onClick, users, unreadCount }) {
 
@@ -42,4 +43,10 @@ export default function ChatWithWho({ onClick, users, unreadCount }) {
         )
 
     )
+}
+
+ChatWithWho.propTypes = {
+    onClick: propTypes.func,
+    users: propTypes.array,
+    unreadCount: propTypes.number
 }

@@ -4,7 +4,10 @@
 수정일 : 2022.01.14
 */
 
-// 메인 Screen
+/*
+1. 메인 Screen
+2. Reactive Variable을 활용하여 search한 값이 있다면 그 값을, 없다면 seeItems값을 띄운다.
+*/
 
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { useState } from 'react';

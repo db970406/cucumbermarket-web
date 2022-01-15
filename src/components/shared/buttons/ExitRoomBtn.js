@@ -23,9 +23,10 @@ const DELETE_ROOM = gql`
     }
 `
 
-export default function ExitRoom({ roomId }) {
+export default function ExitRoomBtn({ roomId }) {
     const darkMode = useReactiveVar(darkModeVar)
 
+    // deleteRoom Mutation과 그 cache 수정
     const updateDeleteRoom = (cache, { data }) => {
         const { deleteRoom: { ok, error } } = data
         if (!ok) {
@@ -36,7 +37,6 @@ export default function ExitRoom({ roomId }) {
             id: `Room:${roomId}`
         })
     }
-
     const [deleteRoom] = useMutation(DELETE_ROOM, {
         variables: {
             id: parseInt(roomId)

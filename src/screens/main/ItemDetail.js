@@ -26,7 +26,7 @@ import UserData from '../../components/main/users/UserData'
 import FontAwesomeBtn from '../../components/shared/buttons/FontAwesomeBtn'
 import DropDownMenu from '../../components/main/items/DropDownMenu'
 import MessageRoom from './MessageScreen'
-import ChatBtn from '../../components/shared/buttons/ChatBtn'
+import ChatBtn from '../../components/main/messages/ChatBtn'
 
 const Container = styled.div`
     display:flex;
