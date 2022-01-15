@@ -3,7 +3,11 @@
 작성일 : 2022.01.07
 수정일 : 2022.01.14
 */
-// 클릭한 아이템의 상세정보를 보여주는 페이지
+
+/* 
+1. 클릭한 Item의 id를 받아 seeItem Query로 상세정보를 보여주는 페이지
+2. Reactive Variable인 chatUserIdVar을 이용하여 MessageRoom을 on/off 할 수 있게 함
+*/
 
 import { useParams } from "react-router-dom"
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
@@ -138,6 +142,7 @@ export default function ItemDetail() {
         update: updateToggleLike
     })
 
+    // MessageRoom을 on하기 위한 함수
     const enterRoom = (userId) => chatUserIdVar(userId)
 
 

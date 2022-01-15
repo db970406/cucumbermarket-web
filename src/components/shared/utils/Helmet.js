@@ -4,10 +4,11 @@
 수정일 : 2022.01.10
 */
 
+// 홈페이지 타이틀의 변화를 도와줄 Helmet
+
 import { Helmet as PageTitle } from 'react-helmet-async'
 import PropTypes from "prop-types"
 
-// 타이틀의 변화를 도와줄 Helmet
 export default function Helmet({ title }) {
     return (
         <PageTitle>

@@ -4,6 +4,10 @@
 수정일 : ------
 */
 
+/* 
+1. prop으로 User의 avatar와 size를 prop으로 받아 활용하기 위함
+*/
+
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 

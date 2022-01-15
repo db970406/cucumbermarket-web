@@ -4,6 +4,10 @@
 수정일 : ------
 */
 
+/* 
+1. 현재 로그인한 유저가 속한 Rooms들의 List들을 띄워주는 Component이다.
+*/
+
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'

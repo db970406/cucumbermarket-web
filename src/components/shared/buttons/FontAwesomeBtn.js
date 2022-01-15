@@ -4,6 +4,11 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. FontAwesome과 버튼을 결합하여 자주 쓰므로 Component화 하였다.
+2. disabled를 prop으로 받아 유저 사용성 고려한 styled-component 구성
+*/
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import propTypes from "prop-types"

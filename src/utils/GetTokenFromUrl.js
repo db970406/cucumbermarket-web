@@ -4,7 +4,8 @@
 수정일 : 2022.01.13
 */
 
-// 네이버 소셜 로그인 시 토큰이 부여된 채로 Redirect되면 그 토큰을 받아 처리할 Component
+// 소셜 로그인 시 프론트엔드 구현부
+
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { logUserIn } from './apollo';
@@ -12,13 +13,15 @@ import { logUserIn } from './apollo';
 const GetTokenFromUrl = async () => {
     const { social } = useParams()
     const location = useLocation();
-    console.log(social);
+    console.log(social)
 
-    // NaverLogin으로 네이버에 요청을 보낸 후 받은 token을 추출하여 백엔드에 전달하여 처리하고 json데이터로 돌려받아 localStorage에 저장
     const processLogin = async () => {
+        console.log("hi")
         switch (social) {
+            // NaverLogin으로 네이버에 요청을 보낸 후 받은 token을 추출하여 백엔드에 전달하여 처리하고 jwtToken을 json데이터로 돌려받아 localStorage에 저장
             case "naver":
                 const token = location.hash.split('=')[1].split('&')[0];
+                console.log(token)
                 const naverLoginResponse = await fetch(`http://localhost:4000/social/naver`, {
                     method: "POST",
                     headers: {
@@ -34,6 +37,8 @@ const GetTokenFromUrl = async () => {
                     logUserIn(jwtToken)
                 }
                 break;
+
+            // GithubLogin으로 깃허브에 요청을 보낸 후 받은 code를 추출하여 백엔드에 전달하여 처리하고 json데이터로 돌려받아 localStorage에 저장
             case "github":
                 const code = location.search.split('=')[1].split('&')[0];
                 console.log(code)
@@ -53,8 +58,7 @@ const GetTokenFromUrl = async () => {
                 break;
         }
     }
-    useEffect(() => {
-        processLogin()
-    }, [social, location])
+    processLogin()
 }
+
 export default GetTokenFromUrl

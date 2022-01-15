@@ -4,6 +4,11 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. Authentication 후 화면들에 쓰일 기본 레이아웃
+2. Header와 DarkModeBtn, ChatBtn을 디폴트로 가진다.
+*/
+
 import { Helmet } from 'react-helmet-async';
 import styled, { css } from 'styled-components';
 import propTypes from "prop-types"
@@ -34,7 +39,7 @@ const Body = styled.div`
     `}
 `
 
-// 로그인 후 화면들에 쓰일 레이아웃
+
 export default function MainLayout({ children, loading, title }) {
     const showChatList = useReactiveVar(showChatListVar)
 

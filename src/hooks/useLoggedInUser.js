@@ -4,12 +4,16 @@
 수정일 : 2022.01.12
 */
 
+/* 
+1. 현재 로그인한 유저의 정보를 1차적으로 가져와준다.
+2. localStorage에 저장되어 있는 jwt를 백엔드에 보내서 해당 유저를 찾는다. 유효하지 않은 토큰이라면 logout시켜버린다.
+*/
+
 import { gql, useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { USER_DEFAULT_FRAGMENT } from '../components/shared/utils/fragments'
 import { logUserOut } from '../utils/apollo'
 
-// 현재 로그인한 유저의 정보를 1차적으로 가져와준다(Header에 avatar를 넣기 위한 목적이 큼).
 const SEE_LOGGED_IN_USER = gql`
     query seeLoggedInUser{
         seeLoggedInUser{

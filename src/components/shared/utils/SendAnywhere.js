@@ -4,6 +4,8 @@
 수정일 : 2022.01.10
 */
 
+// Login과 SignUp Screen에서 사용하는 Component
+
 import propTypes from "prop-types"
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'

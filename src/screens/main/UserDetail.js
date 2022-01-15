@@ -3,7 +3,12 @@
 작성일 : 2022.01.08
 수정일 : 2022.01.14
 */
-// 유저의 상세정보를 보여주는 페이지
+
+/*
+1. User의 id를 받아 seeUser Query로 상세정보를 보여주는 페이지
+2. state를 이용하여 판매 목록과 관심 목록을 오고 갈 수 있게 구현하였다.
+3. Reactive Variables인 chatUserIdVar을 이용하여 MessageRoom을 on/off 할 수 있게 함 
+*/
 
 import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import { useState } from 'react'
@@ -114,8 +119,8 @@ const SEE_USER = gql`
 const UserDetail = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
-    const history = useHistory()
     const [tabFocus, setTabFocus] = useState(true)
+    const history = useHistory()
     const chatUserId = useReactiveVar(chatUserIdVar)
 
     const focusChange = (bool) => setTabFocus(bool)
@@ -129,7 +134,6 @@ const UserDetail = () => {
     })
 
     const sendUserEdit = () => {
-        console.log(userData?.id)
         return history.push(`/user/${userData?.id}/edit`, {
             avatar: userData?.avatar
         })

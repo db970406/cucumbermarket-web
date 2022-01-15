@@ -4,6 +4,12 @@
 수정일 : 2022.01.14
 */
 
+/* 
+1. MainLayout의 ChatBtn
+2. position:fixed로 위치 고정
+3. 유저가 읽지 않은 모든 messages들의 unreadTotal을 더하여 버튼에 띄워준다.
+*/
+
 import { gql, useQuery } from '@apollo/client'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,11 +53,15 @@ const SEE_ROOMS = gql`
     }
 `
 export default function ChatBtn() {
-    const { data } = useQuery(SEE_ROOMS)
     const [unreadCount, setUnreadCount] = useState(0)
 
+    // seeRooms로부터 unreadCount만 받아서 사용할 것이다.
+    const { data } = useQuery(SEE_ROOMS)
+
+    // seeRooms data가 로드되면 모든 room의 unreadTotal을 더하여 unreadCount state에 담아준다.
     useEffect(() => {
-        if (data?.seeRooms) {
+        if (data?.seeRooms?.length > 0) {
+            // seeRooms data 배열 속에 있는 모든 unreadCount를 더하는 함수(reduce)
             const sumTotal = data?.seeRooms?.reduce((a, b) => (a.unreadCount + b.unreadCount));
             setUnreadCount(sumTotal)
         }

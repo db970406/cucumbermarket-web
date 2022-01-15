@@ -4,6 +4,12 @@
 수정일 : ------
 */
 
+/*
+1. ItemDetail, ItemEdit에서 사용되는 사진 Component
+2. ItemDetail에서는 기본적으로 띄워준다.
+3. ItemEdit에서는 editMode를 prop으로 받아 deleteItemPhoto가 가능하게 하였다(cache 수정으로 즉각 반영). 
+*/
+
 import { gql, useMutation } from '@apollo/client'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

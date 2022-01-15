@@ -4,6 +4,8 @@
 수정일 : 2022.01.12
 */
 
+// Item을 upload하는 Screen
+
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';

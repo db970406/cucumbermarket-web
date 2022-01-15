@@ -3,7 +3,11 @@
 작성일 : 2022.01.08
 수정일 : 2022.01.11
 */
-// 본인인 유저만이 입장할 수 있는 페이지로 정보를 수정하는 페이지이다.
+
+/*
+1. 클릭한 User의 id를 받아 userEdit Mutation으로 수정하는 페이지
+2. useLoggedInUser hook으로 받아 form의 defaultValues를 채운다.
+*/
 
 import { useForm } from 'react-hook-form'
 import { useHistory, useParams, useLocation } from 'react-router-dom'
@@ -65,6 +69,7 @@ export default function UserEdit() {
     const history = useHistory()
     const { state } = useLocation()
     const [currentLocation, setCurrentLocation] = useState("")
+
     const { loggedInUser } = useLoggedInUser()
 
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
@@ -181,7 +186,7 @@ export default function UserEdit() {
                             isLong
                         />
                     </form>
-                </FormLayout >
+                </FormLayout>
             </MainLayout>
         ) : (
             <NotAuthorized />

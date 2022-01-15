@@ -4,6 +4,10 @@
 수정일 : 2022.01.14
 */
 
+/* 
+1. 같이 자주 쓰는 UserAvatar, UserLocation, Username Component들을 한 곳에 모아 편하게 사용하기 위함
+*/
+
 import styled from 'styled-components'
 import UserAvatar from './UserAvatar'
 import UserLocation from './UserLocation'
