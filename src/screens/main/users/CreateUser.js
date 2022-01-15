@@ -10,12 +10,12 @@ import { gql, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { kakaoLocationApi } from '../../apis/locationApi';
-import FormLayout from '../../components/layouts/FormLayout';
-import Button from '../../components/shared/buttons/Button';
-import InputError from '../../components/shared/form/InputError';
-import Input from '../../components/shared/form/Input';
-import SendAnywhere from '../../components/shared/utils/SendAnywhere';
+import { kakaoLocationApi } from '../../../apis/locationApi';
+import FormLayout from '../../../components/layouts/FormLayout';
+import Button from '../../../components/shared/buttons/Button';
+import InputError from '../../../components/shared/form/InputError';
+import Input from '../../../components/shared/form/Input';
+import SendAnywhere from '../../../components/shared/utils/SendAnywhere';
 
 const SIGNUP_MUTATION = gql`
     mutation signUp(
@@ -37,7 +37,7 @@ const SIGNUP_MUTATION = gql`
         }
     }
 `
-export default function SignUp() {
+export default function CreateUser() {
     const history = useHistory()
     const [currentLocation, setCurrentLocation] = useState("")
     const { register, handleSubmit, clearErrors, formState, getValues } = useForm({

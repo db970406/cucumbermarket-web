@@ -14,7 +14,7 @@ import { gql, useMutation } from '@apollo/client'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
-import { SEE_ITEM } from '../../../screens/main/ItemDetail'
+import { SEE_ITEM } from '../../../screens/main/items/SeeItem'
 import { colors } from '../../../utils/styles'
 import propTypes from "prop-types"
 

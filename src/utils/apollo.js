@@ -55,6 +55,9 @@ export const chatUserIdVar = makeVar(0)
 export const showChatListVar = makeVar(false)
 export const searchDataVar = makeVar([])
 
+//Item 관련 Reactive Variables
+export const searchModeVar = makeVar(false)
+
 
 // 서버의 Header에 localStorage에 저장한 jwtToken을 싣어보내기 위한 link
 const authLink = setContext((_, { headers }) => {

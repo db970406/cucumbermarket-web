@@ -18,7 +18,7 @@ import BaseContainer from './BaseContainer';
 import ChatListsBtn from '../shared/buttons/ChatListsBtn';
 import { useReactiveVar } from '@apollo/client';
 import { showChatListVar } from '../../utils/apollo';
-import MessageScreen from '../../screens/main/MessageScreen';
+import MessageScreen from '../../screens/main/messages/MessageScreen';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;

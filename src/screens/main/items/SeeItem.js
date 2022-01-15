@@ -11,22 +11,22 @@
 
 import { useParams } from "react-router-dom"
 import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
-import { ITEM_DETAIL_FRAGMENT } from '../../components/shared/utils/fragments'
-import MainLayout from '../../components/layouts/MainLayout'
+import { ITEM_DETAIL_FRAGMENT } from '../../../components/shared/utils/fragments'
+import MainLayout from '../../../components/layouts/MainLayout'
 import styled from 'styled-components'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { colors } from '../../utils/styles'
-import { darkModeVar, chatUserIdVar } from '../../utils/apollo'
+import { colors } from '../../../utils/styles'
+import { darkModeVar, chatUserIdVar } from '../../../utils/apollo'
 import { useState } from 'react'
 import { Link } from "react-router-dom"
-import PhotoSlider from '../../components/main/items/PhotoSlider'
-import ItemPhoto from '../../components/main/items/ItemPhoto'
-import UserData from '../../components/main/users/UserData'
-import FontAwesomeBtn from '../../components/shared/buttons/FontAwesomeBtn'
-import DropDownMenu from '../../components/main/items/DropDownMenu'
-import MessageRoom from './MessageScreen'
-import ChatBtn from '../../components/main/messages/ChatBtn'
+import PhotoSlider from '../../../components/main/items/PhotoSlider'
+import ItemPhoto from '../../../components/main/items/ItemPhoto'
+import UserData from '../../../components/main/users/UserData'
+import FontAwesomeBtn from '../../../components/shared/buttons/FontAwesomeBtn'
+import DropDownMenu from '../../../components/main/items/DropDownMenu'
+import MessageRoom from '../messages/MessageScreen'
+import ChatBtn from '../../../components/main/messages/CreateRoomBtn'
 
 const Container = styled.div`
     display:flex;
@@ -93,7 +93,7 @@ export const SEE_ITEM = gql`
     ${ITEM_DETAIL_FRAGMENT}
 `
 
-export default function ItemDetail() {
+export default function SeeItem() {
     const darkMode = useReactiveVar(darkModeVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
     const [itemData, setItemData] = useState({})

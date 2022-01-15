@@ -14,15 +14,15 @@ import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import DisplayItem from '../../components/main/items/DisplayItem'
-import MainLayout from "../../components/layouts/MainLayout"
-import UserData from '../../components/main/users/UserData'
-import Button from '../../components/shared/buttons/Button'
-import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/utils/fragments'
-import { chatUserIdVar, logUserOut } from '../../utils/apollo'
-import { colors } from '../../utils/styles'
-import MessageRoom from '../../components/main/messages/MessageRoom'
-import ChatBtn from '../../components/main/messages/ChatBtn'
+import DisplayItem from '../../../components/main/items/DisplayItem'
+import MainLayout from "../../../components/layouts/MainLayout"
+import UserData from '../../../components/main/users/UserData'
+import Button from '../../../components/shared/buttons/Button'
+import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
+import { chatUserIdVar, logUserOut } from '../../../utils/apollo'
+import { colors } from '../../../utils/styles'
+import MessageRoom from '../messages/SeeRoom'
+import ChatBtn from '../../../components/main/messages/CreateRoomBtn'
 
 const Container = styled.div`
     display:flex;
@@ -117,7 +117,7 @@ const SEE_USER = gql`
     ${ITEM_DISPLAY_FRAGMENT}
 `
 
-const UserDetail = () => {
+const SeeUser = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
     const [tabFocus, setTabFocus] = useState(true)
@@ -216,4 +216,4 @@ const UserDetail = () => {
     )
 }
 
-export default UserDetail
+export default SeeUser

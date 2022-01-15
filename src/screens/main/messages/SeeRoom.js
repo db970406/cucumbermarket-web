@@ -20,11 +20,11 @@ import styled from 'styled-components'
 import useLoggedInUser from '../../../hooks/useLoggedInUser'
 import { darkModeVar, chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
-import MessageLayout from '../../layouts/MessageRoomLayout'
-import Input from '../../shared/form/Input'
-import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
-import { MESSAGE_DEFAULT_FRAGMENT } from '../../shared/utils/fragments'
-import Message from './Message'
+import Input from '../../../components/shared/form/Input'
+import InputWithFontAwesome from '../../../components/shared/form/InputWithFontAwesome'
+import { MESSAGE_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
+import Message from '../../../components/main/messages/Message'
+import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout'
 
 const PositionAbsolute = styled.div`
     position:absolute;
@@ -76,7 +76,7 @@ const REALTIME_ROOM = gql`
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
 
-export default function MessageRoom() {
+export default function SeeRoom() {
     const darkMode = useReactiveVar(darkModeVar)
     const chatRoomId = useReactiveVar(chatRoomIdVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
@@ -208,7 +208,7 @@ export default function MessageRoom() {
     const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id)
 
     return (
-        <MessageLayout
+        <MessageRoomLayout
             loading={loading}
             title={notMe ? `${notMe?.name}님과 대화중입니다.` : "대화를 시작합니다."}
             fetchMore={
@@ -246,6 +246,6 @@ export default function MessageRoom() {
                     />
                 </InputWithFontAwesome>
             </PositionAbsolute>
-        </MessageLayout>
+        </MessageRoomLayout>
     )
 }
