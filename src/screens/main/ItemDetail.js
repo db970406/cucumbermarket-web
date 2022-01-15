@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.14
+수정일 : 2022.01.15
 */
 
 /* 
@@ -19,7 +19,6 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { colors } from '../../utils/styles'
 import { darkModeVar, chatUserIdVar } from '../../utils/apollo'
 import { useState } from 'react'
-import Button from '../../components/shared/buttons/Button'
 import { Link } from "react-router-dom"
 import PhotoSlider from '../../components/main/items/PhotoSlider'
 import ItemPhoto from '../../components/main/items/ItemPhoto'
@@ -27,6 +26,7 @@ import UserData from '../../components/main/users/UserData'
 import FontAwesomeBtn from '../../components/shared/buttons/FontAwesomeBtn'
 import DropDownMenu from '../../components/main/items/DropDownMenu'
 import MessageRoom from './MessageScreen'
+import ChatBtn from '../../components/shared/buttons/ChatBtn'
 
 const Container = styled.div`
     display:flex;
@@ -142,9 +142,6 @@ export default function ItemDetail() {
         update: updateToggleLike
     })
 
-    // MessageRoom을 on하기 위한 함수
-    const enterRoom = (userId) => chatUserIdVar(userId)
-
 
     return (
         <MainLayout title={itemData?.title} loading={loading}>
@@ -196,9 +193,9 @@ export default function ItemDetail() {
                                 color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                             />
 
-                            <Button
-                                text="실시간 채팅"
-                                onClick={() => enterRoom(itemData?.user?.id)}
+                            <ChatBtn
+                                text="실시간 대화"
+                                userId={itemData?.user?.id}
                             />
                         </Buttons>
                     ) : null}

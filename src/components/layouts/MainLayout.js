@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.14
+수정일 : 2022.01.15
 */
 
 /*
@@ -15,7 +15,7 @@ import propTypes from "prop-types"
 import Header from '../main/users/Header';
 import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import BaseContainer from './BaseContainer';
-import ChatBtn from '../shared/buttons/ChatBtn';
+import ChatListsBtn from '../shared/buttons/ChatListsBtn';
 import { useReactiveVar } from '@apollo/client';
 import { showChatListVar } from '../../utils/apollo';
 import MessageScreen from '../../screens/main/MessageScreen';
@@ -39,7 +39,6 @@ const Body = styled.div`
     `}
 `
 
-
 export default function MainLayout({ children, loading, title }) {
     const showChatList = useReactiveVar(showChatListVar)
 
@@ -57,7 +56,7 @@ export default function MainLayout({ children, loading, title }) {
             {showChatList ? (
                 <MessageScreen />
             ) : (
-                <ChatBtn />
+                <ChatListsBtn />
             )}
             <DarkmodeBtn />
         </>

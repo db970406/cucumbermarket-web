@@ -1,80 +1,83 @@
 /* 
 작성자 : SJ
-작성일 : 2022.01.11
-수정일 : 2022.01.14
+작성일 : 2022.01.15
+수정일 : ------
 */
 
-/* 
-1. MainLayout의 ChatBtn
-2. position:fixed로 위치 고정
-3. 유저가 읽지 않은 모든 messages들의 unreadTotal을 더하여 버튼에 띄워준다.
+/*
+1. UserDetail, ItemDetail에서 대화버튼 클릭 시 바로 Room에 접근할 수 있게 하기 위함
+2. createRoom Mutation은 이미 생성된 방이 있으면 그 방을 retun하고 없으면 새로 방을 만들어 준다.
 */
 
-import { gql, useQuery } from '@apollo/client'
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { showChatListVar } from '../../../utils/apollo'
-import { colors } from '../../../utils/styles'
+import { gql, useMutation } from '@apollo/client';
+import { MESSAGE_DEFAULT_FRAGMENT } from '../utils/fragments';
+import Button from './Button';
+import { chatUserIdVar } from "../../../utils/apollo"
 
-const Button = styled.button`
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    width:50px;
-    height:50px;
-    border-radius:25px;
-    background-color:${colors.green};
-`
-const UnreadCount = styled.div`
-    position:absolute;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    bottom:25px;
-    right: 10px;
-    width:10px;
-    height:10px;
-    border-radius:8px;
-    padding:8px;
-    background-color:${colors.pink} ;
-    text-align:center;
-    span{
-        font-size:10px;
-    }
-`
-
-const SEE_ROOMS = gql`
-    query seeRooms{
-        seeRooms{
+const CREATE_ROOM = gql`
+    mutation createRoom($id:Int!){
+        createRoom(id:$id){
+            id
+            messages{
+                ...MessageDefaultFragment
+            }
             unreadCount
         }
     }
+    ${MESSAGE_DEFAULT_FRAGMENT}
 `
-export default function ChatBtn() {
-    const [unreadCount, setUnreadCount] = useState(0)
+export default function ChatBtn({ text, userId }) {
 
-    // seeRooms로부터 unreadCount만 받아서 사용할 것이다.
-    const { data } = useQuery(SEE_ROOMS)
+    // MessageRoom을 on하기 위한 함수
+    const enterRoom = (userId) => chatUserIdVar(userId)
 
-    // seeRooms data가 로드되면 모든 room의 unreadTotal을 더하여 unreadCount state에 담아준다.
-    useEffect(() => {
-        if (data?.seeRooms?.length > 0) {
-            // seeRooms data 배열 속에 있는 모든 unreadCount를 더하는 함수(reduce)
-            const sumTotal = data?.seeRooms?.reduce((a, b) => (a.unreadCount + b.unreadCount));
-            setUnreadCount(sumTotal)
+    const updateCreateRoom = (cache, { data }) => {
+        const { createRoom } = data
+        if (createRoom.id) {
+            const newRoom = cache.writeFragment({
+                id: `Room:${createRoom.id}`,
+                fragment: gql`
+                    fragment newRoom on Room{
+                        id
+                        messages{
+                            id
+                            payload
+                            user{
+                                id
+                                name
+                                avatar
+                            }
+                            isMine
+                            read
+                        }
+                        unreadCount
+                    }
+                `,
+                data: createRoom
+            })
+            cache.modify({
+                id: "ROOT_QUERY",
+                fields: {
+                    seeRooms(prev) {
+                        return [newRoom, ...prev]
+                    }
+                }
+            })
+            enterRoom(userId)
         }
-    }, [data])
+    }
+    const [createRoom] = useMutation(CREATE_ROOM, {
+        variables: {
+            id: userId
+        },
+        update: updateCreateRoom
+    })
 
+    const makeRoom = () => createRoom()
     return (
-        <Button onClick={() => showChatListVar(true)}>
-            <FontAwesomeIcon icon={faCommentDots} size="lg" color={colors.white} />
-            {unreadCount?.unreadCount ? (
-                <UnreadCount>
-                    <span>{unreadCount.unreadCount}</span>
-                </UnreadCount>
-            ) : null}
-        </Button >
+        <Button
+            text={text}
+            onClick={makeRoom}
+        />
     )
 }

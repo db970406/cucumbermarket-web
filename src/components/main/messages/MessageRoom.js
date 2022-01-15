@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.14
-수정일 : ------
+수정일 : 2022.01.15
 */
 
 /* 
@@ -203,14 +203,14 @@ export default function MessageRoom() {
         }
     }, [data])
 
-    // 해당 방에서 오직 상대방의 data를 갖기 위함이다.
+    // 해당 방에서 상대방의 data를 갖기 위함이다.
     const { loggedInUser } = useLoggedInUser()
     const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id)
 
     return (
         <MessageLayout
             loading={loading}
-            title={`${notMe?.name}님과 대화중입니다.`}
+            title={notMe ? `${notMe?.name}님과 대화중입니다.` : "대화를 시작합니다."}
             fetchMore={
                 () => fetchMore({
                     variables: {

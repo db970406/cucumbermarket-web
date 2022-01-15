@@ -6,6 +6,8 @@
 
 /* 
 1. 현재 로그인한 유저가 속한 Rooms들의 List들을 띄워주는 Component이다.
+2. 새 메시지 알림기능(UnreadSign)
+3. ExitRoom 버튼 추가
 */
 
 import { gql, useQuery } from '@apollo/client'
@@ -14,6 +16,7 @@ import styled from 'styled-components'
 import { chatRoomIdVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
 import MessageLayout from '../../layouts/MessageRoomLayout'
+import ExitRoom from '../../shared/buttons/ExitRoom'
 import ChatWithWho from './ChatWithWho'
 
 const RoomList = styled.div`
@@ -65,12 +68,14 @@ export default function MessageRoomLists() {
             title={`${currentRooms?.length}개의 방이 존재합니다.`}
         >
             {currentRooms?.map(room =>
-                <RoomList key={room.id} onClick={() => enterRoom(room.id)}>
+                <RoomList key={room.id}>
                     <ChatWithWho
+                        onClick={() => enterRoom(room.id)}
                         users={room.users}
                         unreadCount={room.unreadCount}
                     />
                     {room.unreadCount > 0 ? <UnreadSign /> : null}
+                    <ExitRoom roomId={room.id} />
                 </RoomList>
             )}
         </MessageLayout>

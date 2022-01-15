@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.14
+수정일 : 2022.01.15
 */
 
 /*
@@ -11,7 +11,7 @@
 */
 
 import { gql, useQuery, useReactiveVar } from '@apollo/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import DisplayItem from '../../components/main/items/DisplayItem'
@@ -22,6 +22,7 @@ import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/s
 import { chatUserIdVar, logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import MessageRoom from '../../components/main/messages/MessageRoom'
+import ChatBtn from '../../components/shared/buttons/ChatBtn'
 
 const Container = styled.div`
     display:flex;
@@ -126,11 +127,10 @@ const UserDetail = () => {
     const focusChange = (bool) => setTabFocus(bool)
 
 
-    const { loading } = useQuery(SEE_USER, {
+    const { data, loading } = useQuery(SEE_USER, {
         variables: {
             id: parseInt(id)
-        },
-        onCompleted: ({ seeUser }) => setUserData(seeUser)
+        }
     })
 
     const sendUserEdit = () => {
@@ -138,8 +138,11 @@ const UserDetail = () => {
             avatar: userData?.avatar
         })
     }
-    const enterRoom = (userId) => chatUserIdVar(userId)
 
+    useEffect(() => {
+        if (data?.seeUser)
+            setUserData(data?.seeUser)
+    }, [data])
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -168,9 +171,9 @@ const UserDetail = () => {
                                 />
                             </>
                         ) : (
-                            <Button
+                            <ChatBtn
                                 text="대화하기"
-                                onClick={() => enterRoom(userData?.id)}
+                                userId={userData?.id}
                             />
                         )}
                     </Buttons>

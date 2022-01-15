@@ -1,12 +1,11 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.09
-수정일 : 2022.01.13
+수정일 : 2022.01.15
 */
 
 // 소셜 로그인 시 프론트엔드 구현부
 
-import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { logUserIn } from './apollo';
 

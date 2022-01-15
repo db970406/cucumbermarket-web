@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.11
+수정일 : 2022.01.15
 */
 
 /*
@@ -80,7 +80,7 @@ export default function UserEdit() {
     })
 
     const editUserCompleted = ({ editUser }) => {
-        const { ok, error } = editUser
+        const { ok } = editUser
         if (ok) {
             history.push(`/user/${loggedInUser?.id}`);
             window.location.reload()
