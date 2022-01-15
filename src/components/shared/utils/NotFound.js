@@ -4,6 +4,8 @@
 수정일 : ------
 */
 
+// 설정하지 않은 Route로 이동한 경우 띄워주는 Component
+
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { colors } from '../../../utils/styles'

@@ -4,6 +4,8 @@
 수정일 : 2022.01.11
 */
 
+// 클릭한 Item의 id를 받아 editItem Mutation으로 수정하는 페이지
+
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';

@@ -4,6 +4,10 @@
 수정일 : ------
 */
 
+/*
+1. FormLayout에 쓰일 Component
+*/
+
 import styled from 'styled-components';
 import { colors } from '../../../utils/styles';
 

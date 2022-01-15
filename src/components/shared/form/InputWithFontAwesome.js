@@ -4,6 +4,11 @@
 수정일 : ------
 */
 
+/*
+1. Input Component와 FontAwesomeBtn Component의 결합
+2. Input 내에 Icon이 있는 것 같은 시각적 효과를 주기 위한 Component
+*/
+
 import styled from 'styled-components'
 import FontAwesomeBtn from '../buttons/FontAwesomeBtn'
 import propTypes from "prop-types"

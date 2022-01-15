@@ -4,6 +4,11 @@
 수정일 : ------
 */
 
+/*
+1. Message Data를 받는다.
+2. isMine prop을 styled-components로 넘겨 내 메시지 여부를 파악하고 그에 따라 다른 css를 부여한다.
+*/
+
 import styled from 'styled-components'
 import propTypes from "prop-types"
 import UserAvatar from '../users/UserAvatar'
@@ -54,4 +59,13 @@ export default function Message({
             </UserInfo>
         </Container>
     )
+}
+
+Message.propTypes = {
+    avatar: propTypes.string,
+    name: propTypes.string,
+    avatarSize: propTypes.number,
+    nameSize: propTypes.number,
+    isMine: propTypes.bool,
+    message: propTypes.string
 }

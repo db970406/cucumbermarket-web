@@ -4,13 +4,17 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. 메인 Screen
+2. Reactive Variable을 활용하여 search한 값이 있다면 그 값을, 없다면 seeItems값을 띄운다.
+*/
+
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import DisplayItem from '../../components/main/items/DisplayItem';
 import MainLayout from '../../components/layouts/MainLayout';
 import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/utils/fragments';
-import { useLocation } from 'react-router-dom';
 import { searchDataVar } from '../../utils/apollo';
 
 const SEE_ITEMS = gql`
@@ -27,11 +31,6 @@ const Container = styled.div`
     display:flex;
     justify-content:center;
     margin:0 auto;
-`
-const SearchAlarm = styled.p`
-    font-size:14px;
-    margin-bottom:30px;
-    cursor:pointer;
 `
 
 // Main에 display될 item들의 배치

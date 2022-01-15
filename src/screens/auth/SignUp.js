@@ -4,6 +4,8 @@
 수정일 : 2022.01.13
 */
 
+// SignUp Screen
+
 import { gql, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';

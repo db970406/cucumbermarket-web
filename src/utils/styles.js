@@ -3,6 +3,7 @@
 작성일 : 2022.01.06
 수정일 : 2022.01.08
 */
+
 // CSS의 큰 틀을 담당하는 파일
 
 import { createGlobalStyle } from 'styled-components'

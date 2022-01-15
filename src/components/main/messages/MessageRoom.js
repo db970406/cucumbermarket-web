@@ -1,7 +1,15 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.14
-수정일 : ------
+수정일 : 2022.01.15
+*/
+
+/* 
+1. MessageRoom Component로 모든 메시지가 로드되는 곳이다.
+2. MessageLayout의 Infinite Scroll과 함께 pagination 구현
+3. 실시간 메시지 수신을 위해 Apollo의 Subscription Operator 사용(cache 수정으로 즉각 반영했으나 같은 메시지가 여러개로 번지는 버그가 있음)
+4. createMessage 구현(cache 수정으로 즉각 반영)
+5. MessageRoom 입장 시 readMessages 구현하여 안 읽은 메시지 0개로 바꾼다(cache 수정으로 즉각 반영).
 */
 
 import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'
@@ -17,7 +25,6 @@ import Input from '../../shared/form/Input'
 import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
 import { MESSAGE_DEFAULT_FRAGMENT } from '../../shared/utils/fragments'
 import Message from './Message'
-
 
 const PositionAbsolute = styled.div`
     position:absolute;
@@ -41,6 +48,7 @@ const SEE_ROOM = gql`
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
+
 const READ_MESSAGES = gql`
     mutation readMessages($id:Int!){
         readMessages(id:$id){
@@ -49,6 +57,7 @@ const READ_MESSAGES = gql`
         }
     }
 `
+
 const CREATE_MESSAGE = gql`
     mutation createMessage($payload:String!,$roomId:Int,$userId:Int){
         createMessage(payload:$payload,roomId:$roomId,userId:$userId){
@@ -72,8 +81,10 @@ export default function MessageRoom() {
     const chatRoomId = useReactiveVar(chatRoomIdVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
     const [messageData, setMessageData] = useState([])
+
     const { register, handleSubmit, setValue } = useForm()
 
+    // readMessages Mutation 구현부
     const updateReadMessages = (cache, { data }) => {
         const { readMessages: { ok, error } } = data
         if (!ok) {
@@ -93,6 +104,8 @@ export default function MessageRoom() {
         update: updateReadMessages
     })
 
+
+    // 해당 Room의 Messages Data들을 가져오는 seeRoom Query 구현부
     const { data, loading, fetchMore, subscribeToMore } = useQuery(SEE_ROOM, {
         variables: {
             ...(chatRoomId && { roomId: parseInt(chatRoomId) }),
@@ -101,6 +114,8 @@ export default function MessageRoom() {
         },
     })
 
+
+    // 실시간으로 Message Data를 수신하는 realtimeRoom Subscription 구현부
     const { cache } = useApolloClient()
     const realtimeUpdate = (prevQuery, { subscriptionData }) => {
         const { data: { realtimeRoom: newMessage } } = subscriptionData
@@ -134,7 +149,6 @@ export default function MessageRoom() {
             })
         }
     }
-
     const updateCreateMessage = (cache, { data: { createMessage } }) => {
         if (createMessage.id) {
             cache.modify({
@@ -149,10 +163,11 @@ export default function MessageRoom() {
         }
     }
 
+
+    // createMessage 구현부
     const [createMessage, { loading: sendLoading }] = useMutation(CREATE_MESSAGE, {
         update: updateCreateMessage
     })
-
     const onValid = ({ message }) => {
         if (sendLoading) return;
 
@@ -165,6 +180,11 @@ export default function MessageRoom() {
         })
     }
 
+    /* 
+    1. seeRoom Query가 로드되면 Messages들을 messageData state에 옮겨 담는다.
+    2. readMessages Mutation을 실행시켜 Message들의 read 상태를 true로 바꾼다.
+    3. 실시간 통신을 위한 웹소켓 subscribe를 open하고 Message 수신을 기다린다.
+    */
     useEffect(() => {
         if (data?.seeRoom) {
             setMessageData(data?.seeRoom?.messages)
@@ -183,13 +203,14 @@ export default function MessageRoom() {
         }
     }, [data])
 
+    // 해당 방에서 상대방의 data를 갖기 위함이다.
     const { loggedInUser } = useLoggedInUser()
     const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id)
 
     return (
         <MessageLayout
             loading={loading}
-            title={`${notMe?.name}님과 대화중입니다.`}
+            title={notMe ? `${notMe?.name}님과 대화중입니다.` : "대화를 시작합니다."}
             fetchMore={
                 () => fetchMore({
                     variables: {

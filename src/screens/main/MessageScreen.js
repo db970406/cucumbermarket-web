@@ -4,6 +4,8 @@
 수정일 : 2022.01.14
 */
 
+// Message 관련 Screen
+
 import { useReactiveVar } from '@apollo/client'
 import { chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
 import MessageRoom from '../../components/main/messages/MessageRoom'

@@ -47,12 +47,16 @@ export const getLightMode = () => {
     localStorage.removeItem(DARKMODE)
 }
 
+
+
+//Message 관련 Reactive Variables
 export const chatRoomIdVar = makeVar(0)
 export const chatUserIdVar = makeVar(0)
 export const showChatListVar = makeVar(false)
 export const searchDataVar = makeVar([])
 
 
+// 서버의 Header에 localStorage에 저장한 jwtToken을 싣어보내기 위한 link
 const authLink = setContext((_, { headers }) => {
     return {
         headers: {
@@ -61,10 +65,13 @@ const authLink = setContext((_, { headers }) => {
         }
     }
 })
+
+// 파일을 서버에 업로드하기 위한 link
 const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",
 })
 
+// 웹소켓 프로토콜 link로 jwtToken을 싣어보내기 위함
 const wsLink = new WebSocketLink({
     uri: 'ws://localhost:4000/graphql',
     options: {
@@ -74,8 +81,10 @@ const wsLink = new WebSocketLink({
         })
     }
 });
+
 const httpLinks = authLink.concat(uploadHttpLink)
 
+// operation이 subscription이라면 wsLink를, 아니라면 httpLinks를 연결하는 함수
 const splitLink = split(
     ({ query }) => {
         const definition = getMainDefinition(query);

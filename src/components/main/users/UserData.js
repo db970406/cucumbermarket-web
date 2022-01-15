@@ -4,6 +4,11 @@
 수정일 : 2022.01.14
 */
 
+/* 
+1. 같이 자주 쓰는 UserAvatar, UserLocation, Username Component들을 한 곳에 모아 편하게 사용하기 위함
+2. onClick 이벤트 추가
+*/
+
 import styled from 'styled-components'
 import UserAvatar from './UserAvatar'
 import UserLocation from './UserLocation'
@@ -15,6 +20,7 @@ const Container = styled.div`
     align-items:center;
     justify-content:flex-start;
     margin:7px 0;
+    cursor:pointer;
 `
 const UserInfo = styled.div`
     display:flex;
@@ -29,9 +35,10 @@ export default function UserData({
     avatarSize,
     nameSize,
     locationSize,
+    onClick
 }) {
     return (
-        <Container>
+        <Container onClick={onClick}>
             <UserAvatar img={avatar} size={avatarSize} />
             <UserInfo>
                 <Username name={name} size={nameSize} />

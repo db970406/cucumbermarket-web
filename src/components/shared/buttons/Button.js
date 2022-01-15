@@ -4,6 +4,12 @@
 수정일 : 2022.01.13
 */
 
+/*
+1. 가장 기본적인 Button Component
+2. disabled를 prop으로 받으며 hover로 유저 사용성 고려한 styled-component 구성
+3. form과 같이 자주 쓰이므로 longtype을 prop으로 받아 width를 다르게 지정한다.
+*/
+
 import propTypes from "prop-types"
 import styled from "styled-components"
 import { colors } from '../../../utils/styles'

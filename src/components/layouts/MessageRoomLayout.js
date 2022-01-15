@@ -4,6 +4,13 @@
 수정일 : ------
 */
 
+/*
+1. 채팅 버튼을 누르면 켜지는 Message 기능의 레이아웃
+2. position: absolute로 페이지 구석에 자리잡게 하였다.
+3. RoomInfo라는 MessageLayout의 자체적인 Header를 가진다(backToLists, closeMessenger 탑재).
+4. Infinite Scrolling 구현하여 메시지가 많아도 data를 점차적으로 fetch하게 하였다.
+*/
+
 import { useReactiveVar } from '@apollo/client'
 import { faArrowCircleLeft, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
@@ -11,6 +18,7 @@ import styled from 'styled-components'
 import { darkModeVar, showChatListVar, chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import FontAwesomeBtn from '../shared/buttons/FontAwesomeBtn'
+import propTypes from "prop-types"
 
 const Container = styled.div`
     position:fixed;
@@ -26,7 +34,7 @@ const Container = styled.div`
     border-radius:15px;
     z-index:1;    
 `
-const RoomInfo = styled.div`
+const RoomInfo = styled.header`
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -46,6 +54,7 @@ const RoomMain = styled.div`
     bottom:0;
 `
 
+
 export default function MessageRoomLayout({ children, loading, title, fetchMore }) {
     const chatRoomId = useReactiveVar(chatRoomIdVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
@@ -62,6 +71,7 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
 
     const room = useRef()
 
+    // Infinite Scroll
     const scroll = () => {
         const scrollHeight = room.current.scrollHeight;
         const scrollTop = room.current.scrollTop;
@@ -73,16 +83,19 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
         }
     }
 
+    // MessageScreen이 MessageRoomLists를 띄울 수 있게 하는 함수
     const backToLists = () => {
         chatRoomIdVar(0)
         chatUserIdVar(0)
     }
 
+    // MessageScreen을 끄고 ChatBtn을 띄울 수 있게 하는 함수
     const closeMessenger = () => {
         chatRoomIdVar(0)
         chatUserIdVar(0)
         showChatListVar(false)
     }
+
     return (
         loading ? (
             "wait..."
@@ -111,4 +124,10 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
             </Container>
         )
     )
+}
+
+MessageRoomLayout.propTypes = {
+    loading: propTypes.bool,
+    title: propTypes.string,
+    fetchMore: propTypes.func
 }

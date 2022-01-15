@@ -4,6 +4,11 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. 해당 프로젝트에서 가장 기본적인 Input Component
+2. react-hook-form으로 설정한 validation 검사와 함께 쓰인다. border color를 다르게 부여하여 유저 사용성 고려
+*/
+
 import styled from 'styled-components';
 import { colors } from '../../../utils/styles';
 

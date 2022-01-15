@@ -1,12 +1,17 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.14
+수정일 : 2022.01.15
 */
-// 유저의 상세정보를 보여주는 페이지
+
+/*
+1. User의 id를 받아 seeUser Query로 상세정보를 보여주는 페이지
+2. state를 이용하여 판매 목록과 관심 목록을 오고 갈 수 있게 구현하였다.
+3. Reactive Variables인 chatUserIdVar을 이용하여 MessageRoom을 on/off 할 수 있게 함 
+*/
 
 import { gql, useQuery, useReactiveVar } from '@apollo/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import DisplayItem from '../../components/main/items/DisplayItem'
@@ -17,6 +22,7 @@ import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/s
 import { chatUserIdVar, logUserOut } from '../../utils/apollo'
 import { colors } from '../../utils/styles'
 import MessageRoom from '../../components/main/messages/MessageRoom'
+import ChatBtn from '../../components/main/messages/ChatBtn'
 
 const Container = styled.div`
     display:flex;
@@ -114,28 +120,29 @@ const SEE_USER = gql`
 const UserDetail = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
-    const history = useHistory()
     const [tabFocus, setTabFocus] = useState(true)
+    const history = useHistory()
     const chatUserId = useReactiveVar(chatUserIdVar)
 
     const focusChange = (bool) => setTabFocus(bool)
 
 
-    const { loading } = useQuery(SEE_USER, {
+    const { data, loading } = useQuery(SEE_USER, {
         variables: {
             id: parseInt(id)
-        },
-        onCompleted: ({ seeUser }) => setUserData(seeUser)
+        }
     })
 
     const sendUserEdit = () => {
-        console.log(userData?.id)
         return history.push(`/user/${userData?.id}/edit`, {
             avatar: userData?.avatar
         })
     }
-    const enterRoom = (userId) => chatUserIdVar(userId)
 
+    useEffect(() => {
+        if (data?.seeUser)
+            setUserData(data?.seeUser)
+    }, [data])
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -164,9 +171,9 @@ const UserDetail = () => {
                                 />
                             </>
                         ) : (
-                            <Button
+                            <ChatBtn
                                 text="대화하기"
-                                onClick={() => enterRoom(userData?.id)}
+                                userId={userData?.id}
                             />
                         )}
                     </Buttons>

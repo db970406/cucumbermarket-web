@@ -4,6 +4,9 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. form이 들어가는 모든 Screen에 쓰일 Component
+*/
 import styled, { css } from 'styled-components'
 import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import Helmet from '../shared/utils/Helmet';
@@ -29,7 +32,7 @@ const Logo = styled.img`
     margin-bottom:10px;
 `
 
-// 로그인 회원가입에 쓰일 레이아웃
+
 export default function FormLayout({ children, title, logo, auth }) {
     return (
         <>

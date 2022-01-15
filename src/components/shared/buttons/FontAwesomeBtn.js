@@ -4,6 +4,11 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. FontAwesome과 버튼을 결합하여 자주 쓰므로 Component화 하였다.
+2. disabled를 prop으로 받아 유저 사용성 고려한 styled-component 구성
+*/
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import propTypes from "prop-types"
@@ -36,6 +41,9 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
 
 FontAwesomeBtn.propTypes = {
     onClick: propTypes.func,
+    icon: propTypes.object,
     size: propTypes.string,
-    color: propTypes.string
+    color: propTypes.string,
+    marginRight: propTypes.number,
+    disabled: propTypes.bool,
 }

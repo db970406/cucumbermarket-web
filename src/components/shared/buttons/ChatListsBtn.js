@@ -1,7 +1,13 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.11
-수정일 : 2022.01.14
+수정일 : 2022.01.15
+*/
+
+/* 
+1. MainLayout의 ChatListsBtn
+2. position:fixed로 위치 고정
+3. 유저가 읽지 않은 모든 messages들의 unreadTotal을 더하여 버튼에 띄워준다.
 */
 
 import { gql, useQuery } from '@apollo/client'
@@ -46,23 +52,27 @@ const SEE_ROOMS = gql`
         }
     }
 `
-export default function ChatBtn() {
-    const { data } = useQuery(SEE_ROOMS)
+export default function ChatListsBtn() {
     const [unreadCount, setUnreadCount] = useState(0)
 
+    // seeRooms로부터 unreadCount만 받아서 사용할 것이다.
+    const { data } = useQuery(SEE_ROOMS)
+
+    // seeRooms data가 로드되면 모든 room의 unreadTotal을 더하여 unreadCount state에 담아준다.
     useEffect(() => {
-        if (data?.seeRooms) {
-            const sumTotal = data?.seeRooms?.reduce((a, b) => (a.unreadCount + b.unreadCount));
+        if (data?.seeRooms?.length > 0) {
+            // seeRooms data 배열 속에 있는 모든 unreadCount를 더하는 함수(reduce)
+            const unreadCountArray = data?.seeRooms?.map(room => room.unreadCount)
+            const sumTotal = unreadCountArray?.reduce((a, b) => (a + b));
             setUnreadCount(sumTotal)
         }
     }, [data])
-
     return (
         <Button onClick={() => showChatListVar(true)}>
             <FontAwesomeIcon icon={faCommentDots} size="lg" color={colors.white} />
-            {unreadCount?.unreadCount ? (
+            {unreadCount ? (
                 <UnreadCount>
-                    <span>{unreadCount.unreadCount}</span>
+                    <span>{unreadCount}</span>
                 </UnreadCount>
             ) : null}
         </Button >

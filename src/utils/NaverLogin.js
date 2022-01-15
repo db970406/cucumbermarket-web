@@ -5,6 +5,7 @@
 */
 
 // 버튼을 만들어 네이버 로그인 api에 요청을 보낼 Component
+
 import { useEffect } from 'react';
 import { colors } from './styles';
 const { naver } = window;

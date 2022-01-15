@@ -3,7 +3,8 @@
 작성일 : 2022.01.10
 수정일 : 2022.01.12
 */
-// Item 삭제
+
+// 클릭한 Item의 id를 받아 deleteItem Mutation으로 삭제하는 페이지
 
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react';

@@ -4,6 +4,15 @@
 수정일 : 2022.01.14
 */
 
+/*
+1. MainLayout을 사용하는 모든 Screen이 가지는 Header Component이다.
+2. 뒤로 가기 구현
+3. 오이 클릭하여 Home으로 가기 구현
+4. searchItem 버튼 및 기능 구현
+5. uploadItem 버튼 추가
+6. 현재 로그인한 유저(useLoggedInUser hook)의 avatar를 띄워준다. 
+*/
+
 import { faBackspace, faEraser, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -67,21 +76,24 @@ export default function Header() {
     const { loggedInUser } = useLoggedInUser()
     const history = useHistory()
 
+    // state를 이용하여 searchMode라면 Input창을, 아니라면 search 버튼을 띄워줄 것이다.
     const getSearchMode = (bool) => setSearchMode(bool)
 
+
+    // searchItems 구현부
+    // searchItems로 받은 data를 Home으로 보내주어 사용할 것이다.
     const { register, handleSubmit, formState, setValue } = useForm({
         mode: "onChange"
     })
 
+    // searchItems 성공 시 searchDataVar를 Reactive Variables로 data를 받아놓는다.
     const searchCompleted = ({ searchItems }) => {
-        history.push("/", {
-            searchItems
-        })
+        searchDataVar(searchItems)
+        history.push("/")
     }
-    const [searchItems, { data, loading }] = useLazyQuery(SEARCH_ITEMS, {
+    const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
     })
-
     const onValid = ({ keyword }) => {
         if (loading) return;
 
@@ -93,17 +105,15 @@ export default function Header() {
         setValue("keyword", "")
     }
 
+    // path를 인자로 받아 원하는 path로 보내준다.
     const sendWhere = (path) => history.push(path)
 
+    // searchItems로 data를 searchDataVar에 담아놓은 것을 초기화하는 기능
     const resetSearch = () => searchDataVar([])
 
+    // path가 "/"인지에 따라 버튼을 다르게 설정하기 위함
     const { pathname } = window.location
 
-    useEffect(() => {
-        if (data?.searchItems) {
-            searchDataVar(data?.searchItems)
-        }
-    }, [data])
     return (
         <Container>
             {pathname === "/" ? null : (
@@ -125,8 +135,8 @@ export default function Header() {
                         <FontAwesomeBtn
                             onClick={() => resetSearch()}
                             icon={faEraser}
-                            color={darkMode ? colors.white : colors.black}
-                            size={"lg"}
+                            color={colors.red}
+                            size={"2x"}
                         />
                     ) : (
                         searchMode ? (
