@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.16
 */
 
 
@@ -13,14 +13,14 @@ import Login from './screens/main/users/Login';
 import Home from './screens/main/items/Home';
 import { client, darkModeVar, isLoggedInVar } from './utils/apollo';
 import { darkTheme, GlobalStyles, lightTheme } from './utils/styles';
-import SignUp from './screens/main/users/CreateUser';
-import UserDetail from './screens/main/users/SeeUser';
+import CreateUser from './screens/main/users/CreateUser';
+import SeeUser from './screens/main/users/SeeUser';
 import GetTokenFromUrl from './utils/GetTokenFromUrl';
-import UserEdit from './screens/main/users/EditUser';
-import ItemEdit from './screens/main/items/EditItem';
-import ItemUpload from './screens/main/items/UploadItem';
-import ItemDelete from './screens/main/items/DeleteItem';
-import ItemDetail from './screens/main/items/SeeItem';
+import EditUser from './screens/main/users/EditUser';
+import EditItem from './screens/main/items/EditItem';
+import UploadItem from './screens/main/items/UploadItem';
+import DeleteItem from './screens/main/items/DeleteItem';
+import SeeItem from './screens/main/items/SeeItem';
 import NotFound from './components/shared/utils/NotFound';
 
 function App() {
@@ -39,23 +39,23 @@ function App() {
                   <Home />
                 </Route>
                 <Route path="/item/upload" exact>
-                  <ItemUpload />
+                  <UploadItem />
                 </Route>
                 <Route path="/item/:id" exact>
-                  <ItemDetail />
+                  <SeeItem />
                 </Route>
                 <Route path="/item/:id/edit" exact>
-                  <ItemEdit />
+                  <EditItem />
                 </Route>
                 <Route path="/item/:id/delete" exact>
-                  <ItemDelete />
+                  <DeleteItem />
                 </Route>
 
                 <Route path="/user/:id" exact>
-                  <UserDetail />
+                  <SeeUser />
                 </Route>
                 <Route path="/user/:id/edit" exact>
-                  <UserEdit />
+                  <EditUser />
                 </Route>
 
                 <Route>
@@ -68,7 +68,7 @@ function App() {
                   <Login />
                 </Route>
                 <Route path="/sign-up" exact>
-                  <SignUp />
+                  <CreateUser />
                 </Route>
                 <Route path="/:social">
                   <GetTokenFromUrl />

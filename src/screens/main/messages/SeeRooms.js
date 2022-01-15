@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.14
-수정일 : ------
+수정일 : 2022.01.16
 */
 
 /* 
@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout'
 import ChatWithWho from '../../../components/main/messages/ChatWithWho'
-import DeleteRoomBtn from '../../../components/main/messages/DeleteRoomBtn'
+import DeleteRoom from '../../../components/main/messages/DeleteRoom'
 import { chatRoomIdVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
 
@@ -75,7 +75,7 @@ export default function SeeRooms() {
                         unreadCount={room.unreadCount}
                     />
                     {room.unreadCount > 0 ? <UnreadSign /> : null}
-                    <DeleteRoomBtn roomId={room.id} />
+                    <DeleteRoom roomId={room.id} />
                 </RoomList>
             )}
         </MessageRoomLayout>

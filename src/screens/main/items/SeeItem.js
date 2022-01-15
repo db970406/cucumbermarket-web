@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.15
+수정일 : 2022.01.16
 */
 
 /* 
@@ -26,7 +26,7 @@ import UserData from '../../../components/main/users/UserData'
 import FontAwesomeBtn from '../../../components/shared/buttons/FontAwesomeBtn'
 import DropDownMenu from '../../../components/main/items/DropDownMenu'
 import MessageRoom from '../messages/MessageScreen'
-import ChatBtn from '../../../components/main/messages/CreateRoomBtn'
+import CreateRoom from '../../../components/main/messages/CreateRoom'
 
 const Container = styled.div`
     display:flex;
@@ -193,7 +193,7 @@ export default function SeeItem() {
                                 color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
                             />
 
-                            <ChatBtn
+                            <CreateRoom
                                 text="실시간 대화"
                                 userId={itemData?.user?.id}
                             />

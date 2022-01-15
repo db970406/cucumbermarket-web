@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.15
+수정일 : 2022.01.16
 */
 
 /*
@@ -21,8 +21,8 @@ import Button from '../../../components/shared/buttons/Button'
 import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
 import { chatUserIdVar, logUserOut } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
-import MessageRoom from '../messages/SeeRoom'
-import ChatBtn from '../../../components/main/messages/CreateRoomBtn'
+import CreateRoom from '../../../components/main/messages/CreateRoom'
+import SeeRoom from '../messages/SeeRoom'
 
 const Container = styled.div`
     display:flex;
@@ -171,7 +171,7 @@ const SeeUser = () => {
                                 />
                             </>
                         ) : (
-                            <ChatBtn
+                            <CreateRoom
                                 text="대화하기"
                                 userId={userData?.id}
                             />
@@ -210,7 +210,7 @@ const SeeUser = () => {
                 </Items>
             </Container>
             {chatUserId ? (
-                <MessageRoom />
+                <SeeRoom />
             ) : null}
         </MainLayout>
     )

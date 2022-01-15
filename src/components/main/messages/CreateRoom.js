@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.15
-수정일 : ------
+수정일 : 2022.01.16
 */
 
 /*
@@ -60,7 +60,8 @@ export default function CreateRoomBtn({ text, userId }) {
                 id: "ROOT_QUERY",
                 fields: {
                     seeRooms(prev) {
-                        return [newRoom, ...prev]
+                        const checkAlreadyExists = prev.find(room => room.__ref === newRoom.__ref)
+                        return checkAlreadyExists ? [...prev] : [newRoom, ...prev]
                     }
                 }
             })

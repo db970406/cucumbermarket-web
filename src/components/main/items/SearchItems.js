@@ -9,19 +9,18 @@ import Input from '../../shared/form/Input'
 import { useForm } from 'react-hook-form'
 import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments'
 import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
-import { useState } from 'react'
 import { darkModeVar, searchDataVar, searchModeVar } from '../../../utils/apollo'
 import { useHistory } from 'react-router-dom'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { colors } from '../../../utils/styles'
 
 const SEARCH_ITEMS = gql`
-query searchItems($keyword:String!){
-    searchItems(keyword:$keyword){
-        ...ItemDisplayFragment
+    query searchItems($keyword:String!){
+        searchItems(keyword:$keyword){
+            ...ItemDisplayFragment
+        }
     }
-}
-${ITEM_DISPLAY_FRAGMENT}
+    ${ITEM_DISPLAY_FRAGMENT}
 `
 
 export default function SearchItems() {
