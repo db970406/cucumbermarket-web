@@ -28,7 +28,7 @@ const Button = styled.button`
 `
 
 // 다크모드 버튼을 Component화해서 Layout에 부여.
-export default function Darkmode() {
+export default function DarkmodeBtn() {
     const darkMode = useReactiveVar(darkModeVar)
     return (
         <Button darkMode={darkMode} onClick={() => darkMode ? getLightMode() : getDarkMode()}>

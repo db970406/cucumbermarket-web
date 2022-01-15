@@ -9,9 +9,9 @@
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import NotAuthorized from '../../components/shared/utils/NotAuthorized';
-import useItemIsMine from '../../hooks/useItemIsMine';
-import useLoggedInUser from '../../hooks/useLoggedInUser';
+import NotAuthorized from '../../../components/shared/utils/NotAuthorized';
+import useItemIsMine from '../../../hooks/useItemIsMine';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
 
 const DELETE_ITEM = gql`
     mutation deleteItem($id:Int!){
@@ -21,7 +21,7 @@ const DELETE_ITEM = gql`
         }
     }
 `
-export default function ItemDelete() {
+export default function DeleteItem() {
     const { id } = useParams()
     const { data: loggedInUser } = useLoggedInUser()
 

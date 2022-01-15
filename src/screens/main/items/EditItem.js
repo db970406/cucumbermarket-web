@@ -10,15 +10,15 @@ import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import FormLayout from '../../components/layouts/FormLayout';
-import ItemPhoto from '../../components/main/items/ItemPhoto';
-import MainLayout from '../../components/layouts/MainLayout';
-import PhotoSlider from '../../components/main/items/PhotoSlider';
-import Button from '../../components/shared/buttons/Button';
-import InputError from '../../components/shared/form/InputError';
-import Input from '../../components/shared/form/Input';
-import useItemIsMine from '../../hooks/useItemIsMine';
-import { colors } from '../../utils/styles';
+import FormLayout from '../../../components/layouts/FormLayout';
+import ItemPhoto from '../../../components/main/items/ItemPhoto';
+import MainLayout from '../../../components/layouts/MainLayout';
+import PhotoSlider from '../../../components/main/items/PhotoSlider';
+import Button from '../../../components/shared/buttons/Button';
+import InputError from '../../../components/shared/form/InputError';
+import Input from '../../../components/shared/form/Input';
+import useItemIsMine from '../../../hooks/useItemIsMine';
+import { colors } from '../../../utils/styles';
 import { useState, useEffect } from "react"
 
 const FileInput = styled.label`
@@ -56,7 +56,7 @@ const EDIT_ITEM = gql`
 `
 
 
-export default function ItemEdit() {
+export default function EditItem() {
     const [itemData, setItemData] = useState({})
 
     const { id } = useParams()

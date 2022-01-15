@@ -10,14 +10,14 @@ import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import FormLayout from '../../components/layouts/FormLayout';
-import Input from '../../components/shared/form/Input';
-import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/utils/fragments';
-import { colors } from '../../utils/styles';
-import InputError from '../../components/shared/form/InputError';
-import Button from '../../components/shared/buttons/Button';
-import MainLayout from '../../components/layouts/MainLayout';
-import useLoggedInUser from '../../hooks/useLoggedInUser';
+import FormLayout from '../../../components/layouts/FormLayout';
+import Input from '../../../components/shared/form/Input';
+import { ITEM_DISPLAY_FRAGMENT } from '../../../components/shared/utils/fragments';
+import { colors } from '../../../utils/styles';
+import InputError from '../../../components/shared/form/InputError';
+import Button from '../../../components/shared/buttons/Button';
+import MainLayout from '../../../components/layouts/MainLayout';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -50,7 +50,7 @@ const UPLOAD_ITEM = gql`
     ${ITEM_DISPLAY_FRAGMENT}
 `
 
-export default function ItemUpload() {
+export default function UploadItem() {
     const history = useHistory()
     const { register, handleSubmit, clearErrors, formState } = useForm()
     const clearError = (errorName) => clearErrors(errorName)

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.14
-수정일 : ------
+수정일 : 2022.01.16
 */
 
 /* 
@@ -13,11 +13,11 @@
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout'
+import ChatWithWho from '../../../components/main/messages/ChatWithWho'
+import DeleteRoom from '../../../components/main/messages/DeleteRoom'
 import { chatRoomIdVar } from '../../../utils/apollo'
 import { colors } from '../../../utils/styles'
-import MessageLayout from '../../layouts/MessageRoomLayout'
-import ExitRoomBtn from '../../shared/buttons/ExitRoomBtn'
-import ChatWithWho from './ChatWithWho'
 
 const RoomList = styled.div`
     padding:8px 10px;
@@ -49,7 +49,7 @@ const SEE_ROOMS = gql`
     }
 `
 
-export default function MessageRoomLists() {
+export default function SeeRooms() {
     const [currentRooms, setCurrentRooms] = useState([])
 
     const { data, loading } = useQuery(SEE_ROOMS)
@@ -63,7 +63,7 @@ export default function MessageRoomLists() {
     const enterRoom = (roomId) => chatRoomIdVar(roomId)
 
     return (
-        <MessageLayout
+        <MessageRoomLayout
             loading={loading}
             title={`${currentRooms?.length}개의 방이 존재합니다.`}
         >
@@ -75,9 +75,9 @@ export default function MessageRoomLists() {
                         unreadCount={room.unreadCount}
                     />
                     {room.unreadCount > 0 ? <UnreadSign /> : null}
-                    <ExitRoomBtn roomId={room.id} />
+                    <DeleteRoom roomId={room.id} />
                 </RoomList>
             )}
-        </MessageLayout>
+        </MessageRoomLayout>
     )
 }

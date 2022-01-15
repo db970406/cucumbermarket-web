@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.15
-수정일 : ------
+수정일 : 2022.01.16
 */
 
 /*
@@ -27,7 +27,7 @@ const CREATE_ROOM = gql`
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
-export default function ChatBtn({ text, userId }) {
+export default function CreateRoomBtn({ text, userId }) {
 
     // MessageRoom을 on하기 위한 함수
     const enterRoom = (userId) => chatUserIdVar(userId)
@@ -60,7 +60,8 @@ export default function ChatBtn({ text, userId }) {
                 id: "ROOT_QUERY",
                 fields: {
                     seeRooms(prev) {
-                        return [newRoom, ...prev]
+                        const checkAlreadyExists = prev.find(room => room.__ref === newRoom.__ref)
+                        return checkAlreadyExists ? [...prev] : [newRoom, ...prev]
                     }
                 }
             })
@@ -83,7 +84,7 @@ export default function ChatBtn({ text, userId }) {
     )
 }
 
-ChatBtn.propTypes = {
+CreateRoomBtn.propTypes = {
     text: propTypes.string,
     userId: propTypes.number
 }

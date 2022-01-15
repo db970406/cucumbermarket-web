@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.15
+수정일 : 2022.01.16
 */
 
 /*
@@ -14,15 +14,15 @@ import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import DisplayItem from '../../components/main/items/DisplayItem'
-import MainLayout from "../../components/layouts/MainLayout"
-import UserData from '../../components/main/users/UserData'
-import Button from '../../components/shared/buttons/Button'
-import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../components/shared/utils/fragments'
-import { chatUserIdVar, logUserOut } from '../../utils/apollo'
-import { colors } from '../../utils/styles'
-import MessageRoom from '../../components/main/messages/MessageRoom'
-import ChatBtn from '../../components/main/messages/ChatBtn'
+import DisplayItem from '../../../components/main/items/DisplayItem'
+import MainLayout from "../../../components/layouts/MainLayout"
+import UserData from '../../../components/main/users/UserData'
+import Button from '../../../components/shared/buttons/Button'
+import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
+import { chatUserIdVar, logUserOut } from '../../../utils/apollo'
+import { colors } from '../../../utils/styles'
+import CreateRoom from '../../../components/main/messages/CreateRoom'
+import SeeRoom from '../messages/SeeRoom'
 
 const Container = styled.div`
     display:flex;
@@ -117,7 +117,7 @@ const SEE_USER = gql`
     ${ITEM_DISPLAY_FRAGMENT}
 `
 
-const UserDetail = () => {
+const SeeUser = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
     const [tabFocus, setTabFocus] = useState(true)
@@ -171,7 +171,7 @@ const UserDetail = () => {
                                 />
                             </>
                         ) : (
-                            <ChatBtn
+                            <CreateRoom
                                 text="대화하기"
                                 userId={userData?.id}
                             />
@@ -210,10 +210,10 @@ const UserDetail = () => {
                 </Items>
             </Container>
             {chatUserId ? (
-                <MessageRoom />
+                <SeeRoom />
             ) : null}
         </MainLayout>
     )
 }
 
-export default UserDetail
+export default SeeUser

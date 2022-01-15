@@ -12,10 +12,10 @@
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { useState } from 'react';
 import styled from 'styled-components';
-import DisplayItem from '../../components/main/items/DisplayItem';
-import MainLayout from '../../components/layouts/MainLayout';
-import { ITEM_DISPLAY_FRAGMENT } from '../../components/shared/utils/fragments';
-import { searchDataVar } from '../../utils/apollo';
+import DisplayItem from '../../../components/main/items/DisplayItem';
+import MainLayout from '../../../components/layouts/MainLayout';
+import { ITEM_DISPLAY_FRAGMENT } from '../../../components/shared/utils/fragments';
+import { searchDataVar } from '../../../utils/apollo';
 
 const SEE_ITEMS = gql`
     query seeItems{

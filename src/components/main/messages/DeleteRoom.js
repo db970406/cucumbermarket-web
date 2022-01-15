@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.15
-수정일 : ------
+수정일 : 2022.01.16
 */
 
 /*
@@ -12,7 +12,7 @@ import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { darkModeVar } from '../../../utils/apollo';
 import { colors } from '../../../utils/styles';
-import FontAwesomeBtn from './FontAwesomeBtn';
+import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
 
 const DELETE_ROOM = gql`
     mutation deleteRoom($id:Int!){
@@ -23,7 +23,7 @@ const DELETE_ROOM = gql`
     }
 `
 
-export default function ExitRoomBtn({ roomId }) {
+export default function DeleteRoomBtn({ roomId }) {
     const darkMode = useReactiveVar(darkModeVar)
 
     // deleteRoom Mutation과 그 cache 수정

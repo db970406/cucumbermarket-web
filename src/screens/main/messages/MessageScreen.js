@@ -7,18 +7,18 @@
 // Message 관련 Screen
 
 import { useReactiveVar } from '@apollo/client'
-import { chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
-import MessageRoom from '../../components/main/messages/MessageRoom'
-import MessageRoomLists from '../../components/main/messages/MessageRoomLists'
+import { chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo'
+import SeeRoom from './SeeRoom'
+import SeeRooms from "./SeeRooms"
 
 const MessageScreen = () => {
     const chatRoomId = useReactiveVar(chatRoomIdVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
     return (
         chatRoomId > 0 || chatUserId > 0 ? (
-            <MessageRoom />
+            <SeeRoom />
         ) : (
-            <MessageRoomLists />
+            <SeeRooms />
         )
     )
 }
