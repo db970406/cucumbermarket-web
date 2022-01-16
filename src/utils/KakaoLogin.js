@@ -1,6 +1,6 @@
 
 
-//카카오로그인
+// 카카오 로그인 api에 요청을 보낼 Component
 const KakaoLogin = () => {
     const baseUrl = "https://kauth.kakao.com/oauth/authorize"
     const config = {

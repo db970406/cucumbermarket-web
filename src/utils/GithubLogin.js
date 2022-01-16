@@ -4,8 +4,7 @@
 수정일 : 2022.01.13
 */
 
-// 버튼을 만들어 깃허브 로그인 api에 요청을 보낼 Component
-
+// 깃허브 로그인 api에 요청을 보낼 Component
 const GithubLogin = () => {
 
     const baseUrl = `https://github.com/login/oauth/authorize`
