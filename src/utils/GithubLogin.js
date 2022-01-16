@@ -20,12 +20,7 @@ const GithubLogin = () => {
     const reqUrl = `${baseUrl}?${params}`
 
     return (
-        <div
-            style={{
-                width: 60,
-                height: 60
-            }}
-        >
+        <div>
             <a href={reqUrl}>
                 <img
                     style={{

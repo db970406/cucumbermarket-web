@@ -15,19 +15,17 @@ const GetTokenFromUrl = async () => {
     console.log(social)
 
     const processLogin = async () => {
-        console.log("hi")
         switch (social) {
             // NaverLogin으로 네이버에 요청을 보낸 후 받은 token을 추출하여 백엔드에 전달하여 처리하고 jwtToken을 json데이터로 돌려받아 localStorage에 저장
             case "naver":
-                const token = location.hash.split('=')[1].split('&')[0];
-                console.log(token)
+                const naverToken = location.hash.split('=')[1].split('&')[0];
                 const naverLoginResponse = await fetch(`http://localhost:4000/social/naver`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"
                     },
                     body: JSON.stringify({
-                        token
+                        token: naverToken
                     })
                 })
 
@@ -39,22 +37,36 @@ const GetTokenFromUrl = async () => {
 
             // GithubLogin으로 깃허브에 요청을 보낸 후 받은 code를 추출하여 백엔드에 전달하여 처리하고 json데이터로 돌려받아 localStorage에 저장
             case "github":
-                const code = location.search.split('=')[1].split('&')[0];
-                console.log(code)
+                const githubCode = location.search.split('=')[1].split('&')[0];
                 const githubLoginResponse = await fetch(`http://localhost:4000/social/github`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"
                     },
-                    body: JSON.stringify({ code })
+                    body: JSON.stringify({ githubCode })
                 })
 
                 if (githubLoginResponse.status === 200) {
                     const { jwtToken } = await githubLoginResponse.json()
-                    console.log("This is : ", jwtToken)
                     logUserIn(jwtToken)
                 }
                 break;
+
+            case "kakao":
+                const kakaoCode = location.search.split('=')[1].split('&')[0];
+                console.log(kakaoCode)
+                const kakaoLoginResponse = await fetch(`http://localhost:4000/social/kakao`, {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify({ kakaoCode })
+                })
+
+                if (kakaoLoginResponse.status = 200) {
+                    const { jwtToken } = await kakaoLoginResponse.json()
+                    logUserIn(jwtToken)
+                }
         }
     }
     processLogin()

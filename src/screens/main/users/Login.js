@@ -20,6 +20,7 @@ import { colors } from '../../../utils/styles';
 import Input from '../../../components/shared/form/Input';
 import InputError from '../../../components/shared/form/InputError';
 import GithubLogin from '../../../utils/GithubLogin';
+import KakaoLogin from '../../../utils/KakaoLogin';
 
 const SocialLogins = styled.div`
     margin-top:5px;
@@ -28,6 +29,10 @@ const SocialLogins = styled.div`
     align-items:center;
     margin:0 auto;
     gap:10px;
+    width:100%;
+    div{
+        width:50px;
+    }
 `
 
 const Greeting = styled.span`
@@ -155,6 +160,7 @@ export default function Login() {
             <SocialLogins>
                 <NaverLogin />
                 <GithubLogin />
+                <KakaoLogin />
             </SocialLogins>
         </FormLayout>
     )

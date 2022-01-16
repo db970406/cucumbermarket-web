@@ -27,7 +27,7 @@ const CREATE_ROOM = gql`
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
 `
-export default function CreateRoomBtn({ text, userId }) {
+export default function CreateRoom({ text, userId }) {
 
     // MessageRoom을 on하기 위한 함수
     const enterRoom = (userId) => chatUserIdVar(userId)
@@ -84,7 +84,7 @@ export default function CreateRoomBtn({ text, userId }) {
     )
 }
 
-CreateRoomBtn.propTypes = {
+CreateRoom.propTypes = {
     text: propTypes.string,
     userId: propTypes.number
 }
