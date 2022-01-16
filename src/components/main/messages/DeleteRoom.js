@@ -13,6 +13,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { darkModeVar } from '../../../utils/apollo';
 import { colors } from '../../../utils/styles';
 import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
+import propTypes from "prop-types"
 
 const DELETE_ROOM = gql`
     mutation deleteRoom($id:Int!){
@@ -23,7 +24,7 @@ const DELETE_ROOM = gql`
     }
 `
 
-export default function DeleteRoomBtn({ roomId }) {
+export default function DeleteRoom({ roomId }) {
     const darkMode = useReactiveVar(darkModeVar)
 
     // deleteRoom Mutation과 그 cache 수정
@@ -52,4 +53,8 @@ export default function DeleteRoomBtn({ roomId }) {
             onClick={deleteRoom}
         />
     )
+}
+
+DeleteRoom.propTypes = {
+    roomId: propTypes.number
 }
