@@ -6,7 +6,7 @@
 
 /* 
 1. 클릭한 Item의 id를 받아 seeItem Query로 상세정보를 보여주는 페이지
-2. Reactive Variable인 chatUserIdVar을 이용하여 MessageRoom을 on/off 할 수 있게 함
+2. Reactive Variable인 chatUserIdVar을 이용하여 seeRoom을 on/off 할 수 있게 함
 */
 
 import { useParams } from "react-router-dom"

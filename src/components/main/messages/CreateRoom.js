@@ -5,7 +5,7 @@
 */
 
 /*
-1. UserDetail, ItemDetail에서 대화버튼 클릭 시 바로 Room에 접근할 수 있게 하기 위함
+1. SeeUser, SeeItem에서 대화버튼 클릭 시 바로 seeRooms를 거치지 않고 바로 seeRoom에 접근할 수 있게 하기 위함
 2. createRoom Mutation은 이미 생성된 방이 있으면 그 방을 retun하고 없으면 새로 방을 만들어 준다.
 */
 

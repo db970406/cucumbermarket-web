@@ -5,9 +5,9 @@
 */
 
 /* 
-1. MainLayout의 DarkmodeBtn
+1. MainLayout의 Component
 2. position:fixed로 위치 고정
-3. darkModeVar이라는 Reactive Variable 활용과 GlobalStyles로 다크모드를 구현하였다.
+3. Reactive Variable활용과 GlobalStyles로 다크모드를 구현하였다.
 */
 
 import { useReactiveVar } from '@apollo/client'

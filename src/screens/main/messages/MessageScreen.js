@@ -4,7 +4,7 @@
 수정일 : 2022.01.14
 */
 
-// Message 관련 Screen
+// Reactive Variable에 따라 어떤 Message Screen을 띄워줄 것인지 결정하는 Component
 
 import { useReactiveVar } from '@apollo/client'
 import { chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo'

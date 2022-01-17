@@ -9,7 +9,7 @@
 2. MessageRoomLayout의 Infinite Scroll과 함께 pagination 구현
 3. 실시간 메시지 수신을 위해 Apollo의 Subscription Operator 사용(cache 수정으로 즉각 반영했으나 같은 메시지가 여러개로 번지는 버그가 있음)
 4. createMessage 구현(cache 수정으로 즉각 반영)
-5. MessageRoom 입장 시 readMessages 구현하여 안 읽은 메시지 0개로 바꾼다(cache 수정으로 즉각 반영).
+5. seeRoom 입장 시 readMessages 구현하여 안 읽은 메시지 0개로 바꾼다(cache 수정으로 즉각 반영).
 */
 
 import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'

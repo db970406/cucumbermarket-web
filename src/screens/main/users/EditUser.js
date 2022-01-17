@@ -75,10 +75,11 @@ export default function EditUser() {
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange",
         defaultValues: {
-            name: loggedInUser.name
+            name: loggedInUser?.name
         }
     })
 
+    // editUser 구현부
     const editUserCompleted = ({ editUser }) => {
         const { ok } = editUser
         if (ok) {

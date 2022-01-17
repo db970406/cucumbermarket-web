@@ -5,8 +5,8 @@
 */
 
 /*
-1. Authentication 후 화면들에 쓰일 기본 레이아웃
-2. Header와 DarkModeBtn, ChatBtn을 디폴트로 가진다.
+1. 로그인 후 화면들에 쓰일 기본 레이아웃
+2. Header와 DarkModeBtn, ChatListsBtn을 디폴트로 가진다.
 */
 
 import { Helmet } from 'react-helmet-async';

@@ -53,14 +53,11 @@ const LOGIN_MUTATION = gql`
 export default function Login() {
     const { state } = useLocation()
 
-    // SignUp이 성공하면 form에 자동적으로 username과 password를 세팅하게 둠
-    const { register, handleSubmit, clearErrors, formState } = useForm({
-        mode: "onChange"
-    })
+    const { register, handleSubmit, clearErrors, formState } = useForm()
 
     const clearError = (errorName) => clearErrors(errorName)
 
-    // Login Mutation 처리 후 실행할 함수
+    // Login 구현부
     const afterLogin = ({ login }) => {
         const { ok, token, error } = login
         if (!ok) {
@@ -98,7 +95,6 @@ export default function Login() {
                 <Input
                     defaultValue={state?.username}
                     placeholder="아이디를 입력하세요."
-                    onFocus={() => clearError('username')}
                     {...register("username", {
                         required: true,
                         minLength: {
@@ -122,7 +118,6 @@ export default function Login() {
                     defaultValue={state?.password}
                     type="password"
                     placeholder="비밀번호를 입력하세요."
-                    onFocus={() => clearError("password")}
                     {...register("password", {
                         required: true,
                         minLength: {

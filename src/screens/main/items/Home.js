@@ -5,7 +5,7 @@
 */
 
 /*
-1. 메인 Screen
+1. 메인 Screen(seeItems Query)
 2. Reactive Variable을 활용하여 search한 값이 있다면 그 값을, 없다면 seeItems값을 띄운다.
 */
 

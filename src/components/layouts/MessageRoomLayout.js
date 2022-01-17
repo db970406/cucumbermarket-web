@@ -83,13 +83,13 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
         }
     }
 
-    // MessageScreen이 MessageRoomLists를 띄울 수 있게 하는 함수
+    // seeRoom에서 seeRooms로 돌아가기
     const backToLists = () => {
         chatRoomIdVar(0)
         chatUserIdVar(0)
     }
 
-    // MessageScreen을 끄고 ChatBtn을 띄울 수 있게 하는 함수
+    // MessageScreen 끄기
     const closeMessenger = () => {
         chatRoomIdVar(0)
         chatUserIdVar(0)

@@ -32,7 +32,6 @@ const Logo = styled.img`
     margin-bottom:10px;
 `
 
-
 export default function FormLayout({ children, title, logo, auth }) {
     return (
         <>

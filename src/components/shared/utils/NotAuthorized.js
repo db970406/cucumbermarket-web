@@ -4,7 +4,10 @@
 수정일 : ------
 */
 
-// 입장 권한 없는 페이지 접근 시 전 URL로 돌려보내는 Component
+/* 
+1. 본인이 아닌 유저가 그 유저의 EditUser에 접근하는 경우
+2. 소셜로그인 유저가 EditUser에 접근하려는 경우 이전 URL로 돌려보내는 Component
+*/
 
 import { useHistory } from 'react-router-dom';
 

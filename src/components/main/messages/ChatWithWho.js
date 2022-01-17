@@ -5,8 +5,8 @@
 */
 
 /* 
-1. MessageRoomLists의 Component로 그 Room에 있는 users들의 정보를 받는다.
-2. 내가 아닌 유저를 counterPart 변수에 담았다.
+1. seeRooms Component로부터 각각의 Room에 있는 users들의 정보를 받는다.
+2. 내가 아닌 user의 정보를 counterPart 변수에 담았다.
 3. 그 counterPart의 정보가 있다면 UserData Component를 이용해서 반환 하였다.
 4. counterPart 정보가 없다면 상대방이 퇴장한 것이므로 퇴장했다는 문구를 띄워준다.
 */

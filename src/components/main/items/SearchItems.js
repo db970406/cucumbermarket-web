@@ -4,6 +4,8 @@
 수정일 : ------
 */
 
+// Header에서 사용할 SearchItems Mutation Component
+
 import { gql, useLazyQuery, useReactiveVar } from "@apollo/client"
 import Input from '../../shared/form/Input'
 import { useForm } from 'react-hook-form'
