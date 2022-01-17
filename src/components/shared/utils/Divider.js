@@ -4,9 +4,8 @@
 수정일 : 2022.01.13
 */
 
-/*
-1. Login Screen에서 소셜로그인과 로그인 form을 구별하는 Component
-*/
+// Login Screen에서 소셜로그인과 로그인 form을 구별하는 Component
+
 
 import styled from 'styled-components'
 

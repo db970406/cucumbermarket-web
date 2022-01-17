@@ -6,7 +6,7 @@
 
 /*
 1. 가장 기본적인 Button Component
-2. disabled를 prop으로 받으며 hover로 유저 사용성 고려한 styled-component 구성
+2. disabled를 prop으로 받으며 hover로 유저 사용성 고려한 styled-components 구성
 3. form과 같이 자주 쓰이므로 longtype을 prop으로 받아 width를 다르게 지정한다.
 */
 
@@ -19,10 +19,10 @@ const SButton = styled.button`
     padding:10px 15px;;
     border-radius:7px;
     opacity:${props => props.disabled ? 0.3 : 0.8};
+    margin:5px 0;
     &:hover{
         ${props => props.disabled ? 0.3 : 1};
     }
-    margin:5px 0;
 `
 const ButtonText = styled.span`
     text-align:center;

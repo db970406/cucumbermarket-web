@@ -4,7 +4,7 @@
 수정일 : 2022.01.13
 */
 
-// SignUp Screen
+// 회원가입 Screen
 
 import { gql, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
@@ -45,7 +45,7 @@ export default function CreateUser() {
     })
     const clearError = (errorName) => clearErrors(errorName)
 
-    // SignUp Mutation 처리 후 실행할 함수로 Login으로 보내면서 정보를 넘겨준다. 
+    // createUser 구현부(history를 사용하여 가입 정보를 Login Screen에 넘겨준다.)
     const signUpCompleted = ({ createUser }) => {
         const { ok, error } = createUser
         if (!ok) {

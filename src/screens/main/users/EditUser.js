@@ -79,6 +79,7 @@ export default function EditUser() {
         }
     })
 
+    // editUser 구현부
     const editUserCompleted = ({ editUser }) => {
         const { ok } = editUser
         if (ok) {

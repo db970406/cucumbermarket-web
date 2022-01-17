@@ -6,9 +6,9 @@
 
 /*
 1. MainLayout을 사용하는 모든 Screen이 가지는 Header Component이다.
-2. 뒤로 가기 구현
+2. 뒤로 가기 구현(Home제외)
 3. 오이 클릭하여 Home으로 가기 구현
-4. searchItem 버튼 및 기능 구현
+4. searchItems 버튼 및 기능 구현
 5. uploadItem 버튼 추가
 6. 현재 로그인한 유저(useLoggedInUser hook)의 avatar를 띄워준다. 
 */
@@ -22,9 +22,7 @@ import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
 import UserAvatar from './UserAvatar'
 import { useReactiveVar } from "@apollo/client"
 import { darkModeVar, searchDataVar, searchModeVar } from "../../../utils/apollo"
-
 import SearchItems from '../items/SearchItems'
-import { useState } from 'react'
 
 const Container = styled.header`
     padding:20px 70px;
@@ -57,7 +55,6 @@ const Tabs = styled.div`
 `
 const Tab = styled.button`
 `
-
 
 export default function Header() {
     const searchMode = useReactiveVar(searchModeVar)

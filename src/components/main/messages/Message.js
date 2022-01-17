@@ -5,8 +5,8 @@
 */
 
 /*
-1. Message Data를 받는다.
-2. isMine prop을 styled-components로 넘겨 내 메시지 여부를 파악하고 그에 따라 다른 css를 부여한다.
+1. Message 말풍선 구현부로 seeRoom에게 user정보와 message를 넘겨받는다.
+2. isMine prop을 styled-components로 넘겨 내 메시지인지 여부에 따라 다른 css를 부여한다.
 */
 
 import styled from 'styled-components'

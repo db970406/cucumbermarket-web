@@ -4,9 +4,8 @@
 수정일 : 2022.01.11
 */
 
-/*
-1. react-hook-form으로 설정한 validation 검사에 부합하지 않으면 에러 문구를 띄워주는 Component
-*/
+// react-hook-form으로 설정한 validation 검사에 부합하지 않으면 에러 문구를 띄워주는 Component
+
 
 import styled from 'styled-components'
 import { colors } from '../../../utils/styles'

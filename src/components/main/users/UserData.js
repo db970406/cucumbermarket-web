@@ -6,7 +6,7 @@
 
 /* 
 1. 같이 자주 쓰는 UserAvatar, UserLocation, Username Component들을 한 곳에 모아 편하게 사용하기 위함
-2. onClick 이벤트 추가
+2. onClick으로 함수를 prop으로 받아 처리할 수 있다.
 */
 
 import styled from 'styled-components'

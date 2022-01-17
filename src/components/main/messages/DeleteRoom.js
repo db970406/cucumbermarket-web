@@ -4,9 +4,7 @@
 수정일 : 2022.01.16
 */
 
-/*
-1. MessageRoomLists에서 방을 퇴장할 수 있게 하기 위한 Component
-*/
+// seeRooms에서 사용할 DeleteRoom Mutation Component
 
 import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';

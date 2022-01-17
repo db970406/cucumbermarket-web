@@ -4,9 +4,8 @@
 수정일 : 2022.01.11
 */
 
-/* 
-1. prop으로 User의 name과 size를 prop으로 받아 활용하기 위함
-*/
+// prop으로 User의 name과 size를 prop으로 받아 활용하기 위함
+
 
 import styled from 'styled-components'
 import propTypes from "prop-types"

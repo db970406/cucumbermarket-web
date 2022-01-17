@@ -5,7 +5,7 @@
 */
 
 /*
-1. 화면에 기본적으로 배치될 Item들의 형태
+1. Home, SeeUser에 배치될 Item들의 형태
 2. toggleLike(관심) 구현 및 cache 수정으로 즉각 결과 확인 가능
 */
 

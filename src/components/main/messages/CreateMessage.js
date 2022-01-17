@@ -4,6 +4,8 @@
 수정일 : ------
 */
 
+// SeeRoom에서 사용할 CreateMessage Mutation Component
+
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons'
 import { colors } from '../../../utils/styles'
 import Input from '../../../components/shared/form/Input'
@@ -43,6 +45,10 @@ export default function CreateMessage({ roomId }) {
                 fields: {
                     messages(prev) {
                         return [...prev, createMessage]
+                    },
+                    unreadCount(prev) {
+                        console.log(prev)
+                        return prev + 1
                     }
                 }
             })
@@ -50,11 +56,11 @@ export default function CreateMessage({ roomId }) {
         }
     }
 
-    const [createMessage, { loading: sendLoading }] = useMutation(CREATE_MESSAGE, {
+    const [createMessage, { loading }] = useMutation(CREATE_MESSAGE, {
         update: updateCreateMessage
     })
     const onValid = ({ message }) => {
-        if (sendLoading) return;
+        if (loading) return;
 
         createMessage({
             variables: {

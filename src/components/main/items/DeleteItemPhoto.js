@@ -4,6 +4,8 @@
 수정일 : ------
 */
 
+// EditItem에서 사용할 DeleteItemPhoto Mutation Component
+
 import { gql, useMutation } from '@apollo/client'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -36,23 +38,12 @@ export default function DeleteItemPhoto({ itemId, id }) {
             alert(error);
             return;
         }
-        const result = cache.readFragment({
-            id: `Item:${itemId}`,
-            fragment: gql`
-                fragment itemPhotoCount on Item{
-                    itemPhotoCount
-                }
-            `
+
+        // 백엔드에서 마지막 한 장은 못지우게 설정해놓았다.
+        cache.evict({
+            id: `ItemPhoto:${id}`
         })
-        const { itemPhotoCount } = result
-        if (itemPhotoCount === 1) {
-            alert("사진은 반드시 한 장은 필요합니다")
-            return;
-        } else {
-            cache.evict({
-                id: `ItemPhoto:${id}`
-            })
-        }
+
     }
     const [deleteItemPhoto] = useMutation(DELETE_ITEM_PHOTO, {
         variables: {

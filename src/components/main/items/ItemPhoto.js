@@ -5,9 +5,9 @@
 */
 
 /*
-1. ItemDetail, ItemEdit에서 사용되는 사진 Component
-2. ItemDetail에서는 기본적으로 띄워준다.
-3. ItemEdit에서는 editMode를 prop으로 받아 deleteItemPhoto가 가능하게 하였다(cache 수정으로 즉각 반영). 
+1. SeeItem, EditItem에서 사용되는 사진 Component
+2. SeeItem에서는 기본적으로 사진을 띄워주는 용도
+3. EditItem에서 editMode를 prop으로 받아 deleteItemPhoto가 가능하게 하였다(cache 수정으로 즉각 반영). 
 */
 
 import styled from 'styled-components'
@@ -26,7 +26,6 @@ const Img = styled.img`
 `
 
 export default function ItemPhoto({ editMode, itemId, id, src, alt, maxHeight, maxWidth }) {
-
     return (
         editMode ? (
             <DeleteContainer>

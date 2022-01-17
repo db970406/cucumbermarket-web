@@ -6,7 +6,7 @@
 
 /*
 1. 사진이 여러 장일 때 slider로 보여주는 Component
-2. react-slick을 사용하였고 css 커스터마이징을 위해 styled-components에 특이한 작업을 진행하였다.
+2. react-slick을 사용하였고 css 커스터마이징을 위해 styled-components에 작성.
 */
 
 import Slider from 'react-slick'
@@ -15,6 +15,7 @@ import { colors } from '../../../utils/styles';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Slider Setting
 const settings = {
     infinite: true,
     speed: 500,
