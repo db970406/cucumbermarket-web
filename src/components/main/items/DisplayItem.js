@@ -22,19 +22,20 @@ import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
 import UserData from '../users/UserData';
 
 const Container = styled.div`
-    transition:all 0.2s ease-in-out;
-    &:hover{
-        transform:scale(1.05);
-    }
 `
 const PhotoCase = styled.div`
     width:200px;
     height:200px;
-    img{
-        border-radius:7px;
+    overflow:hidden;
+    border-radius:7px;
+    &:hover{
+        img{
+            transform:scale(1.1);
+        }
     }
 `
 const ItemPhoto = styled.img`
+    transition:all 0.2s ease-in-out;
     width:100%;
     height:100%;
 `

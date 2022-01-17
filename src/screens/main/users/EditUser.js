@@ -75,7 +75,7 @@ export default function EditUser() {
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange",
         defaultValues: {
-            name: loggedInUser.name
+            name: loggedInUser?.name
         }
     })
 
