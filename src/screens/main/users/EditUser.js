@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.15
+수정일 : 2022.01.18
 */
 
 /*
@@ -141,6 +141,7 @@ export default function EditUser() {
                         <Input
                             onChange={clearError}
                             {...register("name", {
+                                required: "이름은 필수항목입니다.",
                                 minLength: {
                                     value: 2,
                                     message: "이름은 2글자 이상이어야 합니다."
@@ -150,6 +151,7 @@ export default function EditUser() {
                                     message: "이름은 8글자 이하이어야 합니다."
                                 }
                             })}
+                            required
                             placeholder="이름을 입력하세요."
                             isError={Boolean(formState.errors?.name?.message)}
                         />
@@ -180,7 +182,7 @@ export default function EditUser() {
                         />
                         <Button
                             auth
-                            disabled={loading}
+                            disabled={!formState.isValid || loading}
                             loading={loading}
                             text={`${loggedInUser?.name}님의 정보 수정`}
                             onClick={handleSubmit(onValid)}

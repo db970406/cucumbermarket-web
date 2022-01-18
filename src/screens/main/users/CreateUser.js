@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.18
 */
 
 // 회원가입 Screen
@@ -100,7 +100,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("name", {
-                        required: true,
+                        required: "이름은 필수항목입니다.",
                         minLength: {
                             value: 2,
                             message: "이름은 2글자 이상이어야 합니다."
@@ -114,7 +114,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("email", {
-                        required: true,
+                        required: "이메일은 필수항목입니다.",
                         pattern: {
                             value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g,
                             message: "이메일 양식을 지켜주세요."
@@ -128,7 +128,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("username", {
-                        required: true,
+                        required: "아이디는 필수항목입니다.",
                         minLength: {
                             value: 6,
                             message: "아이디는 6자리 이상이어야 합니다."
@@ -160,7 +160,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("password", {
-                        required: true,
+                        required: "비밀번호는 필수항목입니다.",
                         minLength: {
                             value: 8,
                             message: "비밀번호는 8자리 이상이어야 합니다."
@@ -183,7 +183,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("password2", {
-                        required: true,
+                        required: "확인 비밀번호는 필수항목입니다.",
                         minLength: {
                             value: 8,
                             message: "비밀번호는 8자리 이상이어야 합니다."
@@ -208,7 +208,6 @@ export default function CreateUser() {
                     loading={loading}
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
-                    width="100%"
                     longtype
                 />
                 <SendAnywhere

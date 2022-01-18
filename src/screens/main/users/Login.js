@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.18
 */
 
 // Login Screen
@@ -142,7 +142,7 @@ export default function Login() {
                     text="로그인"
                     disabled={!formState.isValid || loading}
                     loading={loading}
-                    width="100%"
+                    onClick={handleSubmit(onValid)}
                     longtype
                 />
                 <SendAnywhere
