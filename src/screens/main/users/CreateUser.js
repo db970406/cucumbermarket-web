@@ -1,24 +1,25 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.18
 */
 
 // 회원가입 Screen
 
-import { gql, useMutation } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { gql, useMutation, useReactiveVar } from '@apollo/client';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { kakaoLocationApi } from '../../../apis/locationApi';
+import { getCurrentPosition } from '../../../apis/locationApi';
 import FormLayout from '../../../components/layouts/FormLayout';
 import Button from '../../../components/shared/buttons/Button';
 import InputError from '../../../components/shared/form/InputError';
 import Input from '../../../components/shared/form/Input';
 import SendAnywhere from '../../../components/shared/utils/SendAnywhere';
+import { currentLocationVar } from '../../../utils/apollo';
 
-const SIGNUP_MUTATION = gql`
-    mutation signUp(
+const CREATE_USER_MUTATION = gql`
+    mutation createUser(
         $name:String!,
         $username:String!,
         $email:String!,
@@ -39,14 +40,14 @@ const SIGNUP_MUTATION = gql`
 `
 export default function CreateUser() {
     const history = useHistory()
-    const [currentLocation, setCurrentLocation] = useState("")
+    const currentLocation = useReactiveVar(currentLocationVar)
     const { register, handleSubmit, clearErrors, formState, getValues } = useForm({
         mode: "onChange"
     })
     const clearError = (errorName) => clearErrors(errorName)
 
     // createUser 구현부(history를 사용하여 가입 정보를 Login Screen에 넘겨준다.)
-    const signUpCompleted = ({ createUser }) => {
+    const createUserCompleted = ({ createUser }) => {
         const { ok, error } = createUser
         if (!ok) {
             alert(error)
@@ -59,8 +60,8 @@ export default function CreateUser() {
             password
         })
     }
-    const [signUp, { loading }] = useMutation(SIGNUP_MUTATION, {
-        onCompleted: signUpCompleted
+    const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION, {
+        onCompleted: createUserCompleted
     })
 
     const onValid = (data) => {
@@ -72,7 +73,7 @@ export default function CreateUser() {
             return;
         }
 
-        signUp({
+        createUser({
             variables: {
                 name,
                 username,
@@ -86,12 +87,7 @@ export default function CreateUser() {
 
     // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
     useEffect(() => {
-        const success = async (position) => {
-            const { latitude: lat, longitude: lon } = position.coords
-            const getLocation = await kakaoLocationApi(lat, lon)
-            setCurrentLocation(getLocation)
-        }
-        navigator.geolocation.getCurrentPosition(success)
+        getCurrentPosition()
     }, [])
 
     return (
@@ -100,7 +96,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("name", {
-                        required: true,
+                        required: "이름은 필수항목입니다.",
                         minLength: {
                             value: 2,
                             message: "이름은 2글자 이상이어야 합니다."
@@ -114,7 +110,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("email", {
-                        required: true,
+                        required: "이메일은 필수항목입니다.",
                         pattern: {
                             value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g,
                             message: "이메일 양식을 지켜주세요."
@@ -128,7 +124,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("username", {
-                        required: true,
+                        required: "아이디는 필수항목입니다.",
                         minLength: {
                             value: 6,
                             message: "아이디는 6자리 이상이어야 합니다."
@@ -160,7 +156,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("password", {
-                        required: true,
+                        required: "비밀번호는 필수항목입니다.",
                         minLength: {
                             value: 8,
                             message: "비밀번호는 8자리 이상이어야 합니다."
@@ -183,7 +179,7 @@ export default function CreateUser() {
                 <Input
                     onChange={clearError}
                     {...register("password2", {
-                        required: true,
+                        required: "확인 비밀번호는 필수항목입니다.",
                         minLength: {
                             value: 8,
                             message: "비밀번호는 8자리 이상이어야 합니다."
@@ -208,7 +204,6 @@ export default function CreateUser() {
                     loading={loading}
                     disabled={!formState.isValid || loading}
                     onClick={handleSubmit(onValid)}
-                    width="100%"
                     longtype
                 />
                 <SendAnywhere

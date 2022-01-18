@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.14
-수정일 : ------
+수정일 : 2022.01.18`
 */
 
 /*
@@ -21,7 +21,7 @@ const InputContainer = styled.div`
     width:95%;
     margin:0 auto;
 `
-const SearchBtn = styled.div`
+const BtnContainer = styled.div`
     // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하기 위함
     position:absolute;
     right:10px;
@@ -31,14 +31,14 @@ const InputWithFontAwesome = ({ children, onClick, icon, color, size, disabled }
     return (
         <InputContainer>
             {children}
-            <SearchBtn onClick={onClick}>
+            <BtnContainer onClick={onClick}>
                 <FontAwesomeBtn
                     icon={icon}
                     color={color}
                     size={size}
                     disabled={disabled}
                 />
-            </SearchBtn>
+            </BtnContainer>
         </InputContainer>
     )
 }

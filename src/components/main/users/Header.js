@@ -54,6 +54,7 @@ const Tabs = styled.div`
     }
 `
 const Tab = styled.button`
+
 `
 
 export default function Header() {
@@ -81,7 +82,7 @@ export default function Header() {
                 <GoBack>
                     <FontAwesomeBtn
                         icon={faBackspace}
-                        size={"lg"}
+                        size={"2x"}
                         color={darkMode ? colors.white : colors.black}
                         onClick={() => history.goBack()}
                     />

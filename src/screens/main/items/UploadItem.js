@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : 2022.01.12
+수정일 : 2022.01.18
 */
 
 // Item을 upload하는 Screen
@@ -52,7 +52,9 @@ const UPLOAD_ITEM = gql`
 
 export default function UploadItem() {
     const history = useHistory()
-    const { register, handleSubmit, clearErrors, formState } = useForm()
+    const { register, handleSubmit, clearErrors, formState } = useForm({
+        mode: "onChange"
+    })
     const clearError = (errorName) => clearErrors(errorName)
     const { loggedInUser } = useLoggedInUser()
 
@@ -90,7 +92,6 @@ export default function UploadItem() {
     const onValid = (data) => {
         if (loading) return;
         const { title, description, files } = data
-        console.log(files)
         uploadItemMutation({
             variables: {
                 title,
@@ -117,7 +118,7 @@ export default function UploadItem() {
                     <Input
                         onChange={clearError}
                         {...register("title", {
-                            require: true,
+                            required: true,
                             minLength: {
                                 value: 2,
                                 message: "제목은 2글자 이상이어야 합니다."
@@ -125,9 +126,9 @@ export default function UploadItem() {
                         })}
                         required
                         placeholder="제목을 입력하세요."
-                        isError={Boolean(formState.errors?.title?.message)}
+                        isError={Boolean(formState?.errors?.title?.message)}
                     />
-                    <InputError text={formState.errors?.title?.message} />
+                    <InputError text={formState?.errors?.title?.message} />
 
                     <Input
                         onChange={clearError}
@@ -138,9 +139,9 @@ export default function UploadItem() {
                             }
                         })}
                         placeholder="설명글을 입력하세요."
-                        isError={Boolean(formState.errors?.description?.message)}
+                        isError={Boolean(formState?.errors?.description?.message)}
                     />
-                    <InputError text={formState.errors?.description?.message} />
+                    <InputError text={formState?.errors?.description?.message} />
 
                     <Button
                         text='물건 업로드'
@@ -150,7 +151,7 @@ export default function UploadItem() {
                         onClick={handleSubmit(onValid)}
                     />
                 </form>
-            </FormLayout >
+            </FormLayout>
         </MainLayout>
     )
 }
