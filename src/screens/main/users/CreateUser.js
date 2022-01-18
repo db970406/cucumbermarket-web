@@ -6,19 +6,20 @@
 
 // 회원가입 Screen
 
-import { gql, useMutation } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { gql, useMutation, useReactiveVar } from '@apollo/client';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { kakaoLocationApi } from '../../../apis/locationApi';
+import { getCurrentPosition } from '../../../apis/locationApi';
 import FormLayout from '../../../components/layouts/FormLayout';
 import Button from '../../../components/shared/buttons/Button';
 import InputError from '../../../components/shared/form/InputError';
 import Input from '../../../components/shared/form/Input';
 import SendAnywhere from '../../../components/shared/utils/SendAnywhere';
+import { currentLocationVar } from '../../../utils/apollo';
 
-const SIGNUP_MUTATION = gql`
-    mutation signUp(
+const CREATE_USER_MUTATION = gql`
+    mutation createUser(
         $name:String!,
         $username:String!,
         $email:String!,
@@ -39,14 +40,14 @@ const SIGNUP_MUTATION = gql`
 `
 export default function CreateUser() {
     const history = useHistory()
-    const [currentLocation, setCurrentLocation] = useState("")
+    const currentLocation = useReactiveVar(currentLocationVar)
     const { register, handleSubmit, clearErrors, formState, getValues } = useForm({
         mode: "onChange"
     })
     const clearError = (errorName) => clearErrors(errorName)
 
     // createUser 구현부(history를 사용하여 가입 정보를 Login Screen에 넘겨준다.)
-    const signUpCompleted = ({ createUser }) => {
+    const createUserCompleted = ({ createUser }) => {
         const { ok, error } = createUser
         if (!ok) {
             alert(error)
@@ -59,8 +60,8 @@ export default function CreateUser() {
             password
         })
     }
-    const [signUp, { loading }] = useMutation(SIGNUP_MUTATION, {
-        onCompleted: signUpCompleted
+    const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION, {
+        onCompleted: createUserCompleted
     })
 
     const onValid = (data) => {
@@ -72,7 +73,7 @@ export default function CreateUser() {
             return;
         }
 
-        signUp({
+        createUser({
             variables: {
                 name,
                 username,
@@ -86,12 +87,7 @@ export default function CreateUser() {
 
     // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
     useEffect(() => {
-        const success = async (position) => {
-            const { latitude: lat, longitude: lon } = position.coords
-            const getLocation = await kakaoLocationApi(lat, lon)
-            setCurrentLocation(getLocation)
-        }
-        navigator.geolocation.getCurrentPosition(success)
+        getCurrentPosition()
     }, [])
 
     return (

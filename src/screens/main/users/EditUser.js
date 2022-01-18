@@ -15,15 +15,16 @@ import InputError from '../../../components/shared/form/InputError'
 import Input from '../../../components/shared/form/Input'
 import useLoggedInUser from '../../../hooks/useLoggedInUser'
 import Button from "../../../components/shared/buttons/Button"
-import { kakaoLocationApi } from '../../../apis/locationApi'
-import { useEffect, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { getCurrentPosition } from '../../../apis/locationApi'
+import { useEffect } from 'react'
+import { gql, useMutation, useReactiveVar } from '@apollo/client'
 import styled from 'styled-components'
 import { colors } from '../../../utils/styles'
 import NotAuthorized from '../../../components/shared/utils/NotAuthorized'
 import FormLayout from '../../../components/layouts/FormLayout'
 import ItemPhoto from '../../../components/main/items/ItemPhoto';
 import MainLayout from '../../../components/layouts/MainLayout';
+import { currentLocationVar } from '../../../utils/apollo'
 
 const Container = styled.div`
     max-width:600px;
@@ -68,7 +69,7 @@ export default function EditUser() {
     const { id } = useParams()
     const history = useHistory()
     const { state } = useLocation()
-    const [currentLocation, setCurrentLocation] = useState("")
+    const currentLocation = useReactiveVar(currentLocationVar)
 
     const { loggedInUser } = useLoggedInUser()
 
@@ -106,12 +107,7 @@ export default function EditUser() {
 
     // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
     useEffect(() => {
-        const success = async (position) => {
-            const { latitude: lat, longitude: lon } = position.coords
-            const getLocation = await kakaoLocationApi(lat, lon)
-            setCurrentLocation(getLocation)
-        }
-        navigator.geolocation.getCurrentPosition(success)
+        getCurrentPosition()
     }, [])
 
     return (

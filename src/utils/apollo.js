@@ -58,6 +58,9 @@ export const searchDataVar = makeVar([])
 //Item 관련 Reactive Variables
 export const searchModeVar = makeVar(false)
 
+//위치 관련 Reactive Variables
+export const currentLocationVar = makeVar("")
+
 
 // 서버의 Header에 localStorage에 저장한 jwtToken을 싣어보내기 위한 link
 const authLink = setContext((_, { headers }) => {
