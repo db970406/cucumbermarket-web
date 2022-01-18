@@ -38,6 +38,10 @@ export default function SearchItems() {
 
     // searchItems 성공 시 searchDataVar를 Reactive Variables로 data를 받아놓는다.
     const searchCompleted = ({ searchItems }) => {
+        if (searchItems.length < 1) {
+            alert("검색 결과가 없습니다.")
+            return
+        }
         searchDataVar(searchItems)
         history.push("/")
     }
