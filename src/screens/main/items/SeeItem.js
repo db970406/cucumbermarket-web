@@ -24,6 +24,7 @@ import DropDownMenu from '../../../components/main/items/DropDownMenu'
 import MessageRoom from '../messages/MessageScreen'
 import CreateRoom from '../../../components/main/messages/CreateRoom'
 import ToggleLike from '../../../components/main/items/ToggleLike'
+import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate'
 
 const Container = styled.div`
     display:flex;
@@ -155,11 +156,13 @@ export default function SeeItem() {
                     <Description>
                         {itemData?.description}
                     </Description>
+                    <GetKoreanStyleDate milliSecond={itemData?.createdAt} size={14} />
                 </MetaData>
             </Container>
             {chatUserId ? (
                 <MessageRoom />
             ) : null}
+
         </MainLayout>
     )
 }

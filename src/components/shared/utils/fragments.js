@@ -34,6 +34,7 @@ export const ITEM_DETAIL_FRAGMENT = gql`
         isMine
         likeCount
         isLiked
+        createdAt
     }
 `
 
@@ -54,6 +55,7 @@ export const ITEM_DISPLAY_FRAGMENT = gql`
         isMine
         likeCount
         isLiked
+        createdAt
     }
 `
 
