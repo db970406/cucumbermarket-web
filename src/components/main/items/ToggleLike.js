@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.18
-수정일 : ------
+수정일 : 2022.01.19
 */
 
 // DisplayItem에서 사용할 ToggleLike Mutation Component
@@ -13,14 +13,15 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { darkModeVar } from '../../../utils/apollo';
 import { colors } from '../../../utils/styles';
+import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id:Int!){
         toggleLike(id:$id){
-            ok
-            error
+            ...ItemDisplayFragment
         }
     }
+    ${ITEM_DISPLAY_FRAGMENT}
 `
 
 export default function ToggleLike({ itemId, isLiked }) {
@@ -29,9 +30,9 @@ export default function ToggleLike({ itemId, isLiked }) {
 
     // 관심 Mutation과 프론트 즉각 반영을 위한 cache작업
     const updateToggleLike = (cache, { data }) => {
-        const { toggleLike: { ok } } = data
-        if (ok) {
-            const photoPressedLike = cache.readFragment({
+        const { toggleLike: item } = data
+        if (item.id) {
+            const photoPressedLike = cache.writeFragment({
                 id: `Item:${itemId}`,
                 fragment: gql`
                     fragment itemDisplay on Item{
@@ -51,7 +52,8 @@ export default function ToggleLike({ itemId, isLiked }) {
                         likeCount
                         isLiked
                     }
-                `
+                `,
+                data: item
             })
 
             cache.modify({
@@ -65,18 +67,7 @@ export default function ToggleLike({ itemId, isLiked }) {
                         const clearMyLikes = prev.filter(item => item.__ref !== photoPressedLike.__ref)
 
                         //관심을 누르지 않았다면 그대로 이전 배열을 사용한다.
-                        return isLiked ? clearMyLikes : [...prev]
-                    }
-                }
-            })
-            cache.modify({
-                id: `Item:${itemId}`,
-                fields: {
-                    isLiked(prev) {
-                        return !prev
-                    },
-                    likeCount(prev) {
-                        return isLiked ? prev - 1 : prev + 1
+                        return isLiked ? [...prev] : [photoPressedLike, ...clearMyLikes]
                     }
                 }
             })
@@ -91,7 +82,6 @@ export default function ToggleLike({ itemId, isLiked }) {
     return (
         <FontAwesomeBtn
             onClick={toggleLike}
-            checkState={isLiked}
             icon={isLiked ? solidHeart : faHeart}
             size={"lg"}
             color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}

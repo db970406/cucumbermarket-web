@@ -1,4 +1,8 @@
-
+/* 
+작성자 : SJ
+작성일 : 2022.01.19
+수정일 : ------
+*/
 
 // 카카오 로그인 api에 요청을 보낼 Component
 const KakaoLogin = () => {
@@ -21,6 +25,7 @@ const KakaoLogin = () => {
                         height: "100%",
                     }}
                     src={require("../images/kakaotalk.png")}
+                    alt="카카오 로그인"
                 />
             </a>
         </div>

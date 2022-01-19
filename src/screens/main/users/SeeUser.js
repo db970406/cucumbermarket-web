@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.16
+수정일 : 2022.01.19
 */
 
 /*
@@ -125,7 +125,6 @@ const SeeUser = () => {
     const chatUserId = useReactiveVar(chatUserIdVar)
 
     const focusChange = (bool) => setTabFocus(bool)
-
 
     const { data, loading } = useQuery(SEE_USER, {
         variables: {
