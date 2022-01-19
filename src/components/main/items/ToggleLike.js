@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.18
-수정일 : 2022.01.19
+수정일 : ------
 */
 
 // DisplayItem에서 사용할 ToggleLike Mutation Component

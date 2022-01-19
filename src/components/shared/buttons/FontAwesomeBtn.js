@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.11
-수정일 : 2022.01.14
+수정일 : 2022.01.19
 */
 
 /*
@@ -25,7 +25,6 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
         <BtnContainer
             style={{
                 marginRight,
-                marginBottom: 3
             }}
         >
             <Btn onClick={onClick} disabled={disabled}>

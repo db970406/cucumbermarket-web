@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate';
 import UserData from '../users/UserData';
+import LikeCount from './LikeCount';
 import ToggleLike from './ToggleLike';
 
 const Container = styled.div`
@@ -47,10 +48,7 @@ const Title = styled.span`
     font-size:16px;
     font-weight:700;
 `
-const LikeCount = styled.span`
-    font-size:12px;
-    color:${props => props.theme.themeGray};
-`
+
 
 const DisplayItem = ({
     id,
@@ -89,10 +87,10 @@ const DisplayItem = ({
                 {!isMine ? (
                     <ToggleLike itemId={id} isLiked={isLiked} />
                 ) : null}
-                <LikeCount>관심 : {likeCount}</LikeCount>
+                <LikeCount likeCount={`관심 : ${likeCount}`} size={12} />
                 <GetKoreanStyleDate milliSecond={createdAt} size={12} />
             </MetaData>
-        </Container >
+        </Container>
     )
 }
 
