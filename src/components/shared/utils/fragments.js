@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.13
+수정일 : 2022.01.19
 */
 
 // GraphQL 양식 작성 시 데이터 모델의 자주 쓰는 필드들을 fragment화 해놓은 파일
@@ -34,6 +34,7 @@ export const ITEM_DETAIL_FRAGMENT = gql`
         isMine
         likeCount
         isLiked
+        createdAt
     }
 `
 
@@ -54,6 +55,7 @@ export const ITEM_DISPLAY_FRAGMENT = gql`
         isMine
         likeCount
         isLiked
+        createdAt
     }
 `
 

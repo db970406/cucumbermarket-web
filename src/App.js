@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.16
+수정일 : 2022.01.19
 */
 
 
@@ -70,7 +70,7 @@ function App() {
                 <Route path="/sign-up" exact>
                   <CreateUser />
                 </Route>
-                <Route path="/:social">
+                <Route path="/:social" exact>
                   <GetTokenFromUrl />
                 </Route>
 

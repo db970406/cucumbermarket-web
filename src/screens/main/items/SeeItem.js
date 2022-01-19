@@ -24,6 +24,8 @@ import DropDownMenu from '../../../components/main/items/DropDownMenu'
 import MessageRoom from '../messages/MessageScreen'
 import CreateRoom from '../../../components/main/messages/CreateRoom'
 import ToggleLike from '../../../components/main/items/ToggleLike'
+import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate'
+import LikeCount from '../../../components/main/items/LikeCount'
 
 const Container = styled.div`
     display:flex;
@@ -58,11 +60,6 @@ const Buttons = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
-`
-
-const LikeCount = styled.span`
-    font-size:14px;
-    color:${props => props.theme.themeGray};
 `
 
 const Description = styled.p`
@@ -143,6 +140,7 @@ export default function SeeItem() {
                             <ToggleLike
                                 isLiked={itemData?.isLiked}
                                 itemId={itemData?.id}
+                                size={"2x"}
                             />
 
                             <CreateRoom
@@ -151,15 +149,17 @@ export default function SeeItem() {
                             />
                         </Buttons>
                     ) : null}
-                    <LikeCount>{itemData?.likeCount} 개의 관심</LikeCount>
+                    <LikeCount likeCount={`${itemData?.likeCount} 개의 관심`} size={14} />
                     <Description>
                         {itemData?.description}
                     </Description>
+                    <GetKoreanStyleDate milliSecond={itemData?.createdAt} size={14} />
                 </MetaData>
             </Container>
             {chatUserId ? (
                 <MessageRoom />
             ) : null}
+
         </MainLayout>
     )
 }

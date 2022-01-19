@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.16
-수정일 : ------
+수정일 : 2022.01.19
 */
 
 // SeeRoom에서 사용할 CreateMessage Mutation Component
@@ -47,7 +47,6 @@ export default function CreateMessage({ roomId }) {
                         return [...prev, createMessage]
                     },
                     unreadCount(prev) {
-                        console.log(prev)
                         return prev + 1
                     }
                 }

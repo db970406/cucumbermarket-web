@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.18
+수정일 : 2022.01.19
 */
 
 /*
@@ -13,10 +13,14 @@
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate';
 import UserData from '../users/UserData';
+import LikeCount from './LikeCount';
 import ToggleLike from './ToggleLike';
 
 const Container = styled.div`
+    box-shadow:4px 4px 10px rgba(0,0,0,0.2);
+    border-radius:7px;
 `
 const PhotoCase = styled.div`
     width:200px;
@@ -35,7 +39,7 @@ const ItemPhoto = styled.img`
     height:100%;
 `
 const MetaData = styled.div`
-    padding:7px;
+    padding:10px;
     display:flex;
     flex-direction:column;
 `
@@ -44,13 +48,18 @@ const Title = styled.span`
     font-size:16px;
     font-weight:700;
 `
-const LikeCount = styled.span`
-    font-size:12px;
-    color:${props => props.theme.themeGray};
-`
 
-const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }) => {
 
+const DisplayItem = ({
+    id,
+    title,
+    user,
+    itemPhotos,
+    isMine,
+    likeCount,
+    isLiked,
+    createdAt
+}) => {
     return (
         <Container>
             <Link to={`/item/${id}`}>
@@ -75,12 +84,19 @@ const DisplayItem = ({ id, title, user, itemPhotos, isMine, likeCount, isLiked }
                         />
                     </Link>
                 ) : null}
-                {!isMine ? (
-                    <ToggleLike itemId={id} isLiked={isLiked} />
-                ) : null}
-                <LikeCount>관심 : {likeCount}</LikeCount>
+                <div>
+                    {!isMine ? (
+                        <ToggleLike
+                            itemId={id}
+                            isLiked={isLiked}
+                            size={"lg"}
+                        />
+                    ) : null}
+                    <LikeCount likeCount={`관심 : ${likeCount}`} size={12} />
+                </div>
+                <GetKoreanStyleDate milliSecond={createdAt} size={12} />
             </MetaData>
-        </Container >
+        </Container>
     )
 }
 

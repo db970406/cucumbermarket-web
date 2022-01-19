@@ -24,7 +24,7 @@ const TOGGLE_LIKE_MUTATION = gql`
     ${ITEM_DISPLAY_FRAGMENT}
 `
 
-export default function ToggleLike({ itemId, isLiked }) {
+export default function ToggleLike({ itemId, isLiked, size }) {
     const { loggedInUser } = useLoggedInUser()
     const darkMode = useReactiveVar(darkModeVar)
 
@@ -83,7 +83,7 @@ export default function ToggleLike({ itemId, isLiked }) {
         <FontAwesomeBtn
             onClick={toggleLike}
             icon={isLiked ? solidHeart : faHeart}
-            size={"lg"}
+            size={size}
             color={isLiked ? colors.pink : darkMode ? colors.white : colors.black}
         />
     )
