@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.10
-수정일 : 2022.01.11
+수정일 : 2022.01.19
 */
 
 // 클릭한 Item의 id를 받아 editItem Mutation으로 수정하는 페이지
@@ -33,6 +33,7 @@ const FileInput = styled.label`
     font-size:12px;
     text-align:center;
     display:inline-block;
+    margin-right:5px;
 `
 
 const Container = styled.div`

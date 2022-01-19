@@ -31,6 +31,7 @@ const FileInput = styled.label`
     font-size:12px;
     text-align:center;
     display:inline-block;
+    margin-right:5px;
 `
 
 const UPLOAD_ITEM = gql`
@@ -52,7 +53,7 @@ const UPLOAD_ITEM = gql`
 
 export default function UploadItem() {
     const history = useHistory()
-    const { register, handleSubmit, clearErrors, formState } = useForm({
+    const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange"
     })
     const clearError = (errorName) => clearErrors(errorName)
@@ -106,14 +107,20 @@ export default function UploadItem() {
             <FormLayout title="물건 업로드">
                 <form onSubmit={handleSubmit(onValid)}>
 
-                    <input id="file-input"
-                        {...register("files", {
-                            require: true,
-                        })}
-                        type="file"
-                        accept='.jpg,.jpeg,.png'
-                        required
-                    />
+                    <FileInput htmlFor='file-input'>
+                        이미지 업로드
+                        <input id="file-input"
+                            {...register("files", {
+                                require: true,
+                            })}
+                            type="file"
+                            accept='.jpg,.jpeg,.png'
+                            required
+                        />
+                    </FileInput>
+                    {watch("files")?.length > 0 ? (
+                        <span>저장 되었습니다.</span>
+                    ) : null}
 
                     <Input
                         onChange={clearError}

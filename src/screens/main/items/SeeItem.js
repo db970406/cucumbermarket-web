@@ -140,6 +140,7 @@ export default function SeeItem() {
                             <ToggleLike
                                 isLiked={itemData?.isLiked}
                                 itemId={itemData?.id}
+                                size={"2x"}
                             />
 
                             <CreateRoom

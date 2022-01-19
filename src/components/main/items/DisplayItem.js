@@ -19,8 +19,8 @@ import LikeCount from './LikeCount';
 import ToggleLike from './ToggleLike';
 
 const Container = styled.div`
- box-shadow:4px 4px 10px rgba(0,0,0,0.2);
- border-radius:7px;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.2);
+    border-radius:7px;
 `
 const PhotoCase = styled.div`
     width:200px;
@@ -84,10 +84,16 @@ const DisplayItem = ({
                         />
                     </Link>
                 ) : null}
-                {!isMine ? (
-                    <ToggleLike itemId={id} isLiked={isLiked} />
-                ) : null}
-                <LikeCount likeCount={`관심 : ${likeCount}`} size={12} />
+                <div>
+                    {!isMine ? (
+                        <ToggleLike
+                            itemId={id}
+                            isLiked={isLiked}
+                            size={"lg"}
+                        />
+                    ) : null}
+                    <LikeCount likeCount={`관심 : ${likeCount}`} size={12} />
+                </div>
                 <GetKoreanStyleDate milliSecond={createdAt} size={12} />
             </MetaData>
         </Container>

@@ -1,32 +1,36 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.09
-수정일 : 2022.01.16
+수정일 : 2022.01.19
 */
 
 // 소셜 로그인 요청으로 특정 URL로 Redirect되면 URL에 실린 code를 받아 처리할 Component
 
+import axios from 'axios';
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { logUserIn } from './apollo';
 
 // code를 추출하고 서버에 fetch하는 함수
 const extractCodeAndFetchToServer = async (social, location) => {
     const code = location.search.split('=')[1].split('&')[0];
-    const response = await fetch(`http://localhost:4000/social/${social}`, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json"
+    const response = await axios.post(`http://localhost:4000/social/${social}`,
+        {
+            code
         },
-        body: JSON.stringify({ code })
-    })
+        {
+            headers: {
+                "Content-type": "application/json"
+            },
+        },
+    )
     if (response.status === 200) {
-        const { jwtToken } = await response.json()
-        console.log(jwtToken)
-        return logUserIn(jwtToken)
+        const { jwtToken } = await response.data
+        logUserIn(jwtToken)
     }
 }
 
-const GetTokenFromUrl = async () => {
+export default function GetTokenFromUrl() {
     const { social } = useParams()
     const location = useLocation();
 
@@ -43,7 +47,10 @@ const GetTokenFromUrl = async () => {
                 return extractCodeAndFetchToServer("kakao", location)
         }
     }
-    processLogin()
+    useEffect(() => {
+        processLogin()
+    }, [])
+    return (
+        <span>Login...</span>
+    )
 }
-
-export default GetTokenFromUrl
