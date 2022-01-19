@@ -1,11 +1,10 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.09
-수정일 : 2022.01.16
+수정일 : 2022.01.19
 */
 
 // 네이버 로그인 api에 요청을 보낼 Component
-const { naver } = window;
 
 const NaverLogin = () => {
   const baseUrl = "https://nid.naver.com/oauth2.0/authorize"
@@ -29,6 +28,7 @@ const NaverLogin = () => {
             height: "100%",
           }}
           src={require("../images/naver.png")}
+          alt="네이버 로그인"
         />
       </a>
     </div>

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.12
-수정일 : 2022.01.13
+수정일 : 2022.01.19
 */
 
 // 깃허브 로그인 api에 요청을 보낼 Component
@@ -27,6 +27,7 @@ const GithubLogin = () => {
                         height: "100%",
                     }}
                     src={require("../images/github.png")}
+                    alt="깃허브 로그인"
                 />
             </a>
         </div>

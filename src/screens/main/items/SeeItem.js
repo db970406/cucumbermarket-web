@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.16
+수정일 : 2022.01.19
 */
 
 /* 
@@ -10,23 +10,20 @@
 */
 
 import { useParams } from "react-router-dom"
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client"
+import { gql, useQuery, useReactiveVar } from "@apollo/client"
 import { ITEM_DETAIL_FRAGMENT } from '../../../components/shared/utils/fragments'
 import MainLayout from '../../../components/layouts/MainLayout'
 import styled from 'styled-components'
-import { faHeart } from '@fortawesome/free-regular-svg-icons'
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { colors } from '../../../utils/styles'
 import { darkModeVar, chatUserIdVar } from '../../../utils/apollo'
 import { useState } from 'react'
 import { Link } from "react-router-dom"
 import PhotoSlider from '../../../components/main/items/PhotoSlider'
 import ItemPhoto from '../../../components/main/items/ItemPhoto'
 import UserData from '../../../components/main/users/UserData'
-import FontAwesomeBtn from '../../../components/shared/buttons/FontAwesomeBtn'
 import DropDownMenu from '../../../components/main/items/DropDownMenu'
 import MessageRoom from '../messages/MessageScreen'
 import CreateRoom from '../../../components/main/messages/CreateRoom'
+import ToggleLike from '../../../components/main/items/ToggleLike'
 
 const Container = styled.div`
     display:flex;
@@ -75,14 +72,6 @@ const Description = styled.p`
     word-wrap: break-word;
 `
 
-const TOGGLE_LIKE_MUTATION = gql`
-    mutation toggleLike($id:Int!){
-        toggleLike(id:$id){
-            ok
-            error
-        }
-    }
-`
 
 export const SEE_ITEM = gql`
     query seeItem($id:Int!){
@@ -94,7 +83,6 @@ export const SEE_ITEM = gql`
 `
 
 export default function SeeItem() {
-    const darkMode = useReactiveVar(darkModeVar)
     const chatUserId = useReactiveVar(chatUserIdVar)
     const [itemData, setItemData] = useState({})
 
@@ -108,40 +96,6 @@ export default function SeeItem() {
         },
         onCompleted: seeItemCompleted
     })
-
-    // 좋아요 Mutation과 프론트 즉각 반영을 위한 cache작업
-    const updateToggleLike = (cache, { data }) => {
-        const { toggleLike: { ok } } = data
-        const result = cache.readFragment({
-            id: `Item:${id}`,
-            fragment: gql`
-                fragment isLiked on Item{
-                    isLiked
-                }
-            `
-        })
-        const { isLiked: cacheIsLiked } = result
-        if (ok) {
-            cache.modify({
-                id: `Item:${id}`,
-                fields: {
-                    isLiked(prev) {
-                        return !prev
-                    },
-                    likeCount(prev) {
-                        return cacheIsLiked ? prev - 1 : prev + 1
-                    }
-                }
-            })
-        }
-    }
-    const [toggleLike] = useMutation(TOGGLE_LIKE_MUTATION, {
-        variables: {
-            id: parseInt(id)
-        },
-        update: updateToggleLike
-    })
-
 
     return (
         <MainLayout title={itemData?.title} loading={loading}>
@@ -186,11 +140,9 @@ export default function SeeItem() {
                     <Title>{itemData?.title}</Title>
                     {!itemData?.isMine ? (
                         <Buttons>
-                            <FontAwesomeBtn
-                                onClick={toggleLike}
-                                icon={itemData?.isLiked ? solidHeart : faHeart}
-                                size="2x"
-                                color={itemData?.isLiked ? colors.pink : darkMode ? colors.white : colors.black}
+                            <ToggleLike
+                                isLiked={itemData?.isLiked}
+                                itemId={itemData?.id}
                             />
 
                             <CreateRoom
