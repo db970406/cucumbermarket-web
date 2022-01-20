@@ -17,6 +17,7 @@ import BaseContainer from './BaseContainer';
 const Container = styled(BaseContainer)`
     margin-top:50px;
     align-items:center;
+    // 로그인, 회원가입에 쓰인다면 화면 정중앙에 form을 위치시키기 위함
     ${({ auth }) => auth ? css`
         justify-content:center;
         height:100vh;
