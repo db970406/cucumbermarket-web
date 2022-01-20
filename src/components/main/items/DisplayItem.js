@@ -106,7 +106,7 @@ DisplayItem.propTypes = {
     user: propTypes.shape({
         id: propTypes.number.isRequired,
         name: propTypes.string.isRequired,
-        location: propTypes.string.isRequired,
+        location: propTypes.string,
         avatar: propTypes.string,
     }),
     itemPhotos: propTypes.arrayOf(propTypes.shape({
