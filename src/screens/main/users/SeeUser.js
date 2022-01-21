@@ -1,18 +1,18 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.08
-수정일 : 2022.01.19
+수정일 : 2022.01.21
 */
 
 /*
 1. 클릭한 User의 id를 받아 seeUser Query로 상세정보를 보여주는 페이지
-2. state를 이용하여 판매 목록과 관심 목록을 오고 갈 수 있게 구현하였다.
+2. Nested Routes를 이용하여 판매 목록과 관심 목록을 오고 갈 수 있게 구현하였다.
 3. Reactive Variables인 chatUserIdVar을 이용하여 seeRoom을 on/off 할 수 있게 함 
 */
 
 import { gql, useQuery, useReactiveVar } from '@apollo/client'
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import DisplayItem from '../../../components/main/items/DisplayItem'
 import MainLayout from "../../../components/layouts/MainLayout"
@@ -62,7 +62,7 @@ const Buttons = styled.div`
 const Tabs = styled.p`
 `
 const Tab = styled.button`
-    ${({ isFocused }) => isFocused ?
+    ${({ isActive }) => isActive ?
         css`
         span{
             color:${colors.green};
@@ -120,12 +120,10 @@ const SEE_USER = gql`
 const SeeUser = () => {
     const { id } = useParams()
     const [userData, setUserData] = useState({})
-    const [tabFocus, setTabFocus] = useState(true)
     const history = useHistory()
     const chatUserId = useReactiveVar(chatUserIdVar)
-
-    const focusChange = (bool) => setTabFocus(bool)
-
+    const nowSellingMatch = useRouteMatch(`/user/:id/now-selling`)
+    const likesMatch = useRouteMatch(`/user/:id/likes`)
     const { data, loading } = useQuery(SEE_USER, {
         variables: {
             id: parseInt(id)
@@ -180,31 +178,38 @@ const SeeUser = () => {
                 <Introduce>{userData?.introduce}</Introduce>
                 <Items>
                     <Tabs>
-                        <Tab isFocused={tabFocus} onClick={() => focusChange(true)}>
-                            <span>판매 물건 ({userData?.itemCount})</span>
-                            <div />
-                        </Tab>
-                        <Tab isFocused={!tabFocus} onClick={() => focusChange(false)}>
-                            <span>관심 물건 ({userData?.likeCount})</span>
-                            <div />
-                        </Tab>
+                        <Link to={`/user/${id}/now-selling`}>
+                            <Tab isActive={nowSellingMatch !== null}>
+                                <span>판매 물건 ({userData?.itemCount})</span>
+                                <div />
+                            </Tab>
+                        </Link>
+                        <Link to={`/user/${id}/likes`}>
+                            <Tab isActive={likesMatch !== null}>
+                                <span>관심 물건 ({userData?.likeCount})</span>
+                                <div />
+                            </Tab>
+                        </Link>
                     </Tabs>
                     <Flex>
-                        {tabFocus ? (
-                            userData?.items?.map(item =>
-                                <DisplayItem
-                                    key={item.id}
-                                    {...item}
-                                />
-                            )
-                        ) : (
-                            userData?.likes?.map(item =>
-                                <DisplayItem
-                                    key={item.id}
-                                    {...item}
-                                />
-                            )
-                        )}
+                        <Switch>
+                            <Route path={`/user/:id/now-selling`}>
+                                {userData?.items?.map(item =>
+                                    <DisplayItem
+                                        key={item.id}
+                                        {...item}
+                                    />
+                                )}
+                            </Route>
+                            <Route path={`/user/:id/likes`}>
+                                {userData?.likes?.map(item =>
+                                    <DisplayItem
+                                        key={item.id}
+                                        {...item}
+                                    />
+                                )}
+                            </Route>
+                        </Switch>
                     </Flex>
                 </Items>
             </Container>

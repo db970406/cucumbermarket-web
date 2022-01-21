@@ -51,7 +51,7 @@ function App() {
                   <DeleteItem />
                 </Route>
 
-                <Route path="/user/:id" exact>
+                <Route path="/user/:id">
                   <SeeUser />
                 </Route>
                 <Route path="/user/:id/edit" exact>

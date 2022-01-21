@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.19
+수정일 : 2022.01.21
 */
 
 /*
@@ -60,6 +60,7 @@ const DisplayItem = ({
     isLiked,
     createdAt
 }) => {
+    console.log("hihi")
     return (
         <Container>
             <Link to={`/item/${id}`}>
@@ -73,7 +74,7 @@ const DisplayItem = ({
             <MetaData>
                 <Title>{title}</Title>
                 {user ? (
-                    <Link to={`/user/${user?.id}`}>
+                    <Link to={`/user/${user?.id}/now-selling`}>
                         <UserData
                             avatar={user?.avatar}
                             name={user?.name}
