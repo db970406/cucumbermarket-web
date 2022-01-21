@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.19
+수정일 : 2022.01.21
 */
 
 /* 
@@ -14,7 +14,7 @@ import { gql, useQuery, useReactiveVar } from "@apollo/client"
 import { ITEM_DETAIL_FRAGMENT } from '../../../components/shared/utils/fragments'
 import MainLayout from '../../../components/layouts/MainLayout'
 import styled from 'styled-components'
-import { darkModeVar, chatUserIdVar } from '../../../utils/apollo'
+import { chatUserIdVar } from '../../../utils/apollo'
 import { useState } from 'react'
 import { Link } from "react-router-dom"
 import PhotoSlider from '../../../components/main/items/PhotoSlider'
@@ -98,7 +98,7 @@ export default function SeeItem() {
         <MainLayout title={itemData?.title} loading={loading}>
             <Container>
                 <Header>
-                    <Link to={`/user/${itemData?.user?.id}`}>
+                    <Link to={`/user/${itemData?.user?.id}/now-selling`}>
                         <UserData
                             avatar={itemData?.user?.avatar}
                             name={itemData?.user?.name}

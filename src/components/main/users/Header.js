@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.07
-수정일 : 2022.01.16
+수정일 : 2022.01.21
 */
 
 /*
@@ -119,7 +119,7 @@ export default function Header() {
                     color={colors.green}
                     onClick={() => sendWhere(`/item/upload`)}
                 />
-                <Tab onClick={() => sendWhere(`/user/${loggedInUser?.id}`)}>
+                <Tab onClick={() => sendWhere(`/user/${loggedInUser?.id}/now-selling`)}>
                     <UserAvatar img={loggedInUser?.avatar} size={30} />
                 </Tab>
             </Tabs>
