@@ -23,34 +23,34 @@ const extractCodeAndFetchToServer = async (social, location) => {
                 "Content-type": "application/json"
             },
         },
-    )
+    );
     if (response.status === 200) {
-        const { jwtToken } = await response.data
-        logUserIn(jwtToken)
-    }
+        const { jwtToken } = await response.data;
+        logUserIn(jwtToken);
+    };
 }
 
 export default function GetTokenFromUrl() {
-    const { social } = useParams()
+    const { social } = useParams();
     const location = useLocation();
 
     const processLogin = async () => {
         // 각 소셜로그인 Component로 해당 사이트에 요청을 보낸 후 받은 token을 추출하여 백엔드에 전달하여 처리하고 jwtToken을 json데이터로 돌려받아 localStorage에 저장
         switch (social) {
             case "naver":
-                return extractCodeAndFetchToServer("naver", location)
+                return extractCodeAndFetchToServer("naver", location);
 
             case "github":
-                return extractCodeAndFetchToServer("github", location)
+                return extractCodeAndFetchToServer("github", location);
 
             case "kakao":
-                return extractCodeAndFetchToServer("kakao", location)
-        }
-    }
+                return extractCodeAndFetchToServer("kakao", location);
+        };
+    };
     useEffect(() => {
-        processLogin()
-    }, [])
+        processLogin();
+    }, []);
     return (
         <span>Login...</span>
-    )
-}
+    );
+};

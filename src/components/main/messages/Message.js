@@ -9,11 +9,11 @@
 2. isMine prop을 styled-components로 넘겨 내 메시지인지 여부에 따라 다른 css를 부여한다.
 */
 
-import styled from 'styled-components'
-import propTypes from "prop-types"
-import UserAvatar from '../users/UserAvatar'
-import Username from '../users/Username'
-import { colors } from '../../../utils/styles'
+import styled from 'styled-components';
+import propTypes from "prop-types";
+import UserAvatar from '../users/UserAvatar';
+import Username from '../users/Username';
+import { colors } from '../../../utils/styles';
 
 const Container = styled.div`
     display:flex;
@@ -22,23 +22,26 @@ const Container = styled.div`
     align-items:center;
     justify-content:flex-start;
     margin:10px;
-`
+`;
+
 const UserInfo = styled.div`
     display:flex;
     flex-direction:column;
     margin-left:3px;
-`
+`;
+
 const MessageBubble = styled.div`
     background-color:${({ isMine }) => isMine ? colors.green : colors.orange};
     padding:10px;
     border-radius:7px;
     margin:5px;
     text-align:${({ isMine }) => isMine ? "right" : "left"};
-`
+`;
+
 const MessageText = styled.span`    
     color:white;
     font-weight:600;
-`
+`;
 
 export default function Message({
     avatar,

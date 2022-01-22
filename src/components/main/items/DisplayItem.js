@@ -21,7 +21,8 @@ import ToggleLike from './ToggleLike';
 const Container = styled.div`
     box-shadow:4px 4px 10px rgba(0,0,0,0.2);
     border-radius:7px;
-`
+`;
+
 const PhotoCase = styled.div`
     width:200px;
     height:200px;
@@ -32,23 +33,25 @@ const PhotoCase = styled.div`
             transform:scale(1.1);
         }
     }
-`
+`;
+
 const ItemPhoto = styled.img`
     transition:all 0.2s ease-in-out;
     width:100%;
     height:100%;
-`
+`;
+
 const MetaData = styled.div`
     padding:10px;
     display:flex;
     flex-direction:column;
-`
+`;
+
 const Title = styled.span`
     margin:3px 0 7px 0;
     font-size:16px;
     font-weight:700;
-`
-
+`;
 
 const DisplayItem = ({
     id,
@@ -60,7 +63,6 @@ const DisplayItem = ({
     isLiked,
     createdAt
 }) => {
-    console.log("hihi")
     return (
         <Container>
             <Link to={`/item/${id}`}>
@@ -99,7 +101,7 @@ const DisplayItem = ({
             </MetaData>
         </Container>
     )
-}
+};
 
 DisplayItem.propTypes = {
     id: propTypes.number.isRequired,

@@ -19,7 +19,7 @@ import InputError from '../../../components/shared/form/InputError';
 import Input from '../../../components/shared/form/Input';
 import useItemIsMine from '../../../hooks/useItemIsMine';
 import { colors } from '../../../utils/styles';
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -34,13 +34,13 @@ const FileInput = styled.label`
     text-align:center;
     display:inline-block;
     margin-right:5px;
-`
+`;
 
 const Container = styled.div`
     max-width:600px;
     width:100%;
     margin:0 auto;
-`
+`;
 
 const EDIT_ITEM = gql`
     mutation editItem($id:Int!,$title:String,$description:String,$file:Upload){
@@ -54,25 +54,25 @@ const EDIT_ITEM = gql`
             }
         }
     }
-`
+`;
 
 export default function EditItem() {
-    const [itemData, setItemData] = useState({})
+    const [itemData, setItemData] = useState({});
 
-    const { id } = useParams()
+    const { id } = useParams();
 
     // 아이템의 소유자가 아니면 되돌려보내는 hook
-    const { data, loading } = useItemIsMine(id)
+    const { data, loading } = useItemIsMine(id);
 
-    const history = useHistory()
+    const history = useHistory();
     const { register, handleSubmit, formState, clearErrors, watch } = useForm({
         mode: "onChange",
-    })
-    const clearError = () => clearErrors()
+    });
+    const clearError = () => clearErrors();
 
     // editItem Mutation 실행과 실행 후의 cache 처리를 위한 함수
     const updateEditItem = (cache, { data }) => {
-        const { editItem } = data
+        const { editItem } = data;
         if (editItem.id) {
             cache.modify({
                 id: `Item:${id}`,
@@ -87,17 +87,17 @@ export default function EditItem() {
                         return editItem.itemPhotos
                     }
                 }
-            })
-            history.push(`/item/${id}`)
-        }
-    }
+            });
+            history.push(`/item/${id}`);
+        };
+    };
     const [editItem] = useMutation(EDIT_ITEM, {
         update: updateEditItem
-    })
+    });
 
     const onValid = (data) => {
         if (loading) return;
-        const { file, title, description } = data
+        const { file, title, description } = data;
         editItem({
             variables: {
                 id: parseInt(id),
@@ -105,12 +105,12 @@ export default function EditItem() {
                 ...(title && { title }),
                 ...(description && { description })
             }
-        })
-    }
+        });
+    };
 
     useEffect(() => {
-        setItemData(data)
-    }, [data])
+        setItemData(data);
+    }, [data]);
     return (
         <MainLayout title="수정 중" loading={loading}>
             <Container>
@@ -175,5 +175,5 @@ export default function EditItem() {
                 </form>
             </FormLayout>
         </MainLayout>
-    )
-}
+    );
+};

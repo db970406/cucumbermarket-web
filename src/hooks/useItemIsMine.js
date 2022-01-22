@@ -9,8 +9,8 @@
 2. 나의 Item이 아니라면 돌려 보낸다.
 */
 
-import { gql, useQuery } from "@apollo/client"
-import { useHistory } from 'react-router-dom'
+import { gql, useQuery } from "@apollo/client";
+import { useHistory } from 'react-router-dom';
 
 const CHECK_IS_MINE = gql`
     query seeItem($id:Int!){
@@ -26,22 +26,22 @@ const CHECK_IS_MINE = gql`
             itemPhotoCount
         }
     }
-`
+`;
 
 export default function useItemIsMine(id) {
-    const history = useHistory()
+    const history = useHistory();
 
     const isMineCompleted = ({ seeItem }) => {
         if (!seeItem?.isMine) {
-            history.goBack()
+            history.goBack();
         }
-    }
+    };
     const { data, loading } = useQuery(CHECK_IS_MINE, {
         variables: {
             id: parseInt(id)
         },
         onCompleted: isMineCompleted
-    })
+    });
 
-    return { data, loading }
-}
+    return { data, loading };
+};

@@ -6,19 +6,19 @@
 
 // EditItem에서 사용할 DeleteItemPhoto Mutation Component
 
-import { gql, useMutation } from '@apollo/client'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
-import { SEE_ITEM } from '../../../screens/main/items/SeeItem'
-import { colors } from '../../../utils/styles'
+import { gql, useMutation } from '@apollo/client';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
+import { SEE_ITEM } from '../../../screens/main/items/SeeItem';
+import { colors } from '../../../utils/styles';
 
 const DeleteBtn = styled.span`
     position:absolute;
     top:20px;
     right:20px;
     cursor:pointer;
-`
+`;
 
 const DELETE_ITEM_PHOTO = gql`
     mutation deleteItemPhoto($id:Int!){
@@ -37,14 +37,13 @@ export default function DeleteItemPhoto({ itemId, id }) {
         if (!ok) {
             alert(error);
             return;
-        }
+        };
 
         // 백엔드에서 마지막 한 장은 못지우게 설정해놓았다.
         cache.evict({
             id: `ItemPhoto:${id}`
-        })
-
-    }
+        });
+    };
     const [deleteItemPhoto] = useMutation(DELETE_ITEM_PHOTO, {
         variables: {
             id
@@ -58,7 +57,7 @@ export default function DeleteItemPhoto({ itemId, id }) {
                 }
             }
         ]
-    })
+    });
 
     return (
         <DeleteBtn onClick={deleteItemPhoto}>

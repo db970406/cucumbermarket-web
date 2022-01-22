@@ -22,5 +22,6 @@ const Input = styled.input`
         color:${props => props.theme.themeGray};
     }   
     border:2px solid ${props => props.isError ? colors.red : props.theme.themeGray};
-`
-export default Input
+`;
+
+export default Input;

@@ -6,15 +6,15 @@
 
 // Header에서 사용할 SearchItems Mutation Component
 
-import { gql, useLazyQuery, useReactiveVar } from "@apollo/client"
-import Input from '../../shared/form/Input'
-import { useForm } from 'react-hook-form'
-import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments'
-import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome'
-import { darkModeVar, searchDataVar, searchModeVar } from '../../../utils/apollo'
-import { useHistory } from 'react-router-dom'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { colors } from '../../../utils/styles'
+import { gql, useLazyQuery, useReactiveVar } from "@apollo/client";
+import Input from '../../shared/form/Input';
+import { useForm } from 'react-hook-form';
+import { ITEM_DISPLAY_FRAGMENT } from '../../shared/utils/fragments';
+import InputWithFontAwesome from '../../shared/form/InputWithFontAwesome';
+import { darkModeVar, searchDataVar, searchModeVar } from '../../../utils/apollo';
+import { useHistory } from 'react-router-dom';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { colors } from '../../../utils/styles';
 
 const SEARCH_ITEMS = gql`
     query searchItems($keyword:String!){
@@ -26,25 +26,25 @@ const SEARCH_ITEMS = gql`
 `
 
 export default function SearchItems() {
-    const searchMode = useReactiveVar(searchModeVar)
-    const darkMode = useReactiveVar(darkModeVar)
-    const history = useHistory()
+    const searchMode = useReactiveVar(searchModeVar);
+    const darkMode = useReactiveVar(darkModeVar);
+    const history = useHistory();
 
     // searchItems 구현부
     // searchItems로 받은 data를 Home으로 보내주어 사용할 것이다.
     const { register, handleSubmit, formState, setValue } = useForm({
         mode: "onChange"
-    })
+    });
 
     // searchItems 성공 시 searchDataVar를 Reactive Variables로 data를 받아놓는다.
     const searchCompleted = ({ searchItems }) => {
         if (searchItems.length < 1) {
-            alert("검색 결과가 없습니다.")
-            return
+            alert("검색 결과가 없습니다.");
+            return;
         }
-        searchDataVar(searchItems)
-        history.push("/")
-    }
+        searchDataVar(searchItems);
+        history.push("/");
+    };
     const [searchItems, { loading }] = useLazyQuery(SEARCH_ITEMS, {
         onCompleted: searchCompleted
     })
@@ -55,12 +55,12 @@ export default function SearchItems() {
             variables: {
                 keyword
             }
-        })
-        setValue("keyword", "")
+        });
+        setValue("keyword", "");
     }
 
     // Reactive Variables를 이용하여 searchMode라면 Input창을, 아니라면 search 버튼을 띄워줄 것이다.
-    const getSearchMode = (bool) => searchModeVar(bool)
+    const getSearchMode = (bool) => searchModeVar(bool);
 
     return (
         <InputWithFontAwesome

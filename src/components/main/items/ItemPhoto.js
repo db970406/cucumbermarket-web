@@ -10,20 +10,21 @@
 3. EditItem에서 editMode를 prop으로 받아 deleteItemPhoto가 가능하게 하였다(cache 수정으로 즉각 반영). 
 */
 
-import styled from 'styled-components'
-import propTypes from "prop-types"
-import DeleteItemPhoto from './DeleteItemPhoto'
+import styled from 'styled-components';
+import propTypes from "prop-types";
+import DeleteItemPhoto from './DeleteItemPhoto';
 
 const DeleteContainer = styled.div`
     position:relative;
-`
+`;
+
 const Img = styled.img`
     height:100%;
     margin:auto auto;
     border-radius:10px;
     display:flex;
     justify-content:center;
-`
+`;
 
 export default function ItemPhoto({ editMode, itemId, id, src, alt, maxHeight, maxWidth }) {
     return (

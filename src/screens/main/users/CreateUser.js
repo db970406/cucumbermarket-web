@@ -37,41 +37,43 @@ const CREATE_USER_MUTATION = gql`
             error
         }
     }
-`
+`;
+
 export default function CreateUser() {
-    const history = useHistory()
-    const currentLocation = useReactiveVar(currentLocationVar)
+    const history = useHistory();
+    const currentLocation = useReactiveVar(currentLocationVar);
     const { register, handleSubmit, clearErrors, formState, getValues } = useForm({
         mode: "onChange"
-    })
-    const clearError = (errorName) => clearErrors(errorName)
+    });
+    const clearError = (errorName) => clearErrors(errorName);
 
     // createUser 구현부(history를 사용하여 가입 정보를 Login Screen에 넘겨준다.)
     const createUserCompleted = ({ createUser }) => {
-        const { ok, error } = createUser
+        const { ok, error } = createUser;
         if (!ok) {
-            alert(error)
+            alert(error);
             return;
         }
-        const { name, username, password } = getValues()
+        const { name, username, password } = getValues();
         history.push("/", {
             message: `${name}님 반갑습니다!`,
             username,
             password
-        })
-    }
+        });
+    };
+
     const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION, {
         onCompleted: createUserCompleted
-    })
+    });
 
     const onValid = (data) => {
         if (loading) return;
 
-        const { name, username, email, location, password, password2 } = data
+        const { name, username, email, location, password, password2 } = data;
         if (password !== password2) {
-            alert("비밀번호가 일치하지 않습니다.")
+            alert("비밀번호가 일치하지 않습니다.");
             return;
-        }
+        };
 
         createUser({
             variables: {
@@ -81,14 +83,14 @@ export default function CreateUser() {
                 location: location === "동의" ? currentLocation : undefined,
                 password
             }
-        })
-    }
+        });
+    };
 
 
     // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
     useEffect(() => {
-        getCurrentPosition()
-    }, [])
+        getCurrentPosition();
+    }, []);
 
     return (
         <FormLayout auth logo title="회원가입">
@@ -213,5 +215,5 @@ export default function CreateUser() {
                 />
             </form>
         </FormLayout>
-    )
-}
+    );
+};

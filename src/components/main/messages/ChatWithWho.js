@@ -17,7 +17,7 @@ import propTypes from "prop-types"
 export default function ChatWithWho({ onClick, users, unreadCount }) {
 
     // 채팅방 내 상대방의 정보를 counterPart 변수에 담는다.
-    const counterPart = users.find(user => !user.isMe)
+    const counterPart = users.find(user => !user.isMe);
 
     // counterPart에 정보가 담겨있는 가에 따라 다르게 return
     return (

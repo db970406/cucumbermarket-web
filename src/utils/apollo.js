@@ -12,54 +12,54 @@ import { getMainDefinition, offsetLimitPagination } from '@apollo/client/utiliti
 import { createUploadLink } from 'apollo-upload-client'
 import { WebSocketLink } from '@apollo/client/link/ws';
 
+
+//Message 관련 Reactive Variables
+export const chatRoomIdVar = makeVar(0);
+export const chatUserIdVar = makeVar(0);
+export const showChatListVar = makeVar(false);
+export const searchDataVar = makeVar([]);
+
+//Item 관련 Reactive Variables
+export const searchModeVar = makeVar(false);
+
+//위치 관련 Reactive Variables
+export const currentLocationVar = makeVar("");
+
 /* 
 로그인 구현부
 로그인 후 주어지는 token을 localStorage에 저장하여 로그인 유지 및 인가에 사용한다.
 */
 const TOKEN = "Token"
-export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)))
+export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 export const logUserIn = (token) => {
-    isLoggedInVar(true)
-    localStorage.setItem(TOKEN, token)
-    window.location.href = "/"
-}
+    isLoggedInVar(true);
+    localStorage.setItem(TOKEN, token);
+    window.location.href = "/";
+};
 export const logUserOut = (history) => {
-    window.location.reload()
-    isLoggedInVar(false)
-    localStorage.removeItem(TOKEN)
-    history.replace()
-    window.location.href = "/"
-}
+    window.location.reload();
+    isLoggedInVar(false);
+    localStorage.removeItem(TOKEN);
+    history.replace();
+    window.location.href = "/";
+};
 
 
 /* 
 다크모드 구현부
 새로고침해도 다크모드가 해제되지 않게 localStorage에 값 저장
 */
-const DARKMODE = "Darkmode"
-export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARKMODE)))
+const DARKMODE = "Darkmode";
+export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARKMODE)));
 export const getDarkMode = () => {
-    darkModeVar(true)
-    localStorage.setItem(DARKMODE, "enabled")
-}
+    darkModeVar(true);
+    localStorage.setItem(DARKMODE, "enabled");
+};
+
 export const getLightMode = () => {
-    darkModeVar(false)
-    localStorage.removeItem(DARKMODE)
-}
-
-
-
-//Message 관련 Reactive Variables
-export const chatRoomIdVar = makeVar(0)
-export const chatUserIdVar = makeVar(0)
-export const showChatListVar = makeVar(false)
-export const searchDataVar = makeVar([])
-
-//Item 관련 Reactive Variables
-export const searchModeVar = makeVar(false)
-
-//위치 관련 Reactive Variables
-export const currentLocationVar = makeVar("")
+    darkModeVar(false);
+    localStorage.removeItem(DARKMODE);
+};
 
 
 // 서버의 Header에 localStorage에 저장한 jwtToken을 싣어보내기 위한 link
@@ -69,13 +69,13 @@ const authLink = setContext((_, { headers }) => {
             ...headers,
             token: localStorage.getItem(TOKEN)
         }
-    }
-})
+    };
+});
 
 // 파일을 서버에 업로드하기 위한 link
 const uploadHttpLink = createUploadLink({
     uri: "http://localhost:4000/graphql",
-})
+});
 
 // 웹소켓 프로토콜 link로 jwtToken을 싣어보내기 위함
 const wsLink = new WebSocketLink({
@@ -88,7 +88,7 @@ const wsLink = new WebSocketLink({
     }
 });
 
-const httpLinks = authLink.concat(uploadHttpLink)
+const httpLinks = authLink.concat(uploadHttpLink);
 
 // operation이 subscription이라면 wsLink를, 아니라면 httpLinks를 연결하는 함수
 const splitLink = split(
@@ -114,4 +114,4 @@ export const client = new ApolloClient({
             }
         }
     })
-})
+});

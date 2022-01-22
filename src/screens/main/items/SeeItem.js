@@ -9,23 +9,23 @@
 2. Reactive Variable인 chatUserIdVar을 이용하여 seeRoom을 on/off 할 수 있게 함
 */
 
-import { useParams } from "react-router-dom"
-import { gql, useQuery, useReactiveVar } from "@apollo/client"
-import { ITEM_DETAIL_FRAGMENT } from '../../../components/shared/utils/fragments'
-import MainLayout from '../../../components/layouts/MainLayout'
-import styled from 'styled-components'
-import { chatUserIdVar } from '../../../utils/apollo'
-import { useState } from 'react'
-import { Link } from "react-router-dom"
-import PhotoSlider from '../../../components/main/items/PhotoSlider'
-import ItemPhoto from '../../../components/main/items/ItemPhoto'
-import UserData from '../../../components/main/users/UserData'
-import DropDownMenu from '../../../components/main/items/DropDownMenu'
-import MessageRoom from '../messages/MessageScreen'
-import CreateRoom from '../../../components/main/messages/CreateRoom'
-import ToggleLike from '../../../components/main/items/ToggleLike'
-import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate'
-import LikeCount from '../../../components/main/items/LikeCount'
+import { useParams } from "react-router-dom";
+import { gql, useQuery, useReactiveVar } from "@apollo/client";
+import { ITEM_DETAIL_FRAGMENT } from '../../../components/shared/utils/fragments';
+import MainLayout from '../../../components/layouts/MainLayout';
+import styled from 'styled-components';
+import { chatUserIdVar } from '../../../utils/apollo';
+import { useState } from 'react';
+import { Link } from "react-router-dom";
+import PhotoSlider from '../../../components/main/items/PhotoSlider';
+import ItemPhoto from '../../../components/main/items/ItemPhoto';
+import UserData from '../../../components/main/users/UserData';
+import DropDownMenu from '../../../components/main/items/DropDownMenu';
+import MessageRoom from '../messages/MessageScreen';
+import CreateRoom from '../../../components/main/messages/CreateRoom';
+import ToggleLike from '../../../components/main/items/ToggleLike';
+import GetKoreanStyleDate from '../../../utils/GetKoreanStyleDate';
+import LikeCount from '../../../components/main/items/LikeCount';
 
 const Container = styled.div`
     display:flex;
@@ -37,37 +37,39 @@ const Container = styled.div`
     margin-top:30px;
     max-width:700px;
     margin-bottom:30px;
-`
+`;
+
 const Header = styled.header`
     display:flex;
     flex-direction:row;
     align-items:center;
     padding:10px;
     justify-content:space-between;
-`
+`;
+
 const Title = styled.h4`
     font-size:24px;
     font-weight:700;
     margin-bottom:5px;
-`
+`;
 
 const MetaData = styled.div`
     padding:15px;
     width:100%;
-`
+`;
 
 const Buttons = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
-`
+`;
 
 const Description = styled.p`
     margin:20px 0px 10px 0;
     font-size:14px;
     // 콘텐츠가 다음 줄로 넘어가고 필요한 경우 단어 줄 바꿈이 발생한다.
     word-wrap: break-word;
-`
+`;
 
 
 export const SEE_ITEM = gql`
@@ -77,22 +79,22 @@ export const SEE_ITEM = gql`
         }
     }
     ${ITEM_DETAIL_FRAGMENT}
-`
+`;
 
 export default function SeeItem() {
-    const chatUserId = useReactiveVar(chatUserIdVar)
-    const [itemData, setItemData] = useState({})
+    const chatUserId = useReactiveVar(chatUserIdVar);
+    const [itemData, setItemData] = useState({});
 
     // 파라미터에서 id를 뽑아 resolver의 variables로 줄 것이다.
-    const { id } = useParams()
+    const { id } = useParams();
 
-    const seeItemCompleted = ({ seeItem }) => setItemData(seeItem)
+    const seeItemCompleted = ({ seeItem }) => setItemData(seeItem);
     const { loading } = useQuery(SEE_ITEM, {
         variables: {
             id: parseInt(id)
         },
         onCompleted: seeItemCompleted
-    })
+    });
 
     return (
         <MainLayout title={itemData?.title} loading={loading}>
@@ -159,7 +161,6 @@ export default function SeeItem() {
             {chatUserId ? (
                 <MessageRoom />
             ) : null}
-
         </MainLayout>
-    )
-}
+    );
+};

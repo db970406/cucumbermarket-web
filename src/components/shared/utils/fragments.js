@@ -36,7 +36,7 @@ export const ITEM_DETAIL_FRAGMENT = gql`
         isLiked
         createdAt
     }
-`
+`;
 
 export const ITEM_DISPLAY_FRAGMENT = gql`
     fragment ItemDisplayFragment on Item{
@@ -57,7 +57,7 @@ export const ITEM_DISPLAY_FRAGMENT = gql`
         isLiked
         createdAt
     }
-`
+`;
 
 export const USER_DEFAULT_FRAGMENT = gql`
     fragment UserDefaultFragment on User{
@@ -68,7 +68,7 @@ export const USER_DEFAULT_FRAGMENT = gql`
         username
         avatar
     }
-`
+`;
 
 export const MESSAGE_DEFAULT_FRAGMENT = gql`
     fragment MessageDefaultFragment on Message{
@@ -82,4 +82,4 @@ export const MESSAGE_DEFAULT_FRAGMENT = gql`
         isMine
         read
     }
-`
+`;

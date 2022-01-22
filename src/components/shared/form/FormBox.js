@@ -19,5 +19,6 @@ const FormBox = styled.div`
     border:${colors.green} 2px solid;
     border-radius:15px;
     padding:20px;
-`
-export default FormBox
+`;
+
+export default FormBox;

@@ -6,10 +6,10 @@
 
 // Login과 CreateUser Screen에서 사용하는 Component
 
-import propTypes from "prop-types"
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { colors } from '../../../utils/styles'
+import propTypes from "prop-types";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { colors } from '../../../utils/styles';
 
 const Container = styled.div`
     display:flex;
@@ -17,18 +17,20 @@ const Container = styled.div`
     align-items:center;
     margin:0 auto;
     margin-top:12px;
-`
+`;
+
 const Description = styled.span`
     font-size:12px;
     margin-right:7px;
-`
+`;
+
 const Where = styled.span`
     font-size:14px;
     &:hover{
         text-decoration:underline;
     };
     color:${colors.green};
-`
+`;
 
 export default function SendAnywhere({ description, where, link }) {
     return (
@@ -39,10 +41,10 @@ export default function SendAnywhere({ description, where, link }) {
             </Link>
         </Container>
     )
-}
+};
 
 SendAnywhere.propTypes = {
     description: propTypes.string.isRequired,
     where: propTypes.string.isRequired,
     link: propTypes.string.isRequired,
-}
+};

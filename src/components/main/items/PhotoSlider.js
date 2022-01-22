@@ -9,7 +9,7 @@
 2. react-slick을 사용하였고 css 커스터마이징을 위해 styled-components에 작성.
 */
 
-import Slider from 'react-slick'
+import Slider from 'react-slick';
 import styled from 'styled-components';
 import { colors } from '../../../utils/styles';
 import "slick-carousel/slick/slick.css";
@@ -38,7 +38,7 @@ const PhotoCase = styled.div`
         opacity: .75;
         color: ${colors.green};
     }
-`
+`;
 
 export default function PhotoSlider({ children }) {
     return (
@@ -48,4 +48,4 @@ export default function PhotoSlider({ children }) {
             </Slider>
         </PhotoCase>
     )
-}
+};

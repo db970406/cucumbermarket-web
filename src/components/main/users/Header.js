@@ -13,16 +13,16 @@
 6. 현재 로그인한 유저(useLoggedInUser hook)의 avatar를 띄워준다. 
 */
 
-import { faBackspace, faEraser, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
-import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import useLoggedInUser from '../../../hooks/useLoggedInUser'
-import { colors } from '../../../utils/styles'
-import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn'
-import UserAvatar from './UserAvatar'
-import { useReactiveVar } from "@apollo/client"
-import { darkModeVar, searchDataVar, searchModeVar } from "../../../utils/apollo"
-import SearchItems from '../items/SearchItems'
+import { faBackspace, faEraser, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
+import { colors } from '../../../utils/styles';
+import FontAwesomeBtn from '../../shared/buttons/FontAwesomeBtn';
+import UserAvatar from './UserAvatar';
+import { useReactiveVar } from "@apollo/client";
+import { darkModeVar, searchDataVar, searchModeVar } from "../../../utils/apollo";
+import SearchItems from '../items/SearchItems';
 
 const Container = styled.header`
     padding:20px 70px;
@@ -33,17 +33,18 @@ const Container = styled.header`
     top:0;
     background-color:${props => props.theme.header};
     z-index:1;
-`
+`;
+
 const GoBack = styled.div`
     position:absolute;
     top:30px;
     left:30px;
-`
+`;
 
 const Logo = styled.img`
     width:40px;
     height:40px;
-`
+`;
 
 const Tabs = styled.div`
     display:flex;
@@ -52,29 +53,28 @@ const Tabs = styled.div`
     @media screen and (max-width:650px){
         display:none;
     }
-`
-const Tab = styled.button`
+`;
 
-`
+const Tab = styled.button``;
 
 export default function Header() {
-    const searchMode = useReactiveVar(searchModeVar)
-    const searchData = useReactiveVar(searchDataVar)
-    const darkMode = useReactiveVar(darkModeVar)
-    const { loggedInUser } = useLoggedInUser()
-    const history = useHistory()
+    const searchMode = useReactiveVar(searchModeVar);
+    const searchData = useReactiveVar(searchDataVar);
+    const darkMode = useReactiveVar(darkModeVar);
+    const { loggedInUser } = useLoggedInUser();
+    const history = useHistory();
 
     // Reactive Variables를 이용하여 searchMode라면 Input창을, 아니라면 search 버튼을 띄워줄 것이다.
-    const getSearchMode = (bool) => searchModeVar(bool)
+    const getSearchMode = (bool) => searchModeVar(bool);
 
     // path를 인자로 받아 원하는 path로 보내준다.
-    const sendWhere = (path) => history.push(path)
+    const sendWhere = (path) => history.push(path);
 
     // searchItems로 data를 searchDataVar에 담아놓은 것을 초기화하는 기능
-    const resetSearch = () => searchDataVar([])
+    const resetSearch = () => searchDataVar([]);
 
     // path가 "/"인지에 따라 버튼을 다르게 설정하기 위함
-    const { pathname } = window.location
+    const { pathname } = window.location;
 
     return (
         <Container>
@@ -125,4 +125,4 @@ export default function Header() {
             </Tabs>
         </Container>
     )
-}
+};

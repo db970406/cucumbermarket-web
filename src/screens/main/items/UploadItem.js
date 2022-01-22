@@ -32,7 +32,7 @@ const FileInput = styled.label`
     text-align:center;
     display:inline-block;
     margin-right:5px;
-`
+`;
 
 const UPLOAD_ITEM = gql`
     mutation uploadItem(
@@ -49,18 +49,18 @@ const UPLOAD_ITEM = gql`
         }
     }
     ${ITEM_DISPLAY_FRAGMENT}
-`
+`;
 
 export default function UploadItem() {
-    const history = useHistory()
+    const history = useHistory();
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange"
-    })
-    const clearError = (errorName) => clearErrors(errorName)
-    const { loggedInUser } = useLoggedInUser()
+    });
+    const clearError = (errorName) => clearErrors(errorName);
+    const { loggedInUser } = useLoggedInUser();
 
     const updateUploadItem = (cache, { data }) => {
-        const { uploadItem } = data
+        const { uploadItem } = data;
         if (uploadItem.id) {
             cache.modify({
                 id: `ROOT_QUERY`,
@@ -69,7 +69,7 @@ export default function UploadItem() {
                         return [uploadItem, ...prev]
                     }
                 }
-            })
+            });
             cache.modify({
                 id: `User:${loggedInUser?.id}`,
                 fields: {
@@ -80,33 +80,32 @@ export default function UploadItem() {
                         return [uploadItem, ...prev]
                     }
                 }
-            })
+            });
 
-            history.push("/")
-        }
-    }
+            history.push("/");
+        };
+    };
 
     const [uploadItemMutation, { loading }] = useMutation(UPLOAD_ITEM, {
         update: updateUploadItem
-    })
+    });
 
     const onValid = (data) => {
         if (loading) return;
-        const { title, description, files } = data
+        const { title, description, files } = data;
         uploadItemMutation({
             variables: {
                 title,
                 description,
                 files
             }
-        })
-    }
+        });
+    };
 
     return (
         <MainLayout title="물건 업로드">
             <FormLayout title="물건 업로드">
                 <form onSubmit={handleSubmit(onValid)}>
-
                     <FileInput htmlFor='file-input'>
                         이미지 업로드
                         <input id="file-input"
@@ -160,5 +159,5 @@ export default function UploadItem() {
                 </form>
             </FormLayout>
         </MainLayout>
-    )
-}
+    );
+};

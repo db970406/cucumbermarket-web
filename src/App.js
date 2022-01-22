@@ -7,7 +7,7 @@
 
 import { ApolloProvider, useReactiveVar } from '@apollo/client';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from 'styled-components';
 import Login from './screens/main/users/Login';
 import Home from './screens/main/items/Home';
@@ -24,8 +24,8 @@ import SeeItem from './screens/main/items/SeeItem';
 import NotFound from './components/shared/utils/NotFound';
 
 function App() {
-  const isLoggedIn = useReactiveVar(isLoggedInVar)
-  const darkMode = useReactiveVar(darkModeVar)
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const darkMode = useReactiveVar(darkModeVar);
 
   return (
     <HelmetProvider>
@@ -84,6 +84,6 @@ function App() {
       </ApolloProvider>
     </HelmetProvider>
   );
-}
+};
 
 export default App;

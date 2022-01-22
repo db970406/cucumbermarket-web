@@ -9,28 +9,28 @@
 2. useLoggedInUser hook으로 받아 form의 defaultValues를 채운다.
 */
 
-import { useForm } from 'react-hook-form'
-import { useHistory, useParams, useLocation } from 'react-router-dom'
-import InputError from '../../../components/shared/form/InputError'
-import Input from '../../../components/shared/form/Input'
-import useLoggedInUser from '../../../hooks/useLoggedInUser'
-import Button from "../../../components/shared/buttons/Button"
-import { getCurrentPosition } from '../../../apis/locationApi'
-import { useEffect } from 'react'
-import { gql, useMutation, useReactiveVar } from '@apollo/client'
-import styled from 'styled-components'
-import { colors } from '../../../utils/styles'
-import NotAuthorized from '../../../components/shared/utils/NotAuthorized'
-import FormLayout from '../../../components/layouts/FormLayout'
+import { useForm } from 'react-hook-form';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
+import InputError from '../../../components/shared/form/InputError';
+import Input from '../../../components/shared/form/Input';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
+import Button from "../../../components/shared/buttons/Button";
+import { getCurrentPosition } from '../../../apis/locationApi';
+import { useEffect } from 'react';
+import { gql, useMutation, useReactiveVar } from '@apollo/client';
+import styled from 'styled-components';
+import { colors } from '../../../utils/styles';
+import NotAuthorized from '../../../components/shared/utils/NotAuthorized';
+import FormLayout from '../../../components/layouts/FormLayout';
 import ItemPhoto from '../../../components/main/items/ItemPhoto';
 import MainLayout from '../../../components/layouts/MainLayout';
-import { currentLocationVar } from '../../../utils/apollo'
+import { currentLocationVar } from '../../../utils/apollo';
 
 const Container = styled.div`
     max-width:600px;
     width:100%;
     margin:0 auto;
-`
+`;
 
 const FileInput = styled.label`
     padding: 10px 15px;
@@ -45,7 +45,7 @@ const FileInput = styled.label`
     text-align:center;
     display:inline-block;
     margin-right:10px;
-`
+`;
 
 const EDIT_USER = gql`
     mutation editUser(
@@ -64,36 +64,37 @@ const EDIT_USER = gql`
             error
         }
     }
-`
-export default function EditUser() {
-    const { id } = useParams()
-    const history = useHistory()
-    const { state } = useLocation()
-    const currentLocation = useReactiveVar(currentLocationVar)
+`;
 
-    const { loggedInUser } = useLoggedInUser()
+export default function EditUser() {
+    const { id } = useParams();
+    const history = useHistory();
+    const { state } = useLocation();
+    const currentLocation = useReactiveVar(currentLocationVar);
+
+    const { loggedInUser } = useLoggedInUser();
 
     const { register, handleSubmit, clearErrors, formState, watch } = useForm({
         mode: "onChange",
         defaultValues: {
             name: loggedInUser?.name
         }
-    })
+    });
 
     // editUser 구현부
     const editUserCompleted = ({ editUser }) => {
-        const { ok } = editUser
+        const { ok } = editUser;
         if (ok) {
             history.push(`/user/${loggedInUser?.id}`);
-            window.location.reload()
-        }
-    }
+            window.location.reload();
+        };
+    };
     const [editUser, { loading }] = useMutation(EDIT_USER, {
         onCompleted: editUserCompleted
-    })
+    });
     const onValid = (data) => {
         if (loading) return;
-        const { name, introduce, location, avatar } = data
+        const { name, introduce, location, avatar } = data;
         editUser({
             variables: {
                 ...(name && { name }),
@@ -101,14 +102,14 @@ export default function EditUser() {
                 ...(avatar && { avatar }),
                 location: location === "동의" ? currentLocation : undefined,
             }
-        })
-    }
-    const clearError = () => clearErrors()
+        });
+    };
+    const clearError = () => clearErrors();
 
     // 유저의 현 위치를 구하는 API(카카오 맵 API 이용)
     useEffect(() => {
-        getCurrentPosition()
-    }, [])
+        getCurrentPosition();
+    }, []);
 
     return (
         parseInt(id) === loggedInUser?.id &&
@@ -190,5 +191,5 @@ export default function EditUser() {
         ) : (
             <NotAuthorized />
         )
-    )
-}
+    );
+};

@@ -19,10 +19,11 @@ import ChatListsBtn from '../shared/buttons/ChatListsBtn';
 import { useReactiveVar } from '@apollo/client';
 import { showChatListVar } from '../../utils/apollo';
 import MessageScreen from '../../screens/main/messages/MessageScreen';
+import React from 'react';
 
 const Container = styled(BaseContainer)`
     margin-top:30px;
-`
+`;
 
 const loadingAnimation = keyframes`
     from{
@@ -31,7 +32,8 @@ const loadingAnimation = keyframes`
     to{
         transform:rotate(360deg);
     }
-`
+`;
+
 const Loading = styled.div`
     margin: 0 auto;
     text-align:center;
@@ -44,7 +46,8 @@ const Loading = styled.div`
         font-size:16px;
         margin-top:20px;
     }
-`
+`;
+
 const Body = styled.div`
     margin:0 80px;
     ${({ wait }) => wait && css`
@@ -54,13 +57,13 @@ const Body = styled.div`
         align-items:center;
         height:100vh;
     `}
-`
+`;
 
 export default function MainLayout({ children, loading, title }) {
-    const showChatList = useReactiveVar(showChatListVar)
+    const showChatList = useReactiveVar(showChatListVar);
 
     return (
-        <>
+        <React.Fragment>
             <Header />
             <Container>
                 <Helmet title={title} />
@@ -81,7 +84,7 @@ export default function MainLayout({ children, loading, title }) {
                 <ChatListsBtn />
             )}
             <DarkmodeBtn />
-        </>
+        </React.Fragment>
     )
 }
 

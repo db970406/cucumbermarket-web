@@ -12,14 +12,14 @@
 5. seeRoom 입장 시 readMessages 구현하여 안 읽은 메시지 0개로 바꾼다(cache 수정으로 즉각 반영).
 */
 
-import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'
-import { useEffect, useState } from 'react'
-import useLoggedInUser from '../../../hooks/useLoggedInUser'
-import { chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo'
-import { MESSAGE_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
-import Message from '../../../components/main/messages/Message'
-import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout'
-import CreateMessage from '../../../components/main/messages/CreateMessage'
+import { gql, useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import useLoggedInUser from '../../../hooks/useLoggedInUser';
+import { chatRoomIdVar, chatUserIdVar } from '../../../utils/apollo';
+import { MESSAGE_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments';
+import Message from '../../../components/main/messages/Message';
+import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout';
+import CreateMessage from '../../../components/main/messages/CreateMessage';
 
 const SEE_ROOM = gql`
     query seeRoom($roomId:Int,$userId:Int,$offset:Int){
@@ -36,7 +36,7 @@ const SEE_ROOM = gql`
         }
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
-`
+`;
 
 const READ_MESSAGES = gql`
     mutation readMessages($id:Int!){
@@ -45,7 +45,7 @@ const READ_MESSAGES = gql`
             error
         }
     }
-`
+`;
 
 const REALTIME_ROOM = gql`
     subscription realtimeRoom($id:Int!){
@@ -54,20 +54,20 @@ const REALTIME_ROOM = gql`
         }
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
-`
+`;
 
 export default function SeeRoom() {
-    const chatRoomId = useReactiveVar(chatRoomIdVar)
-    const chatUserId = useReactiveVar(chatUserIdVar)
-    const [messageData, setMessageData] = useState([])
+    const chatRoomId = useReactiveVar(chatRoomIdVar);
+    const chatUserId = useReactiveVar(chatUserIdVar);
+    const [messageData, setMessageData] = useState([]);
 
     // readMessages Mutation 구현부
     const updateReadMessages = (cache, { data }) => {
-        const { readMessages: { ok, error } } = data
+        const { readMessages: { ok, error } } = data;
         if (!ok) {
-            alert(error)
+            alert(error);
             return;
-        }
+        };
         cache.modify({
             id: `Room:${data?.seeRoom?.id}`,
             fields: {
@@ -75,12 +75,11 @@ export default function SeeRoom() {
                     return 0
                 }
             }
-        })
+        });
     }
     const [readMessages] = useMutation(READ_MESSAGES, {
         update: updateReadMessages
-    })
-
+    });
 
     // 해당 Room의 Messages Data들을 가져오는 seeRoom Query 구현부
     const { data, loading, fetchMore, subscribeToMore } = useQuery(SEE_ROOM, {
@@ -89,13 +88,13 @@ export default function SeeRoom() {
             ...(chatUserId && { userId: parseInt(chatUserId) }),
             offset: 0
         },
-    })
+    });
 
 
     // 실시간으로 Message Data를 수신하는 realtimeRoom Subscription 구현부
-    const { cache } = useApolloClient()
+    const { cache } = useApolloClient();
     const realtimeUpdate = (prevQuery, { subscriptionData }) => {
-        const { data: { realtimeRoom: newMessage } } = subscriptionData
+        const { data: { realtimeRoom: newMessage } } = subscriptionData;
         if (newMessage.id) {
             const incomingMessage = cache.writeFragment({
                 id: `Message:${newMessage.id}`,
@@ -113,7 +112,7 @@ export default function SeeRoom() {
                     }
                 `,
                 data: newMessage
-            })
+            });
             cache.modify({
                 id: `Room:${data?.seeRoom?.id}`,
                 fields: {
@@ -123,9 +122,9 @@ export default function SeeRoom() {
                         return [...prev, newMessage]
                     }
                 }
-            })
-        }
-    }
+            });
+        };
+    };
 
     /* 
     1. seeRoom Query가 로드되면 Messages들을 messageData state에 옮겨 담는다.
@@ -134,25 +133,25 @@ export default function SeeRoom() {
     */
     useEffect(() => {
         if (data?.seeRoom) {
-            setMessageData(data?.seeRoom?.messages)
+            setMessageData(data?.seeRoom?.messages);
             readMessages({
                 variables: {
                     id: data?.seeRoom?.id
                 }
-            })
+            });
             subscribeToMore({
                 document: REALTIME_ROOM,
                 variables: {
                     id: data?.seeRoom?.id
                 },
                 updateQuery: realtimeUpdate
-            })
-        }
-    }, [data])
+            });
+        };
+    }, [data]);
 
     // 해당 방에서 상대방의 data를 갖기 위함이다.
-    const { loggedInUser } = useLoggedInUser()
-    const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id)
+    const { loggedInUser } = useLoggedInUser();
+    const notMe = data?.seeRoom?.users?.find(user => user.id !== loggedInUser?.id);
 
     return (
         <MessageRoomLayout
@@ -180,5 +179,5 @@ export default function SeeRoom() {
             )}
             <CreateMessage roomId={data?.seeRoom?.id} />
         </MessageRoomLayout>
-    )
-}
+    );
+};

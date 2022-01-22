@@ -10,9 +10,9 @@
 3. form과 같이 자주 쓰이므로 longtype을 prop으로 받아 width를 다르게 지정한다.
 */
 
-import propTypes from "prop-types"
-import styled from "styled-components"
-import { colors } from '../../../utils/styles'
+import propTypes from "prop-types";
+import styled from "styled-components";
+import { colors } from '../../../utils/styles';
 
 const SButton = styled.button`
     background-color:${props => props.logout ? colors.red : colors.green} ;
@@ -23,10 +23,11 @@ const SButton = styled.button`
     &:hover{
         ${props => props.disabled ? 0.3 : 1};
     }
-`
+`;
+
 const ButtonText = styled.span`
     text-align:center;
-`
+`;
 
 export default function Button({ loading, text, disabled, onClick, longtype, logout }) {
     return (
@@ -47,7 +48,7 @@ export default function Button({ loading, text, disabled, onClick, longtype, log
             </ButtonText>
         </SButton>
     )
-}
+};
 
 Button.propTypes = {
     text: propTypes.string.isRequired,
@@ -55,4 +56,4 @@ Button.propTypes = {
     disabled: propTypes.bool,
     onClick: propTypes.func,
     width: propTypes.string,
-}
+};

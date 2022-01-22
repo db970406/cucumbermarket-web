@@ -7,7 +7,7 @@
 // Login Screen에서 소셜로그인과 로그인 form을 구별하는 Component
 
 
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const SDivider = styled.div`
     margin: 10px 0;
@@ -26,8 +26,8 @@ const SDivider = styled.div`
         width: 100%;
         height: 1px;
         background-color: ${props => props.theme.themeGray};
-    }
-`
+    };
+`;
 
 
 const Divider = () => {
@@ -38,6 +38,6 @@ const Divider = () => {
             <div></div>
         </SDivider>
     )
-}
+};
 
-export default Divider
+export default Divider;

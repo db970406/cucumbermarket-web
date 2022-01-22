@@ -12,7 +12,7 @@
 import { useHistory } from 'react-router-dom';
 
 export default function NotAuthorized() {
-    const history = useHistory()
-    history.goBack()
+    const history = useHistory();
+    history.goBack();
     return;
-}
+};

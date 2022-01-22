@@ -6,8 +6,8 @@
 
 // CSS의 큰 틀을 담당하는 파일
 
-import { createGlobalStyle } from 'styled-components'
-import reset from 'styled-reset'
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
 // 사용할 컬러들을 퍼스널화 한다.
 export const colors = {
@@ -22,7 +22,7 @@ export const colors = {
     darkgray: "rgb(30,30,30)",
     lightgray: "rgb(240,240,240)",
     pink: "tomato",
-}
+};
 
 // Theme으로 부여할 prop
 export const darkTheme = {
@@ -31,18 +31,19 @@ export const darkTheme = {
     accent: colors.green,
     themeGray: colors.opacityLightgray,
     header: colors.darkgray,
-}
+};
+
 export const lightTheme = {
     bgColor: colors.white,
     color: colors.black,
     accent: colors.green,
     themeGray: colors.opacityDarkgray,
     header: colors.lightgray,
-}
+};
 
 // 전역 Styles 적용
 export const GlobalStyles = createGlobalStyle`
-    ${reset}
+    ${reset};
     *{
         box-sizing:border-box;
     }
@@ -69,4 +70,4 @@ export const GlobalStyles = createGlobalStyle`
         border:${props => props.theme.themeGray} 1.5px solid;
         color:${props => props.theme.color};
     }
-`
+`;
