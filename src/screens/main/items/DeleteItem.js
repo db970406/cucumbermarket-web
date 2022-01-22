@@ -19,43 +19,44 @@ const DELETE_ITEM = gql`
             error
         }
     }
-`
+`;
+
 export default function DeleteItem() {
-    const { id } = useParams()
-    const { data: loggedInUser } = useLoggedInUser()
+    const { id } = useParams();
+    const { data: loggedInUser } = useLoggedInUser();
 
     // 아이템의 소유자가 아니면 되돌려보내는 hook
-    const { data, loading } = useItemIsMine(id)
+    const { data } = useItemIsMine(id);
 
-    const history = useHistory()
+    const history = useHistory();
 
     const updateDeleteItem = (cache, { data }) => {
-        const { deleteItem: { ok, error } } = data
+        const { deleteItem: { ok, error } } = data;
         if (!ok) {
             alert(error);
             return;
-        }
+        };
         cache.evict({
             id: `Item:${id}`
-        })
+        });
         cache.modify({
             id: `ROOT_QUERY`,
             fields: {
                 seeItems(prev) {
-                    const filteredItems = prev.filter(item => item.id !== parseInt(id))
-                    return [...filteredItems]
+                    const filteredItems = prev.filter(item => item.id !== parseInt(id));
+                    return [...filteredItems];
                 }
             }
-        })
+        });
         cache.modify({
             id: `User:${loggedInUser?.seeLoggedInUser?.id}`,
             fields: {
                 itemCount(prev) {
-                    return prev - 1
+                    return prev - 1;
                 }
             }
-        })
-        history.push("/")
+        });
+        history.push("/");
         return;
     }
     const [deleteItem] = useMutation(DELETE_ITEM, {
@@ -63,12 +64,12 @@ export default function DeleteItem() {
             id: parseInt(id)
         },
         update: updateDeleteItem
-    })
+    });
 
     useEffect(() => {
         if (data?.seeItem?.isMine) {
-            deleteItem()
+            deleteItem();
         }
-    }, [data])
-    return null
+    }, [data]);
+    return null;
 }

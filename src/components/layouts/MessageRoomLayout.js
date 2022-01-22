@@ -11,14 +11,14 @@
 4. Infinite Scrolling 구현하여 메시지가 많아도 data를 점차적으로 fetch하게 하였다.
 */
 
-import { useReactiveVar } from '@apollo/client'
-import { faArrowCircleLeft, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
-import { useRef, useState } from 'react'
-import styled from 'styled-components'
-import { darkModeVar, showChatListVar, chatRoomIdVar, chatUserIdVar } from '../../utils/apollo'
-import { colors } from '../../utils/styles'
-import FontAwesomeBtn from '../shared/buttons/FontAwesomeBtn'
-import propTypes from "prop-types"
+import { useReactiveVar } from '@apollo/client';
+import { faArrowCircleLeft, faDoorClosed } from '@fortawesome/free-solid-svg-icons';
+import { useRef, useState } from 'react';
+import styled from 'styled-components';
+import { darkModeVar, showChatListVar, chatRoomIdVar, chatUserIdVar } from '../../utils/apollo';
+import { colors } from '../../utils/styles';
+import FontAwesomeBtn from '../shared/buttons/FontAwesomeBtn';
+import propTypes from "prop-types";
 
 const Container = styled.div`
     position:fixed;
@@ -33,17 +33,20 @@ const Container = styled.div`
     border:${colors.green} 1px solid;
     border-radius:15px;
     z-index:1;    
-`
+`;
+
 const RoomInfo = styled.header`
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:10px 15px;
-    border-bottom:${props => props.theme.themeGray} 1px solid; ;
-`
+    border-bottom:${props => props.theme.themeGray} 1px solid;
+`;
+
 const RoomTitle = styled.span`
     font-size:14px;
-`
+`;
+
 const RoomMain = styled.div`
     overflow:scroll;
     ::-webkit-scrollbar{
@@ -52,24 +55,24 @@ const RoomMain = styled.div`
     height:100%;
     padding-bottom:80px;
     bottom:0;
-`
+`;
 
 
 export default function MessageRoomLayout({ children, loading, title, fetchMore }) {
-    const chatRoomId = useReactiveVar(chatRoomIdVar)
-    const chatUserId = useReactiveVar(chatUserIdVar)
-    const [fetching, setFetching] = useState(false)
-    const darkMode = useReactiveVar(darkModeVar)
+    const chatRoomId = useReactiveVar(chatRoomIdVar);
+    const chatUserId = useReactiveVar(chatUserIdVar);
+    const [fetching, setFetching] = useState(false);
+    const darkMode = useReactiveVar(darkModeVar);
 
     const fetchMoreMessages = async () => {
         // 추가 데이터를 로드하는 상태로 전환
         setFetching(true);
-        await fetchMore()
+        await fetchMore();
         // 추가 데이터 로드 끝
         setFetching(false);
     };
 
-    const room = useRef()
+    const room = useRef();
 
     // Infinite Scroll
     const scroll = () => {
@@ -80,21 +83,21 @@ export default function MessageRoomLayout({ children, loading, title, fetchMore 
         if (scrollTop + clientHeight >= scrollHeight && fetching === false) {
             // 페이지 끝에 도달하면 추가 데이터를 받아온다
             fetchMoreMessages();
-        }
-    }
+        };
+    };
 
     // seeRoom에서 seeRooms로 돌아가기
     const backToLists = () => {
-        chatRoomIdVar(0)
-        chatUserIdVar(0)
-    }
+        chatRoomIdVar(0);
+        chatUserIdVar(0);
+    };
 
     // MessageScreen 끄기
     const closeMessenger = () => {
-        chatRoomIdVar(0)
-        chatUserIdVar(0)
-        showChatListVar(false)
-    }
+        chatRoomIdVar(0);
+        chatUserIdVar(0);
+        showChatListVar(false);
+    };
 
     return (
         loading ? (

@@ -7,11 +7,10 @@
 // prop으로 User의 name과 size를 prop으로 받아 활용하기 위함
 
 
-import styled from 'styled-components'
-import propTypes from "prop-types"
+import styled from 'styled-components';
+import propTypes from "prop-types";
 
-const Name = styled.span`
-`
+const Name = styled.span``;
 
 export default function Username({ name, size }) {
     return (
@@ -25,9 +24,9 @@ export default function Username({ name, size }) {
             {name}
         </Name>
     )
-}
+};
 
 Username.propTypes = {
     name: propTypes.string,
     size: propTypes.number.isRequired,
-}
+};

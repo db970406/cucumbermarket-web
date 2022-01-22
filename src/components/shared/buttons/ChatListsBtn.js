@@ -10,13 +10,13 @@
 3. 유저가 읽지 않은 모든 messages들의 unreadCount를 더하여 버튼에 띄워준다.
 */
 
-import { gql, useQuery } from '@apollo/client'
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { showChatListVar } from '../../../utils/apollo'
-import { colors } from '../../../utils/styles'
+import { gql, useQuery } from '@apollo/client';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { showChatListVar } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
 
 const Button = styled.button`
     position:fixed;
@@ -26,7 +26,8 @@ const Button = styled.button`
     height:50px;
     border-radius:25px;
     background-color:${colors.green};
-`
+`;
+
 const UnreadCount = styled.div`
     position:absolute;
     display:flex;
@@ -42,8 +43,9 @@ const UnreadCount = styled.div`
     text-align:center;
     span{
         font-size:10px;
-    }
-`
+    };
+`;
+
 
 const SEE_ROOMS = gql`
     query seeRooms{
@@ -51,22 +53,23 @@ const SEE_ROOMS = gql`
             unreadCount
         }
     }
-`
+`;
+
 export default function ChatListsBtn() {
-    const [unreadCount, setUnreadCount] = useState(0)
+    const [unreadCount, setUnreadCount] = useState(0);
 
     // seeRooms로부터 unreadCount만 받아서 사용할 것이다.
-    const { data } = useQuery(SEE_ROOMS)
+    const { data } = useQuery(SEE_ROOMS);
 
     // seeRooms data가 로드되면 모든 room의 unreadCount을 더하여 unreadCount state에 담아준다.
     useEffect(() => {
         if (data?.seeRooms?.length > 0) {
             // seeRooms data 배열 속에 있는 모든 unreadCount를 더하는 함수(reduce)
-            const unreadCountArray = data?.seeRooms?.map(room => room.unreadCount)
+            const unreadCountArray = data?.seeRooms?.map(room => room.unreadCount);
             const sumTotal = unreadCountArray?.reduce((a, b) => (a + b));
-            setUnreadCount(sumTotal)
+            setUnreadCount(sumTotal);
         }
-    }, [data])
+    }, [data]);
     return (
         <Button onClick={() => showChatListVar(true)}>
             <FontAwesomeIcon icon={faCommentDots} size="lg" color={colors.white} />
@@ -77,4 +80,4 @@ export default function ChatListsBtn() {
             ) : null}
         </Button >
     )
-}
+};

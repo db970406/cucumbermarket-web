@@ -23,7 +23,7 @@ const DropDown = styled.div`
             display: block;
         }
     }
-`
+`;
 
 const DropDownContent = styled.div`
     display: none;
@@ -45,7 +45,7 @@ const DropDownContent = styled.div`
         background-color:  ${colors.lightgray};
         border-radius:7px;
     }
-`
+`;
 
 
 export default function DropDownMenu({ link1, link2 }) {

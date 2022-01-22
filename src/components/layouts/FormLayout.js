@@ -7,12 +7,13 @@
 /*
 1. form이 들어가는 모든 Screen에 쓰일 Component
 */
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 import DarkmodeBtn from '../shared/buttons/DarkmodeBtn';
 import Helmet from '../shared/utils/Helmet';
 import propTypes from 'prop-types';
 import FormBox from '../shared/form/FormBox';
 import BaseContainer from './BaseContainer';
+import React from 'react';
 
 const Container = styled(BaseContainer)`
     margin-top:50px;
@@ -31,11 +32,11 @@ const Logo = styled.img`
     height:70px;
     margin : 0 auto;
     margin-bottom:10px;
-`
+`;
 
 export default function FormLayout({ children, title, logo, auth }) {
     return (
-        <>
+        <React.Fragment>
             <Container auth={auth}>
                 <Helmet title={title} />
                 <FormBox>
@@ -44,7 +45,7 @@ export default function FormLayout({ children, title, logo, auth }) {
                 </FormBox>
             </Container>
             <DarkmodeBtn />
-        </>
+        </React.Fragment>
     )
 }
 

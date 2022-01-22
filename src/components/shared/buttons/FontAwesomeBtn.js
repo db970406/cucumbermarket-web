@@ -13,12 +13,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import propTypes from "prop-types"
 
-const BtnContainer = styled.div`
-`
+const BtnContainer = styled.div``;
+
 const Btn = styled.button`
     padding-left:0;
     opacity:${props => props.disabled ? 0.4 : 1};
-`
+`;
 
 export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight, disabled }) {
     return (
@@ -36,7 +36,7 @@ export default function FontAwesomeBtn({ onClick, icon, size, color, marginRight
             </Btn>
         </BtnContainer>
     )
-}
+};
 
 FontAwesomeBtn.propTypes = {
     onClick: propTypes.func,
@@ -45,4 +45,4 @@ FontAwesomeBtn.propTypes = {
     color: propTypes.string,
     marginRight: propTypes.number,
     disabled: propTypes.bool,
-}
+};

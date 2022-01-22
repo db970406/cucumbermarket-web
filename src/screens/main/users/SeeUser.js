@@ -10,46 +10,50 @@
 3. Reactive Variables인 chatUserIdVar을 이용하여 seeRoom을 on/off 할 수 있게 함 
 */
 
-import { gql, useQuery, useReactiveVar } from '@apollo/client'
-import { useEffect, useState } from 'react'
-import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
-import styled, { css } from 'styled-components'
-import DisplayItem from '../../../components/main/items/DisplayItem'
-import MainLayout from "../../../components/layouts/MainLayout"
-import UserData from '../../../components/main/users/UserData'
-import Button from '../../../components/shared/buttons/Button'
-import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments'
-import { chatUserIdVar, logUserOut } from '../../../utils/apollo'
-import { colors } from '../../../utils/styles'
-import CreateRoom from '../../../components/main/messages/CreateRoom'
-import SeeRoom from '../messages/SeeRoom'
+import { gql, useQuery, useReactiveVar } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import DisplayItem from '../../../components/main/items/DisplayItem';
+import MainLayout from "../../../components/layouts/MainLayout";
+import UserData from '../../../components/main/users/UserData';
+import Button from '../../../components/shared/buttons/Button';
+import { ITEM_DISPLAY_FRAGMENT, USER_DEFAULT_FRAGMENT } from '../../../components/shared/utils/fragments';
+import { chatUserIdVar, logUserOut } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
+import CreateRoom from '../../../components/main/messages/CreateRoom';
+import SeeRoom from '../messages/SeeRoom';
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
     max-width:1000px;
     margin:0 auto;
-`
+`;
+
 const User = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-between;
     margin-bottom:30px;
-`
+`;
+
 const Items = styled.div`
     margin-top:30px;
-`
+`;
+
 const Flex = styled.div`
     display:flex;
     flex-wrap:wrap;
     gap:40px;
     margin:0 auto;
     margin-top:20px;
-`
+`;
 
 const Introduce = styled.span`
     font-size:16px;
-`
+`;
+
 const Buttons = styled.div`
     display:flex;
     flex-direction:column;
@@ -57,10 +61,10 @@ const Buttons = styled.div`
     @media screen and (max-width: 550px) {
         display:none;
     }
-`
+`;
 
-const Tabs = styled.p`
-`
+const Tabs = styled.p``;
+
 const Tab = styled.button`
     ${({ isActive }) => isActive ?
         css`
@@ -94,7 +98,7 @@ const Tab = styled.button`
             color:${colors.green};
         }
     }
-`
+`;
 
 const SEE_USER = gql`
     query seeUser($id: Int!){
@@ -115,31 +119,31 @@ const SEE_USER = gql`
     }
     ${USER_DEFAULT_FRAGMENT}
     ${ITEM_DISPLAY_FRAGMENT}
-`
+`;
 
 const SeeUser = () => {
-    const { id } = useParams()
-    const [userData, setUserData] = useState({})
-    const history = useHistory()
-    const chatUserId = useReactiveVar(chatUserIdVar)
-    const nowSellingMatch = useRouteMatch(`/user/:id/now-selling`)
-    const likesMatch = useRouteMatch(`/user/:id/likes`)
+    const { id } = useParams();
+    const [userData, setUserData] = useState({});
+    const history = useHistory();
+    const chatUserId = useReactiveVar(chatUserIdVar);
+    const nowSellingMatch = useRouteMatch(`/user/:id/now-selling`);
+    const likesMatch = useRouteMatch(`/user/:id/likes`);
     const { data, loading } = useQuery(SEE_USER, {
         variables: {
             id: parseInt(id)
         }
-    })
+    });
 
     const sendUserEdit = () => {
         return history.push(`/user/${userData?.id}/edit`, {
             avatar: userData?.avatar
-        })
-    }
+        });
+    };
 
     useEffect(() => {
         if (data?.seeUser)
-            setUserData(data?.seeUser)
-    }, [data])
+            setUserData(data?.seeUser);
+    }, [data]);
     return (
         <MainLayout title={`${userData?.name}님의 프로필`} loading={loading}>
             <Container>
@@ -217,7 +221,7 @@ const SeeUser = () => {
                 <SeeRoom />
             ) : null}
         </MainLayout>
-    )
-}
+    );
+};
 
-export default SeeUser
+export default SeeUser;

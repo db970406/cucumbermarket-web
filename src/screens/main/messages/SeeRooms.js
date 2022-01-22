@@ -10,14 +10,14 @@
 3. DeleteRoom 추가
 */
 
-import { gql, useQuery } from '@apollo/client'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout'
-import ChatWithWho from '../../../components/main/messages/ChatWithWho'
-import DeleteRoom from '../../../components/main/messages/DeleteRoom'
-import { chatRoomIdVar } from '../../../utils/apollo'
-import { colors } from '../../../utils/styles'
+import { gql, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import MessageRoomLayout from '../../../components/layouts/MessageRoomLayout';
+import ChatWithWho from '../../../components/main/messages/ChatWithWho';
+import DeleteRoom from '../../../components/main/messages/DeleteRoom';
+import { chatRoomIdVar } from '../../../utils/apollo';
+import { colors } from '../../../utils/styles';
 
 const RoomList = styled.div`
     padding:8px 10px;
@@ -26,13 +26,14 @@ const RoomList = styled.div`
     align-items:center;
     border-bottom:1px solid ${({ theme }) => theme.themeGray};
     cursor:pointer;
-`
+`;
+
 const UnreadSign = styled.div`
     width:10px;
     height:10px;
     border-radius:5px;
     background-color: ${colors.green};
-`
+`;
 
 const SEE_ROOMS = gql`
     query seeRooms{
@@ -47,20 +48,20 @@ const SEE_ROOMS = gql`
             unreadCount
         }
     }
-`
+`;
 
 export default function SeeRooms() {
-    const [currentRooms, setCurrentRooms] = useState([])
+    const [currentRooms, setCurrentRooms] = useState([]);
 
-    const { data, loading } = useQuery(SEE_ROOMS)
+    const { data, loading } = useQuery(SEE_ROOMS);
 
     useEffect(() => {
         if (data?.seeRooms) {
-            setCurrentRooms(data?.seeRooms)
-        }
-    }, [data])
+            setCurrentRooms(data?.seeRooms);
+        };
+    }, [data]);
 
-    const enterRoom = (roomId) => chatRoomIdVar(roomId)
+    const enterRoom = (roomId) => chatRoomIdVar(roomId);
 
     return (
         <MessageRoomLayout
@@ -79,5 +80,5 @@ export default function SeeRooms() {
                 </RoomList>
             )}
         </MessageRoomLayout>
-    )
-}
+    );
+};

@@ -24,14 +24,14 @@ const SEE_ITEMS = gql`
         }
     }
     ${ITEM_DISPLAY_FRAGMENT}
-`
+`;
 
 const Container = styled.div`
     flex:1;
     display:flex;
     justify-content:center;
     margin:0 auto;
-`
+`;
 
 // Main에 display될 item들의 배치
 const Flex = styled.div`
@@ -41,18 +41,19 @@ const Flex = styled.div`
     flex-wrap:wrap;
     gap:40px;
     margin:0 auto;
-`
-export default function Home() {
-    const [itemsData, setItemsData] = useState([])
-    const searchData = useReactiveVar(searchDataVar)
+`;
 
-    const { data, loading } = useQuery(SEE_ITEMS)
+export default function Home() {
+    const [itemsData, setItemsData] = useState([]);
+    const searchData = useReactiveVar(searchDataVar);
+
+    const { data, loading } = useQuery(SEE_ITEMS);
 
     useEffect(() => {
         if (data?.seeItems) {
-            setItemsData(data?.seeItems)
+            setItemsData(data?.seeItems);
         }
-    }, [data])
+    }, [data]);
     return (
         <MainLayout title="오이마켓" loading={loading || itemsData?.length === 0}>
             <Container>
@@ -75,5 +76,5 @@ export default function Home() {
                 </Flex>
             </Container>
         </MainLayout>
-    )
-}
+    );
+};

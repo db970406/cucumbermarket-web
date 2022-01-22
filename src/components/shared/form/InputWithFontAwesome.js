@@ -20,12 +20,13 @@ const InputContainer = styled.div`
     position:relative;
     width:95%;
     margin:0 auto;
-`
+`;
+
 const BtnContainer = styled.div`
     // FontAwesomeBtn을 Input안에 있는 것 처럼 두게 하기 위함
     position:absolute;
     right:10px;
-`
+`;
 
 const InputWithFontAwesome = ({ children, onClick, icon, color, size, disabled }) => {
     return (
@@ -41,7 +42,7 @@ const InputWithFontAwesome = ({ children, onClick, icon, color, size, disabled }
             </BtnContainer>
         </InputContainer>
     )
-}
+};
 
 InputWithFontAwesome.propTypes = {
     onClick: propTypes.func,
@@ -49,6 +50,6 @@ InputWithFontAwesome.propTypes = {
     color: propTypes.string,
     size: propTypes.string,
     disabled: propTypes.bool,
-}
+};
 
-export default InputWithFontAwesome
+export default InputWithFontAwesome;

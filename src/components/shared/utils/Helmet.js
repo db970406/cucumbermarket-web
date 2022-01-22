@@ -6,8 +6,8 @@
 
 // 홈페이지 타이틀의 변화를 도와줄 Helmet
 
-import { Helmet as PageTitle } from 'react-helmet-async'
-import PropTypes from "prop-types"
+import { Helmet as PageTitle } from 'react-helmet-async';
+import PropTypes from "prop-types";
 
 export default function Helmet({ title }) {
     return (
@@ -19,8 +19,8 @@ export default function Helmet({ title }) {
             }
         </PageTitle>
     )
-}
+};
 
 Helmet.propTypes = {
     title: PropTypes.string.isRequired
-}
+};

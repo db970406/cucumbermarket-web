@@ -33,12 +33,12 @@ const SocialLogins = styled.div`
     div{
         width:50px;
     }
-`
+`;
 
 const Greeting = styled.span`
     color:${colors.green};
     text-align:center;
-`
+`;
 
 const LOGIN_MUTATION = gql`
     mutation login($username:String!,$password:String!){
@@ -48,42 +48,40 @@ const LOGIN_MUTATION = gql`
             error
         }
     }
-`
+`;
 
 export default function Login() {
-    const { state } = useLocation()
+    const { state } = useLocation();
 
-    const { register, handleSubmit, clearErrors, formState } = useForm()
-
-    const clearError = (errorName) => clearErrors(errorName)
+    const { register, handleSubmit, clearErrors, formState } = useForm();
 
     // Login 구현부
     const afterLogin = ({ login }) => {
-        const { ok, token, error } = login
+        const { ok, token, error } = login;
         if (!ok) {
-            alert(error)
+            alert(error);
             return;
-        }
+        };
         if (token) {
-            logUserIn(token)
-        }
-    }
+            logUserIn(token);
+        };
+    };
     const [login, { loading }] = useMutation(LOGIN_MUTATION, {
         onCompleted: afterLogin
-    })
+    });
 
     // form이 제출되었을 때 실행될 함수
     const onValid = (data) => {
         if (loading) return;
 
-        const { username, password } = data
+        const { username, password } = data;
         login({
             variables: {
                 username,
                 password
             }
-        })
-    }
+        });
+    };
 
 
     return (
@@ -158,5 +156,5 @@ export default function Login() {
                 <KakaoLogin />
             </SocialLogins>
         </FormLayout>
-    )
-}
+    );
+};

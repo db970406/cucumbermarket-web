@@ -9,8 +9,8 @@
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Img = styled.img`
-`
+const Img = styled.img``;
+
 export default function UserAvatar({ img, size }) {
     return (
         <Img

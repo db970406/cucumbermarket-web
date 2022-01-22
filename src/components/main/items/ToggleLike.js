@@ -22,15 +22,15 @@ const TOGGLE_LIKE_MUTATION = gql`
         }
     }
     ${ITEM_DISPLAY_FRAGMENT}
-`
+`;
 
 export default function ToggleLike({ itemId, isLiked, size }) {
-    const { loggedInUser } = useLoggedInUser()
-    const darkMode = useReactiveVar(darkModeVar)
+    const { loggedInUser } = useLoggedInUser();
+    const darkMode = useReactiveVar(darkModeVar);
 
     // 관심 Mutation과 프론트 즉각 반영을 위한 cache작업
     const updateToggleLike = (cache, { data }) => {
-        const { toggleLike: item } = data
+        const { toggleLike: item } = data;
         if (item.id) {
             const photoPressedLike = cache.writeFragment({
                 id: `Item:${itemId}`,
@@ -54,7 +54,7 @@ export default function ToggleLike({ itemId, isLiked, size }) {
                     }
                 `,
                 data: item
-            })
+            });
 
             cache.modify({
                 id: `User:${loggedInUser?.id}`,
@@ -70,7 +70,7 @@ export default function ToggleLike({ itemId, isLiked, size }) {
                         return isLiked ? [...prev] : [photoPressedLike, ...clearMyLikes]
                     }
                 }
-            })
+            });
         }
     }
     const [toggleLike] = useMutation(TOGGLE_LIKE_MUTATION, {
@@ -78,7 +78,7 @@ export default function ToggleLike({ itemId, isLiked, size }) {
             id: itemId
         },
         update: updateToggleLike
-    })
+    });
     return (
         <FontAwesomeBtn
             onClick={toggleLike}

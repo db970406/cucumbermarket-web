@@ -6,9 +6,9 @@
 
 // 설정하지 않은 Route로 이동한 경우 띄워주는 Component
 
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { colors } from '../../../utils/styles'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { colors } from '../../../utils/styles';
 
 const Container = styled.div`
     display:flex;
@@ -16,17 +16,19 @@ const Container = styled.div`
     justify-content:center;
     align-items:center;
     height:100vh;
-`
+`;
+
 const Warning = styled.h1`
     font-size:60px;
     font-weight:800;
-`
+`;
+
 const Subscription = styled.span`
     font-weight:600;
     font-size:25px;
     margin:20px 0;
     color:${props => props.link ? colors.green : undefined};
-`
+`;
 
 // Route에서 정하지 않은 URL로 이동 시 띄워줄 화면
 export default function NotFound() {
@@ -39,4 +41,4 @@ export default function NotFound() {
             </Link>
         </Container>
     )
-}
+};

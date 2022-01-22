@@ -26,14 +26,15 @@ const CREATE_ROOM = gql`
         }
     }
     ${MESSAGE_DEFAULT_FRAGMENT}
-`
+`;
+
 export default function CreateRoom({ text, userId }) {
 
     // MessageRoom을 on하기 위한 함수
-    const enterRoom = (userId) => chatUserIdVar(userId)
+    const enterRoom = (userId) => chatUserIdVar(userId);
 
     const updateCreateRoom = (cache, { data }) => {
-        const { createRoom } = data
+        const { createRoom } = data;
         if (createRoom.id) {
             const newRoom = cache.writeFragment({
                 id: `Room:${createRoom.id}`,
@@ -55,27 +56,27 @@ export default function CreateRoom({ text, userId }) {
                     }
                 `,
                 data: createRoom
-            })
+            });
             cache.modify({
                 id: "ROOT_QUERY",
                 fields: {
                     seeRooms(prev) {
-                        const checkAlreadyExists = prev.find(room => room.__ref === newRoom.__ref)
-                        return checkAlreadyExists ? [...prev] : [newRoom, ...prev]
+                        const checkAlreadyExists = prev.find(room => room.__ref === newRoom.__ref);
+                        return checkAlreadyExists ? [...prev] : [newRoom, ...prev];
                     }
                 }
-            })
-            enterRoom(userId)
-        }
+            });
+            enterRoom(userId);
+        };
     }
     const [createRoom] = useMutation(CREATE_ROOM, {
         variables: {
             id: userId
         },
         update: updateCreateRoom
-    })
+    });
 
-    const makeRoom = () => createRoom()
+    const makeRoom = () => createRoom();
     return (
         <Button
             text={text}

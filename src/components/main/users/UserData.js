@@ -9,11 +9,11 @@
 2. onClick으로 함수를 prop으로 받아 처리할 수 있다.
 */
 
-import styled from 'styled-components'
-import UserAvatar from './UserAvatar'
-import UserLocation from './UserLocation'
-import Username from './Username'
-import propTypes from "prop-types"
+import styled from 'styled-components';
+import UserAvatar from './UserAvatar';
+import UserLocation from './UserLocation';
+import Username from './Username';
+import propTypes from "prop-types";
 
 const Container = styled.div`
     display:flex;
@@ -21,12 +21,13 @@ const Container = styled.div`
     justify-content:flex-start;
     margin:7px 0;
     cursor:pointer;
-`
+`;
+
 const UserInfo = styled.div`
     display:flex;
     flex-direction:column;
     margin-left:3px;
-`
+`;
 
 export default function UserData({
     avatar,
@@ -55,4 +56,4 @@ UserData.propTypes = {
     avatarSize: propTypes.number,
     nameSize: propTypes.number,
     locationSize: propTypes.number,
-}
+};
