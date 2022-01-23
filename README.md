@@ -6,7 +6,7 @@
 ### 1) 기술 숙달
 - React의 Component 개발 방식 및 함수형 Component에서의 주요 Hooks 숙달
 - ApolloClient가 제공하는 Reactive Variable로 상태관리
-- 직접 만든 프로젝트에서 프론트엔드에서 백엔드와의 API 소통을 이해
+- 직접 만든 프로젝트에서 프론트엔드와 백엔드와의 API 소통을 이해
 - 소셜 로그인, 위치 제공 등 유명 기업의 공유 API 사용법 숙달
 ### 2) 웹의 흐름 이해
 - 프론트엔드 <-> 백엔드의 흐름 이해 및 현재 보유한 지식의 실무 활용을 위해 총동원하여 풀스택 프로젝트 개발
@@ -16,7 +16,7 @@
 - React
 - styled-components(CSS-in-JS 라이브러리)
 - Apollo Client(GraphQL)
-- FontAwesome
+
 
 ## 3. Rest API가 아닌 GraphQL을 택한 이유
  1) Under-fetching의 문제
