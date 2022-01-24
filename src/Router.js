@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.23
-수정일 : ------
+수정일 : 2022.01.24
 */
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -18,6 +18,7 @@ import SeeItem from './screens/main/items/SeeItem';
 import NotFound from './components/shared/utils/NotFound';
 import { isLoggedInVar } from './utils/apollo';
 import { useReactiveVar } from '@apollo/client';
+import Logout from './screens/main/users/Logout';
 
 export default function Router() {
     const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -49,6 +50,9 @@ export default function Router() {
                         <EditUser />
                     </Route>
 
+                    <Route path="/logout" exact>
+                        <Logout />
+                    </Route>
                     <Route>
                         <NotFound />
                     </Route>

@@ -1,7 +1,7 @@
 /* 
 작성자 : SJ
 작성일 : 2022.01.06
-수정일 : 2022.01.14
+수정일 : 2022.01.24
 */
 
 // ApolloClient 관련파일
@@ -34,14 +34,12 @@ export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 export const logUserIn = (token) => {
     isLoggedInVar(true);
     localStorage.setItem(TOKEN, token);
-    window.location.href = "/";
 };
 export const logUserOut = (history) => {
-    window.location.reload();
     isLoggedInVar(false);
     localStorage.removeItem(TOKEN);
     history.replace();
-    window.location.href = "/";
+    history.push("/")
 };
 
 
