@@ -53,7 +53,7 @@ const LOGIN_MUTATION = gql`
 export default function Login() {
     const { state } = useLocation();
 
-    const { register, handleSubmit, clearErrors, formState } = useForm();
+    const { register, handleSubmit, formState } = useForm();
 
     // Login 구현부
     const afterLogin = ({ login }) => {
@@ -82,7 +82,6 @@ export default function Login() {
             }
         });
     };
-
 
     return (
         <FormLayout auth logo title="로그인">
